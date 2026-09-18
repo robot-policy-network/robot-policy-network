@@ -1,0 +1,15 @@
+# Generated and sensitive files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.secret
+*.seed
+*.tmp
+out/
+cache/
+broadcast/
+lib/
+node_modules/
+.DS_Store

@@ -1,0 +1,24 @@
+{
+  "network": "Arc mainnet",
+  "chainId": 5042,
+  "rpc": "https://rpc.mainnet.arc.io",
+  "contracts": {
+    "fleet": {
+      "address": "0x6a3B12532F8e562f99e3292380e7f69D32e10B32",
+      "explorer": "https://explorer.arc.io/address/0x6a3B12532F8e562f99e3292380e7f69D32e10B32",
+      "status": "address and runtime code verified by read-only RPC"
+    },
+    "arcrobo": {
+      "address": "0x90554cEaf18BD5545F4be6520a3077D327727297",
+      "explorer": "https://explorer.arc.io/address/0x90554cEaf18BD5545F4be6520a3077D327727297",
+      "status": "address and runtime code verified by read-only RPC"
+    },
+    "arcroboUsdcPool": {
+      "address": "0xd3e373b283a28407d40fc2791d759a4bb75c25d277f3bcf9863fc6a2af2afe35",
+      "explorer": "https://explorer.arc.io/address/0xd3e373b283a28407d40fc2791d759a4bb75c25d277f3bcf9863fc6a2af2afe35"
+    }
+  },
+  "nativeUsdc": "0x3600000000000000000000000000000000000000",
+  "checkedAt": "2026-09-18",
+  "verificationScope": "read-only RPC code existence and chain ID; source reproducibility and deployment transaction are not asserted"
+}
