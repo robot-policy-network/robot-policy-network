@@ -1,6 +1,11 @@
-# StonkRobotics Fleet Protocol
+# Robot Policy Network
 
-Open reference implementation for the StonkRobotics robot and AI-agent evaluation protocol.
+[![Contract CI](https://github.com/robot-policy-network/robot-policy-network/actions/workflows/contract-ci.yml/badge.svg)](https://github.com/robot-policy-network/robot-policy-network/actions/workflows/contract-ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+Open reference implementation for verifiable robot-policy evaluation and AI-agent settlement infrastructure.
+
+Robot Policy Network is the protocol layer behind the StonkRobotics demonstration. It separates evaluation evidence from payment authorization: an agent result can be versioned, hashed, signed, and verified on-chain without treating an unverified score as an automatic payment instruction.
 
 This repository is the protocol codebase, not a grant attachment. The current public release focuses on the deployed smart-contract interface, Arc deployment evidence, and the boundaries of what is and is not verified.
 
@@ -37,7 +42,21 @@ EIP-712 voucher is signed
 Arc contract verifies and records the result
 ```
 
-## Local development
+## Repository map
+
+| Repository | Purpose |
+|---|---|
+| [`robot-policy-network`](https://github.com/robot-policy-network/robot-policy-network) | Core contracts and deployment evidence |
+| [`agent-interface`](https://github.com/robot-policy-network/agent-interface) | Agent integration and transaction safety boundary |
+| [`evaluation-specs`](https://github.com/robot-policy-network/evaluation-specs) | Versioned evaluation and result schemas |
+| [`docs`](https://github.com/robot-policy-network/docs) | Public architecture and governance documentation |
+
+## Security
+
+This repository never accepts production secrets, private keys, evaluator credentials, or automatic mainnet deployment workflows. Pull requests are reviewed and CI must pass before changes reach `main`. Report vulnerabilities privately through a GitHub Security Advisory; do not publish exploitable details or credentials in an issue.
+
+See [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`docs/limitations.md`](docs/limitations.md).
+
 
 This repository is intended for Foundry. Install dependencies into `lib/` before building, then run:
 
