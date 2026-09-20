@@ -42,6 +42,19 @@ EIP-712 voucher is signed
 Arc contract verifies and records the result
 ```
 
+## Documentation
+
+| Document | What it is |
+|---|---|
+| [Whitepaper](docs/whitepaper.md) | The protocol end to end, with an honest live/proposed status table |
+| [Settlement specification](docs/settlement-spec.md) | **Frozen, `SPEC_VERSION = 1`** — the normative v1 protocol |
+| [Deployment verification](docs/deployment.md) | Arc addresses, evidence scope, and the deploy procedure |
+| [Evaluation reproducibility](docs/evaluation-reproducibility.md) | What a third party can and cannot re-verify, and the L2 proposal |
+| [Red-team findings](docs/security/red-team-findings.md) | Self-disclosed findings, including the gameable text rubric |
+| [Traction evidence](docs/grants/traction-evidence/README.md) | 492 published evaluation records, SHA-256 pinned, with a re-runnable verifier |
+| [Adversarial review brief](docs/grants/review-brief.md) | Written to be handed to an independent reviewer — claims, weaknesses, hostile questions |
+| [Limitations](docs/limitations.md) | What this repository does and does not establish |
+
 ## Repository map
 
 | Repository | Purpose |
