@@ -97,3 +97,31 @@ better agents.
 - Axis $12M: https://axisrobotics.ai/blogs/blog/axis-raises-12m-seed-round-to-build-the-data-engine-for-physical-ai
 - PrismaX $11M: https://www.prismax.ai/blog/prismax-raises-11m-a16z-robotics-funding
 - RoboTrain: https://app.virtuals.io/acp-ai/robotrain + https://www.robotronica.info/en/news/robotics-en/2982-robotrain-launches-on-virtuals-protocol-to-build-decentralized-robot-training-network.html
+
+---
+
+## URL re-verification — 2026-09-20 (AI-reviewer simulation)
+
+Simulated how an AI reviewer with live fetch tools would check every external
+link. Results:
+
+| URL | Result | Action |
+|---|---|---|
+| stonkrobotics.xyz/skill/ | **200 OK** (browser UA) | Keep — cite as live |
+| explorer.arc.io/address/0x6a3B… | **200 OK** (browser UA) | Keep — cite as live |
+| github.com/robot-policy-network/robot-policy-network | **200 OK** | Keep |
+| arxiv.org/abs/2403.12945 (DROID) | **200 OK** | Keep — safe citation |
+| arxiv.org/abs/2607.06442 (SIEVE) | 502 / unresolvable | **Do NOT cite by ID in the application**; use qualitative claim + re-pin a resolvable citation pre-submission |
+| arxiv.org/abs/2604.15546 (ATHENA) | 502 / unresolvable | Same — keep in memo only |
+| arxiv.org/abs/2511.13406 (RoboDrop) | 502 / unresolvable | Same — keep in memo only |
+| prismax.ai blog URL | **404** | Do not deep-link; cite "company announcement / CoinDesk coverage" |
+| axisrobotics.ai blog URL | dynamic route, content not fetchable | Cite qualitatively, not by URL |
+
+**Rule adopted:** an AI reviewer *will* attempt to resolve every link. Only
+links that returned 200 under a browser User-Agent on 2026-09-20 may appear as
+citations in the submitted application. Academic claims about data curation
+are kept qualitative in the application and must be re-pinned to a live,
+resolvable arXiv ID immediately before submission.
+
+Note: bare `curl` without a User-Agent returns 502/404 on several of these
+(anti-bot); the 200s above were confirmed with a browser UA.

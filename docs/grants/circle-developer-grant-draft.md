@@ -21,23 +21,28 @@ The machine economy has a trust gap, and the market has already priced the
 two layers around it while leaving the middle empty.
 
 **Collection is funded and commoditized.** Axis Robotics raised a $12M seed
-(Hack VC, Jul 2026) and PrismaX raised $11M (a16z CSX, Jun 2025) to scale
-robot-data collection; DROID (RSS 2024 Best Paper) and Open X-Embodiment
-already publish over a million raw trajectories. Raw data is abundant.
+(Hack VC, 2026) and PrismaX raised $11M (a16z CSX, 2025) to scale robot-data
+collection — both widely covered (CoinDesk, company announcements). DROID
+(Khazatsky et al., RSS 2024 Best Paper; arXiv 2403.12945) and Open
+X-Embodiment (2023) already publish over a million raw trajectories. Raw data
+is abundant.
 
-**Academia proved the real bottleneck is curation, not collection.** SIEVE
-(arXiv 2607.06442, Jul 2026) demonstrates that structure-aware selection with
-only 50% of demonstrations and 50% of training steps **surpasses full-data
-training** for VLA imitation learning. More data does not yield better
-policies; better-selected data does.
+**Academia shows the bottleneck is shifting from collection to curation.**
+Recent work on demonstration selection for VLA imitation learning (e.g.
+structure-aware selection methods reporting that roughly half the data can
+match or beat full-data training) indicates that more data does not reliably
+yield better policies; better-selected data does. `<FINAL PRE-SUBMISSION
+CHECK: pin one specific, currently-resolvable arXiv citation here — verify
+the ID resolves before sending>`
 
-**Yet no one occupies the intersection of curation and settlement.** RoboTrain
-(Virtuals Protocol, May 2026) validates scoring-as-a-product but relies on a
-centralized 16-member grading team with explicitly no crypto settlement.
-Generic oracle and escrow projects treat an unverified score as a payment
-instruction. The result: robot-training data cannot be trusted as an asset,
-and machine work cannot be safely paid, because there is no trustworthy bridge
-between "the agent claims it did the work" and "a payer should release funds."
+**Yet the intersection of curation and settlement is thin.** RoboTrain
+(Virtuals Protocol, 2026) validates scoring-as-a-product but relies on a
+centralized human grading team and — per its own launch coverage — no crypto
+settlement. Generic oracle and escrow projects treat an unverified score as a
+payment instruction. The result: robot-training data cannot be trusted as an
+asset, and machine work cannot be safely paid, because there is no
+trustworthy bridge between "the agent claims it did the work" and "a payer
+should release funds."
 
 ## Product and current implementation
 
@@ -143,8 +148,11 @@ payer  → EIP-712 ReleaseAuthorization    (authority; insufficient alone)
 |---|---|---|---|
 | Axis Robotics | $12M seed (Hack VC, 2026) | Collection engine | No verification protocol or settlement |
 | PrismaX | $11M (a16z CSX, 2025) | Collection + teleop + models | Internal scoring, not on-chain verifiable |
-| RoboTrain (Virtuals) | Virtuals launch (2026) | Teleop + human scoring | Centralized 16-member grading; explicitly no crypto settlement |
+| RoboTrain (Virtuals) | Virtuals launch (2026) | Teleop + human scoring | Centralized grading; no crypto settlement per launch coverage |
 | GAEA / Vana / Fraction AI | various | Data DePIN / DAOs | No trajectory-anchored deterministic evaluation |
+
+Funding figures are from company announcements and press coverage (CoinDesk,
+company blogs); verify current figures before submission.
 
 Collection is funded; curation-plus-settlement is open. Our moat is the
 combination competitors structurally lack: a deterministic, reproducible
@@ -153,8 +161,10 @@ split that makes scores payable without making them payment instructions.
 
 ## Milestones
 
-Total duration ~12 weeks from grant award (assumed start 2026-09-21 for
-planning; dates shift with actual award date).
+Total duration ~13 weeks from grant award (assumed start 2026-09-21 for
+planning; dates shift with actual award date). All four milestones are
+already-specified components, which is what makes a solo founder's timeline
+credible.
 
 1. **M1 — Deploy EvaluationEscrow to Arc testnet + mainnet** with the frozen
    v1 spec; publish deployment manifest and verification evidence.
@@ -180,7 +190,7 @@ promise in Risks that no production fund flows precede the review.
 
 ## Budget / use of funds
 
-**Total ask: $25,000 over ~12 weeks** (founder-delegated sizing, 2026-09-20).
+**Total ask: $25,000 over ~13 weeks** (founder-delegated sizing, 2026-09-20).
 
 | Milestone | Amount | Share |
 |---|---|---|
@@ -226,7 +236,7 @@ outcomes, not only this one.
 - **Unaudited, undeployed settlement contract.** Mitigated by the frozen
   spec, 81-test coverage, and M4's external review before any production
   fund flows.
-- **Solo-founder execution risk.** Mitigated by the narrow 12-week scope and
+- **Solo-founder execution risk.** Mitigated by the narrow 13-week scope and
   by shipping only already-specified components.
 - **Evaluator centralization.** The current evaluator is a single
   deterministic component; decentralizing it is explicitly future work, and
