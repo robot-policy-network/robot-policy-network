@@ -10,8 +10,8 @@ claims are sourced in [`research-positioning-2026-09.md`](research-positioning-2
 ## One-line summary
 
 StonkRobotics (Robot Policy Network) is the trust and settlement layer for the
-machine economy on Arc: the first system where autonomous agents do verifiable
-work and get paid in USDC — with evaluation evidence and payment authorization
+machine economy on Arc: a system where autonomous agents do verifiable work
+and get paid in USDC — with evaluation evidence and payment authorization
 cryptographically separated so no score can ever move money by itself.
 
 ## Problem
@@ -21,12 +21,13 @@ priority use case is agentic economic activity. But there is a missing
 primitive at the center of that ambition: **how does a machine get paid for
 work without a human trusting the machine's word?**
 
-Every current answer fails in one of two ways. Agent-payment tools let agents
-*spend* USDC on a human's behalf — the human still decides. Escrow and oracle
-projects treat an unverified score as a payment instruction — so a manipulated
-or hallucinated result can move real money. Neither produces what a machine
-economy actually needs: **a payment that is triggered by proof of work, not by
-a claim of work.**
+Every current approach falls short. Agent-payment tools let agents *spend*
+USDC on a human's behalf — the human still decides. Escrow and oracle projects
+treat an unverified score as a payment instruction — so a manipulated or
+hallucinated result can move real money. Human review and manual escrow work,
+but they do not scale to machine-speed, high-frequency settlement. None of
+these produces what a machine economy actually needs: **a payment that is
+triggered by proof of work, not by a claim of work, at machine cadence.**
 
 The robot-AI side has the same hole. Collection is funded and commoditized —
 Axis Robotics raised a $12M seed (Hack VC, 2026) and PrismaX raised $11M
@@ -111,19 +112,21 @@ and every part of it compounds back into the Arc and Circle ecosystem.
   exist otherwise. As agent work scales, this is not a one-time integration —
   it is a growing transaction stream denominated natively in Arc USDC.
 
-- **A defensible reason the machine economy runs on Arc and nowhere else.**
-  The combination we need — a deterministic evaluator, a low-cost chain for
-  high-frequency signed records, and native USDC settlement with fast
-  finality — is only coherently available on Arc. On any other chain the
-  settlement leg requires a bridge or a wrapper. We are building a reason for
-  an entire category of machine-economic activity to be Arc-exclusive.
+- **A reason the machine economy is strongest on Arc.** The combination we
+  need — a deterministic evaluator, a low-cost chain for high-frequency
+  signed records, and native USDC settlement with fast finality — is most
+  coherently available on Arc. On other chains the settlement leg requires a
+  bridge or a wrapper, adding friction and trust assumptions. Building this
+  category natively on Arc makes it the natural home for machine-economic
+  activity.
 
-- **The reference implementation for a whole category.** The
+- **A reusable reference implementation for a whole category.** The
   evidence/authorization split is a general pattern any agentic-payments
   project on Arc will need: how do you pay for a verified outcome without
   letting the outcome-writer move money? Shipped open-source (MIT), our
-  `EvaluationEscrow` becomes the pattern others build on — which means more
-  projects on Arc, more USDC flow, and more developers reading Arc docs.
+  `EvaluationEscrow` is designed and offered as that reusable pattern —
+  lowering the barrier for the next teams, which means more projects on Arc,
+  more USDC flow, and more developers reading Arc docs.
 
 - **A concrete Agent Stack showcase.** M3 makes StonkRobotics a working,
   public demonstration of Circle Agent Stack powering real agent payments —
@@ -137,7 +140,7 @@ and every part of it compounds back into the Arc and Circle ecosystem.
 
 ## Why us and why now
 
-- **Why us:** the evaluation layer is already live and battle-tested on Arc
+- **Why us:** the evaluation layer is already live and operating on Arc
   mainnet, the settlement protocol is frozen with 81 passing tests, and the
   whole stack is open-source. We are past the idea stage; this grant funds
   deployment and integration, not research.
