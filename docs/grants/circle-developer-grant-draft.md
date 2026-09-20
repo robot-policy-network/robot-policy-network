@@ -41,7 +41,8 @@ between "the agent claims it did the work" and "a payer should release funds."
 
 ## Product and current implementation
 
-The live system closes this gap in three defensible layers.
+The live system addresses the first two layers today; this grant funds the
+third.
 
 **Layer 1 — Deterministic evaluation anchored to real robot trajectories
 (live).** Agents request a challenge at `https://stonkrobotics.xyz/skill/`
@@ -54,13 +55,24 @@ cannot be reverse-engineered. Scoring anchors simultaneously to
 executability (no hard violations) and alignment (path similarity to the
 hidden reference).
 
+**What "verifiable" means here — and what it does not.** Executability is
+independently checkable by anyone (the simulator is published and
+deterministic). The alignment score is a signed *claim* by the evaluator
+about a hidden reference; it is not a trustless computation. What the
+protocol adds is accountability rather than magic: the evaluator's
+attestation binds `planHash` and `resultHash` into a canonical, published
+preimage (spec §4), so any third party can recompute the hashes from the
+published plan and result and publicly flag a mismatch (spec §10). The chain
+records *who claimed what, immutably* — it does not pretend the claim is
+self-proving.
+
 **Layer 2 — On-chain verifiable records (live on Arc mainnet).** Passing
 scores are bound into EIP-712 vouchers (recipient, quantity, score, nonce,
 deadline) verified by the deployed contract
 (`0x6a3B12532F8e562f99e3292380e7f69D32e10B32`, chain ID 5042) with nonce
-replay protection and domain separation. Each verified record is a signed,
-attributable robot-policy performance datum — the raw material of curated
-training sets.
+replay protection and domain separation. These records are the signed,
+attributable performance *inputs* from which curated training assets
+(consensus labels, hard cases, reasoning traces — see roadmap) are derived.
 
 **Layer 3 — Evidence/authorization-split USDC settlement (specified, tested,
 not yet deployed).** The v1 settlement protocol (`docs/settlement-spec.md`,
@@ -71,11 +83,12 @@ insufficient alone). `release()` requires both. The `EvaluationEscrow`
 reference implementation passes 81 Foundry tests covering signature validity,
 domain separation, deadlines, expiry, and settlement paths.
 
-The three layers form a flywheel: agent committees answer trajectory-anchored
-tasks → deterministic reproducible scoring → on-chain verified records →
-curated data assets (consensus labels, hard cases, reasoning traces) →
-verified outcomes trigger milestone USDC release → better data attracts
-better agents.
+The three layers form a flywheel — the first three stages run today, the
+data-asset and settlement stages are the funded roadmap: agent committees
+answer trajectory-anchored tasks → deterministic reproducible scoring →
+on-chain verified records → *roadmap:* curated data assets (consensus labels,
+hard cases, reasoning traces) → verified outcomes trigger milestone USDC
+release → better data attracts better agents.
 
 ## Why Arc and why Circle
 
@@ -147,16 +160,23 @@ planning; dates shift with actual award date).
    v1 spec; publish deployment manifest and verification evidence.
    Due **2026-10-11** (3 weeks). — **$6,000**
 2. **M2 — End-to-end settlement demo**: agent challenge → verified outcome →
-   USDC release on Arc, with public transaction evidence.
+   USDC release on Arc, with public transaction evidence. The demo moves only
+   the founder's own USDC; **no external or user funds touch the contract
+   before M4 completes**.
    Due **2026-10-25** (2 weeks). — **$6,000**
 3. **M3 — Circle Agent Stack integration**: agents in the workflow operate
    with Circle-native agent payment capabilities
    `<CONFIRM PRODUCT CHOICE: Agent Stack recommended; swap to Wallets or
    Contracts if that matches the implementation better>`.
    Due **2026-11-22** (4 weeks). — **$8,000**
-4. **M4 — External security review** of the settlement contract, with
-   findings and fixes published.
-   Due **2026-12-13** (3 weeks). — **$5,000**
+4. **M4 — Independent security review** of the settlement contract (scoped
+   review contest or boutique firm, sized to the $5,000 budget), with
+   findings published and critical/high issues fixed before any third-party
+   funds are accepted. Due **2026-12-20** (4 weeks). — **$5,000**
+
+**Funding gate:** the contract accepts only founder-funded demo escrows until
+M4's review is published. This is the enforcement mechanism behind the
+promise in Risks that no production fund flows precede the review.
 
 ## Budget / use of funds
 
@@ -167,7 +187,11 @@ planning; dates shift with actual award date).
 | M1 deployment + verification evidence | $6,000 | 24% |
 | M2 end-to-end settlement demo | $6,000 | 24% |
 | M3 Circle product integration | $8,000 | 32% |
-| M4 external security review | $5,000 | 20% |
+| M4 independent security review | $5,000 | 20% |
+
+Budget basis: the $5,000 M4 line is sized to a scoped review contest or a
+boutique solo-reviewer engagement for a ~300-line, already-test-covered
+contract — not a top-tier firm audit, which the budget does not claim to buy.
 
 ## Success metrics
 
@@ -175,7 +199,9 @@ Conditional on grant award:
 
 - **100** verified agent outcomes recorded on Arc per month by 2026-12-31.
 - **25** end-to-end USDC settlements executed by 2027-01-31.
-- **5** unique paying counterparties by 2027-01-31.
+- **5** unique paying counterparties by 2027-01-31, sourced from the agent
+  teams already operating in Arc's ecosystem that need verifiable outcomes —
+  the M3 integration is the outreach channel for this commercial motion.
 - 100% of settlements backed by an on-chain verifiable attestation.
 
 ## Team and applicant information
@@ -208,6 +234,12 @@ outcomes, not only this one.
   (`setEvaluator` affects new jobs only).
 - **Marketplace is roadmap.** A general-purpose USDC escrow marketplace is
   not a live claim; this application funds only the settlement primitive.
+- **Scope disclosure.** The Arc deployment also hosts an ERC-721 collection
+  (`UnitreeG1Fleet`) and a separate ARCROBO token
+  (`0x90554cEaf18BD5545F4be6520a3077D327727297`). Both are distinct
+  subsystems, documented in the repository's README and limitations file;
+  they are not part of this proposal and are not required to use the
+  evaluation flow. They are disclosed here so diligence finds no surprises.
 
 ## Public links and deployment evidence
 
