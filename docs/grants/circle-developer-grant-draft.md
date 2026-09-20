@@ -1,9 +1,13 @@
 # Circle Developer Grant — Long-Form Application Draft
 
-**Status: DRAFT v2 (2026-09-20).** Every `<PLACEHOLDER>` must be replaced with
-founder-confirmed information before submission. All claims must comply with
-[`canonical-fact-sheet.md`](canonical-fact-sheet.md); market and competitor
-claims are sourced in [`research-positioning-2026-09.md`](research-positioning-2026-09.md).
+**Status: DRAFT v5 (2026-09-20).** Pre-submission checklist (all must be
+resolved before sending — see "Open items" at the end of this file). Every
+`<PLACEHOLDER>` must be replaced with founder-confirmed information. All
+claims must comply with [`canonical-fact-sheet.md`](canonical-fact-sheet.md);
+market and competitor claims are sourced in
+[`research-positioning-2026-09.md`](research-positioning-2026-09.md); traction
+figures are independently re-derivable from
+[`traction-evidence/`](traction-evidence/README.md).
 
 ---
 
@@ -343,4 +347,41 @@ outcomes, not only this one.
 - Deployment manifest: `deployments/arc-mainnet.json` (read-only RPC evidence, checked 2026-09-18)
 - Research & positioning memo: `docs/grants/research-positioning-2026-09.md`
 - Video / screenshots / deck: `<LINKS — only if they actually exist>`
+
+
+## Open items (must resolve before submission)
+
+| # | Item | Owner | Status |
+|---|---|---|---|
+| 1 | **M3 product choice** — Circle Agent Stack (recommended) vs Wallets vs Contracts. The portal asks for integration plans; leaving this undecided makes the $8,000 M3 line unfounded. | Founder | **Open — blocks submission** |
+| 2 | **Entity status** — applying as an individual with DBA "StonkRobotics"; Legal Entity Name = N/A. Confirm before signing. | Founder | Awaiting final confirm |
+| 3 | **Video / screenshots / deck links** — fill only with links that actually resolve. Do not invent hosting URLs. | Founder | Open (optional) |
+| 4 | **Evidence visibility on `main`** — the traction dataset currently lives on the `ci/install-foundry-dependencies` branch. `main` is a protected branch that requires an approving review; a PR is open. A reviewer landing on the default branch will not see the dataset until the PR merges. | Founder / repo admin | **Open — reviewer-visible issue** |
+| 5 | **Dataset provenance caveat** — the Filebase bucket that holds the source records is private (HTTP 403 to unauthenticated readers). Reviewers can verify the *export we published* (hashes, re-derived stats, on-chain receipts) but cannot independently re-pull the upstream bucket. The export's provenance therefore rests on our word plus the on-chain receipts. Stated here rather than hidden. | Founder | Known limitation |
+| 6 | **Circle portal fields** — business details, integration plan, proposed milestones. The long-form draft is ready but has not yet been transcribed into `circle.com/grant`. | Founder | Not started |
+
+## Appendix A — adversarial self-review log
+
+This draft has been through five review passes. Findings and resolutions:
+
+1. **v2 → v3 (adversarial reviewer pass).** Fixed: "verifiable" vs hidden-rubric
+   contradiction (resolved with an explicit two-tier verifiability model);
+   "the live system closes the gap" overclaim; present-tense curated-data
+   claims; M4 budget not credible at $5k/3 weeks (resized + basis stated);
+   M2 vs Risks contradiction (resolved with a funding gate); ARCROBO
+   non-disclosure.
+2. **v3 → v4 (live-link audit).** Every citation was fetched. Removed three
+   arXiv IDs that did not resolve; replaced with DataMIL (arXiv 2505.09603,
+   verified 200) and DROID (arXiv 2403.12945, verified 200). PrismaX/Axis
+   deep links dropped in favour of coverage attribution. Fixed the 12-week
+   vs M4-date arithmetic inconsistency (13 weeks).
+3. **v4 → offensive pass.** Added "What Arc and Circle gain" and "Why us and
+   why now"; rewrote the moat as three compounding layers.
+4. **v4 → v5 (absolute-claim purge).** Removed "the first system", "and
+   nowhere else", "battle-tested", "becomes the pattern others build on",
+   and the false dichotomy in the Problem section.
+5. **v5 → traction evidence.** Replaced asserted traction with 492 published
+   records and a re-runnable verification script; corrected the participant
+   count from 93 → 91 after finding the protocol's own `poiSigner` address
+   and a placeholder address mixed into the raw records.
 

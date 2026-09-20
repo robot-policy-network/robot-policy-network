@@ -27,12 +27,16 @@
     "avgFailScore": 13.7,
     "uniqueMissions": 64
   },
-  "recordsByDay": {
-    "2026-08-17": 1,
-    "2026-08-29": 1,
+  "scoredByDay": {
     "2026-09-02": 15,
     "2026-09-03": 343,
-    "2026-09-04": 132
+    "2026-09-04": 125
   },
+  "receiptsByDay": {
+    "2026-08-17": 1,
+    "2026-08-29": 1,
+    "2026-09-04": 7
+  },
+  "noteOnEarlyRecords": "The 2 pre-launch records (08-17, 08-29) are on-chain receipts from founder end-to-end tests, not scored participant rounds. They are published unmodified for completeness. All 483 scored rounds fall in 09-02..09-04.",
   "verification": "bash verify.sh re-hashes every record against manifest.json and re-derives these figures from the raw records"
 }
