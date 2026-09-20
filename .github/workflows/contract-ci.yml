@@ -70,3 +70,23 @@ jobs:
           fi
           grep -q "evaluator must differ from owner" /tmp/guard.log
           echo "deploy script smoke test passed"
+
+      # Runs a complete settlement on a local chain: deploys the contract,
+      # funds a job, verifies an attestation, and releases USDC. This is the
+      # executable M1/M2 claim — it proves the path, not just the pieces.
+      - name: End-to-end settlement smoke test (anvil)
+        run: |
+          set -euo pipefail
+          anvil --silent &
+          ANVIL_PID=$!
+          trap 'kill $ANVIL_PID' EXIT
+          for i in $(seq 1 30); do
+            curl -sf -X POST -H 'Content-Type: application/json' \
+              --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
+              http://127.0.0.1:8545 >/dev/null && break
+            sleep 1
+          done
+          EVALUATOR_PK=0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d \
+          PAYER_PK=0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a \
+            forge script script/EndToEndSettlement.s.sol \
+              --rpc-url http://127.0.0.1:8545 --broadcast
