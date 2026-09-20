@@ -33,6 +33,14 @@ collection layer is commoditized.
 aggregation (1979), Query-by-Committee active learning, CoT reasoning-trace
 distillation (DeepSeek-R1 style).
 
+**Verified citable anchor (2026-09-20): DataMIL** (Dass, Khaddaj, Engstrom,
+Madry, Ilyas, Martín-Martín — MIT; arXiv 2505.09603, submitted May 2025).
+Performance-aware data selection via datamodels; naive selection can actively
+*harm* downstream success rates; validated on 60+ sim + real manipulation
+tasks against Open X-Embodiment. This is the citation now used in the
+application — real, resolvable, and its argument (quality over quantity in
+robot imitation data) is exactly the one the narrative needs.
+
 ## 2. Industrial landscape: collection is funded, curation+settlement is open
 
 | Player | Raise | Layer | Key gap vs us |
@@ -111,6 +119,7 @@ link. Results:
 | explorer.arc.io/address/0x6a3B… | **200 OK** (browser UA) | Keep — cite as live |
 | github.com/robot-policy-network/robot-policy-network | **200 OK** | Keep |
 | arxiv.org/abs/2403.12945 (DROID) | **200 OK** | Keep — safe citation |
+| arxiv.org/abs/2505.09603 (DataMIL) | **200 OK** | **Now used in the application** — the resolvable curation citation |
 | arxiv.org/abs/2607.06442 (SIEVE) | 502 / unresolvable | **Do NOT cite by ID in the application**; use qualitative claim + re-pin a resolvable citation pre-submission |
 | arxiv.org/abs/2604.15546 (ATHENA) | 502 / unresolvable | Same — keep in memo only |
 | arxiv.org/abs/2511.13406 (RoboDrop) | 502 / unresolvable | Same — keep in memo only |

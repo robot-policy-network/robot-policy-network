@@ -28,12 +28,13 @@ X-Embodiment (2023) already publish over a million raw trajectories. Raw data
 is abundant.
 
 **Academia shows the bottleneck is shifting from collection to curation.**
-Recent work on demonstration selection for VLA imitation learning (e.g.
-structure-aware selection methods reporting that roughly half the data can
-match or beat full-data training) indicates that more data does not reliably
-yield better policies; better-selected data does. `<FINAL PRE-SUBMISSION
-CHECK: pin one specific, currently-resolvable arXiv citation here — verify
-the ID resolves before sending>`
+DataMIL (Dass et al., MIT; arXiv 2505.09603) demonstrates that
+performance-aware data selection for robot imitation learning beats naive
+use of large prior datasets — and that naive selection can actively *harm*
+downstream success rates. Validated on 60+ simulation and real-world tasks
+against Open X-Embodiment, it shows the value is no longer in amassing raw
+demonstrations but in selecting the right ones. More data does not reliably
+yield better policies; better-selected data does.
 
 **Yet the intersection of curation and settlement is thin.** RoboTrain
 (Virtuals Protocol, 2026) validates scoring-as-a-product but relies on a
