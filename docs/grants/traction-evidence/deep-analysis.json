@@ -1,0 +1,134 @@
+{
+  "total": 65138,
+  "A_roundsDistribution": {
+    "1": 3,
+    "2-10": 11,
+    "11-50": 1,
+    "51-200": 19,
+    "201-500": 174,
+    "500+": 9
+  },
+  "A_top10Addresses": [
+    1381,
+    1368,
+    1365,
+    1352,
+    836,
+    829,
+    803,
+    665,
+    549,
+    445
+  ],
+  "A_top10VolumeSharePct": 14.7,
+  "A_top25VolumeSharePct": 24.3,
+  "B_newAddressesPerDay": {
+    "2026-09-16": 208,
+    "2026-09-17": 9
+  },
+  "C_addressesByDaysActive": {
+    "1": 15,
+    "2": 1,
+    "3": 22,
+    "4": 56,
+    "5": 123
+  },
+  "D_hourOfDayUTC": [
+    4487,
+    2745,
+    2548,
+    2747,
+    2502,
+    2397,
+    1995,
+    1680,
+    1319,
+    1096,
+    1058,
+    1287,
+    1406,
+    1338,
+    564,
+    2689,
+    3752,
+    3439,
+    3199,
+    4782,
+    4676,
+    4809,
+    4611,
+    4012
+  ],
+  "E_answers": {
+    "distinctAnswers": 51058,
+    "reusedAnswers_multiSubmission": 5008,
+    "crossAddressReused": 4508,
+    "maxDistinctAddressesSharingOneAnswer": 9
+  },
+  "F_answerLength": {
+    "mean": 1638,
+    "median": 1681,
+    "min": 15,
+    "max": 6483
+  },
+  "G_plans": {
+    "parsed": 65133,
+    "avgOpsPerPlan": 38.1,
+    "opTypes": {
+      "navigate": 2135108,
+      "cut": 171008,
+      "transport": 171006,
+      "wait": 3630,
+      "grip": 6
+    }
+  },
+  "H_scoreHistogram": {
+    "100": 1757,
+    "90-99": 61883,
+    "80-89": 1403,
+    "70-79": 55,
+    "60-69": 4
+  },
+  "H_perfect100s": 1757,
+  "I_topMissions": [
+    [
+      "traj-real-67",
+      2919
+    ],
+    [
+      "traj-syn-06",
+      2821
+    ],
+    [
+      "traj-real-31",
+      2162
+    ],
+    [
+      "traj-syn-20",
+      1924
+    ],
+    [
+      "traj-syn-12",
+      1883
+    ],
+    [
+      "traj-real-65",
+      1758
+    ]
+  ],
+  "I_missionCount": 67,
+  "J_tiers": {
+    "Elite": 20646,
+    "Legendary": 44351,
+    "Rare": 101,
+    "Standard": 40
+  },
+  "J_free": 64975,
+  "J_priority": 0,
+  "N_windows": {
+    "windowSec": 3600,
+    "windowsWithActivity": 80,
+    "medianAddressesPerWindow": 121,
+    "maxAddressesPerWindow": 207
+  }
+}

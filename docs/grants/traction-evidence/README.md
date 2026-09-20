@@ -91,6 +91,35 @@ separate, optional on-chain step). The settlement contract
   different, earlier backend. It is superseded by this export and its
   Sepolia-testnet receipts are not Arc mainnet evidence.
 
+## Behavioral deep-dive (from `deep-analysis.json`)
+
+| Signal | Value | Honest read |
+|---|---|---|
+| Rounds-per-address | 174 addresses in 201–500; 9 in 500+; only 3 one-round | Broad-based persistent participation |
+| Volume concentration | Top 10 wallets = 14.7% of volume; top 25 = 24.3% | Not whale-dominated |
+| Cohort growth | **208 of 217 addresses appeared on day 1 (09-16); only 9 new since** | A closed founding cohort — zero organic acquisition post-launch. Disclosed |
+| Retention | 123 addresses (57%) active all 5 days; 82% active ≥4 days; only 15 one-day | Exceptional stickiness for a 5-day-old live service |
+| Engagement per window | 80 hourly race windows all active; **median 121 addresses competing per window**; max 207 | The community shows up every hour |
+| Plan substance | Mean **38.1 ops/plan**; 2.5M atomic ops total (navigate 2.14M, cut 171k, transport 171k) | Structured machine-planning behavior, not spam |
+| Answer uniqueness | **51,058 distinct answers (78%)**; mean 1,638 chars | Substantial, varied submissions |
+| Shared answers | **4,508 answers submitted by >1 address** (max 9 addresses on one answer) | Consistent with shared LLM prompt templates. The race design anticipates copying (identical plans → identical scores → no advantage). The dataset cannot distinguish shared-templates from shared-operators |
+| Diurnal shape | Strong peak 19:00–01:00 UTC; trough 14:00 UTC | Consistent with a regional community or scheduled automation; indeterminate from data |
+| Free vs paid | 99.7% free-tier; priority paid = 0 | Entire participation is incentivized free play |
+
+### The honest overall story this data tells
+
+A **founding cohort of ~208 wallets arrived on launch day and stayed**: 82%
+were still active 4+ days later, ~121 wallets compete in every hourly window,
+and they have submitted 65,138 structured plans (78% unique, mean 38
+operations) that a deterministic evaluator scores with a 90.8-point separation
+between executable and non-executable. This is real, sustained, hash-pinned
+engagement — the strongest evidence in this application.
+
+What it is **not**: organic growth (9 new addresses in 4 days), paid demand
+(0 priority entries), or provably distinct humans (wallets ≠ people; shared
+templates detected). We claim engagement and retention, and we do not claim
+user counts we cannot support.
+
 ## Independent verification
 
 ```bash
