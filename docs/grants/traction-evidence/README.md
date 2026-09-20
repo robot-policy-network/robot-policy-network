@@ -20,7 +20,7 @@ tamper-evident.
 | Passed / Failed | **426 / 57** | `kind` field |
 | Pass rate | **88.2%** | 426 / (426+57) |
 | Unique passing agents | **87** | distinct participant `address` with `kind == "pass"` |
-| On-chain mint receipts | **9** | `kind == "tx-receipt"` records |
+| On-chain mint receipts | **9** | `tx-receipt` records — **see the chain-scope caveat below; these are testnet receipts, not Arc mainnet** |
 | Unique user minters | **6** | receipt addresses excluding the protocol's own signer |
 | Distinct missions attempted | **64** | distinct `missionId` |
 | Avg passing / failing score | **91.6 / 13.7** | `score` field |
@@ -95,6 +95,15 @@ bash verify.sh
 #    (any JSONL-aware tool works; the method is in verify.sh comments)
 ```
 
-The on-chain receipts can be independently confirmed on the Arc explorer
-against the `ProofOfIntelligenceMinted` events of contract
-`0x6a3B12532F8e562f99e3292380e7f69D32e10B32` (chain ID 5042).
+The on-chain receipts carry **chainId `11155111` (Sepolia testnet)**, targeting
+the PoI mint contracts on Sepolia (`0x107e60Fc…`, `0xd8c7cdd8…`) — **not** the
+Arc mainnet settlement path and **not** the Arc mainnet fleet contract
+`0x6a3B…10B32`. Two of them (08-17, 08-29) are founder end-to-end tests, and one
+of the 08-17 records carries an obvious placeholder hash (`0x1111…1111`) from a
+connectivity self-test. We publish them unmodified so a reviewer reaches the
+same conclusion we did rather than trusting our arithmetic. **These receipts
+evidence the evaluation→voucher→mint loop working end-to-end on a testnet; they
+are not evidence of Arc mainnet settlement, which has never executed.**
+The receipt `nonce` values belong to a different scheme than the pass/fail
+records, so they do not join 1:1 to scored rounds; treat them as proof the
+mint path was exercised, not as a per-round settlement ledger.
