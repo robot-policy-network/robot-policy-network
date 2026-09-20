@@ -23,7 +23,7 @@ this document. Re-derive it. Every figure below has a stated verification path.
 | 7 | The program's first official priority ("agentic economic activity") is our direct fit | `application-matrix.md` records official parameters | Visit `circle.com/grant` and the 2026-05-14 relaunch post | **True** |
 | 8 | Robotics research indicates data quality and curation are important bottlenecks; this project tests whether verified evaluation improves that layer | `research-positioning-2026-09.md` | Resolve arXiv 2505.09603 (DataMIL) and 2403.12945 (DROID) | **Citations verified 2026-09-20. The citations support the *importance of curation*, not that this project has solved it** |
 | 9 | Traction window is 2026-08-17 → 2026-09-04 | `SUMMARY.json` → `scoredByDay` / `receiptsByDay` | Check the `ts` fields in `records/` | **Recomputable from the published export; source provenance remains self-attested** |
-| 10 | 9 on-chain mint receipts exist in the dataset | `records/tx-receipt/` | Count files; cross-check `nonce` in chain logs | **Recomputable from the published export** |
+| 10 | 9 mint receipts exist in the dataset, **all on Sepolia testnet** (chainId 11155111), not Arc mainnet | `records/tx-receipt/` | Count files; note chainId and target contracts are Sepolia PoI mint contracts, NOT `0x6a3B…` on 5042 | **Recomputable from the export — but these evidence the testnet mint loop, not Arc settlement (which has never executed)** |
 
 ### Dataset layers — read this before quoting any number
 
@@ -35,7 +35,7 @@ The counts below answer different questions. Quoting "492" as participants, or
 | Raw exported objects | **493** | Everything in the bucket, including one founder self-test |
 | Scored rounds | **483** | `pass` + `fail` records (426 + 57); excludes self-test |
 | Pass / Fail | **426 / 57** | Scored rounds by outcome; 88.2% pass rate |
-| On-chain mint receipts | **9** | `tx-receipt` records; a *separate* step from scoring (2 are founder end-to-end tests, 1 is the protocol's own signer) |
+| On-chain mint receipts | **9** | `tx-receipt` records; a *separate* step from scoring, **all on Sepolia testnet** (2 founder end-to-end tests — one with a placeholder hash — and 1 the protocol's own signer) |
 | Unique participant addresses | **91** | Distinct addresses with ≥1 scored round, excluding 2 known non-user addresses |
 | Unique missions | **64** | Distinct `missionId` values |
 | Window | 2026-08-17 → 2026-09-04 | All 483 scored rounds fall on 09-02..09-04; the 2 pre-launch records are receipts |
@@ -48,9 +48,10 @@ Ranked by how much damage they do if a reviewer hits them cold.
    private (403 to unauthenticated GET). You can verify the published export
    (SHA-256 manifest, re-derived stats, on-chain receipts) but you cannot
    independently re-pull the source bucket and confirm it produced this
-   export. The chain receipts are the only independently-anchored slice.
-   *Probe:* the hash chain proves the export is unmodified since publication;
-   it does not prove the records describe real agent runs.
+   export. The chain receipts are the only independently-anchored slice — and
+   even they are **Sepolia testnet** receipts, not Arc mainnet. *Probe:* the
+   hash chain proves the export is unmodified since publication; it does not
+   prove the records describe real agent runs.
 
 2. **A few records are pre-launch, and some arrive in sub-second bursts.**
    Two pre-launch records (08-17, 08-29) are founder end-to-end receipts, not
