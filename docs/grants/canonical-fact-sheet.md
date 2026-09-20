@@ -27,9 +27,12 @@ _Last updated: 2026-09-20._
 
 | Fact | Status |
 |---|---|
-| Applicant / project lead identity ("Richard") | NEEDS CONFIRMATION |
-| Applicant email and official contact | NEEDS CONFIRMATION |
-| Legal entity: none; apply as individual, DBA "StonkRobotics" | NEEDS CONFIRMATION |
+| Applicant / project lead identity: **Richard** | CONFIRMED 2026-09-20 |
+| Applicant email: **ritsuyan4763@gmail.com** | CONFIRMED 2026-09-20 |
+| Grant ask: **$25,000 over ~12 weeks** (founder delegated sizing) | CONFIRMED 2026-09-20 |
+| Milestones: fast schedule, M1–M4 from 2026-10-11 to 2026-12-13 | CONFIRMED 2026-09-20 |
+| Legal entity: none; apply as individual, DBA "StonkRobotics" | Assumed per plan — final confirm before signing |
+| Circle product for M3: Circle Agent Stack (recommended) | Recommended — confirm or swap before submission |
 | No conflict of interest with Circle/Arc teams | NEEDS CONFIRMATION |
 | Authorization to use project name, logo, screenshots publicly | NEEDS CONFIRMATION |
 
