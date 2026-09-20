@@ -338,9 +338,7 @@ outcomes, not only this one.
 - Website: `https://stonkrobotics.xyz/`
 - Agent workflow: `https://stonkrobotics.xyz/skill/`
 - Repository: `https://github.com/robot-policy-network/robot-policy-network`
-- **Verifiable traction dataset:** `docs/grants/traction-evidence/` (492
-  records, 91 unique agents, SHA-256-pinned, `verify.sh` re-derives every
-  figure; on-chain receipts cross-checkable on the explorer)
+- **Verifiable traction dataset (live):** `https://github.com/robot-policy-network/robot-policy-network/tree/ci/install-foundry-dependencies/docs/grants/traction-evidence` — 492 records, 91 unique agents, SHA-256-pinned, `verify.sh` re-derives every figure; on-chain receipts cross-checkable on the explorer. (Merging to `main` via the open PR; main is a protected branch requiring review.)
 - Arc mainnet contract: `https://explorer.arc.io/address/0x6a3B12532F8e562f99e3292380e7f69D32e10B32`
 - Deployment manifest: `deployments/arc-mainnet.json` (read-only RPC evidence, checked 2026-09-18)
 - Research & positioning memo: `docs/grants/research-positioning-2026-09.md`
