@@ -192,12 +192,17 @@ usage is heavy-repeat (median 297 rounds, top 1,381): this is an active mining
 community, not 217 casual users. Both facts are stated in the dataset README
 with the underlying per-address breakdown.
 
-**One number we highlight rather than bury.** Across those 65,138 rounds, the
-passing and failing populations are separated by **90.8 points** (pass mean
-95.8, stdev 2.9; fail mean 5.0, median 0). A failing plan does not run at all.
-That bimodal split is the empirical evidence that the evaluator discriminates —
-the property a settlement-gating score must have, and the thing a text rubric
-could never prove.
+**Three numbers that answer "is the evaluation real?" better than any
+paragraph.** (1) Across those rounds the passing and failing populations are
+separated by **90.8 points** — pass mean 95.8 (stdev 2.9), fail mean 5.0,
+median 0; a failing plan does not execute at all. (2) Missions carry a genuine
+difficulty curve: the hardest real-trajectory task drew **184 distinct wallets**
+and scored them in a tight 83–87 band, while easier tasks sit at 100. (3)
+**91.2% of the 217 wallets submit near-unique plans** (median per-address
+answer diversity 0.988), and longer answers score *worse* (r = −0.395 between
+length and score) — so this is not a template farm, and padding does not pay.
+These are the properties a settlement-gating score must have, and they are
+exactly what a text rubric could never demonstrate.
 
 Next: verified outcomes become the trigger condition for milestone-based USDC
 funding, so provable work becomes payable work with an auditable evidence

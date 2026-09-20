@@ -1,0 +1,187 @@
+{
+ "operatorIndependence": {
+  "addressesAnalyzed": 217,
+  "answerDiversityMedian": 0.988,
+  "answerDiversityMean": 0.936,
+  "addressesWithDiversity_ge_0_9": 198,
+  "addressesWithDiversity_lt_0_5": 12,
+  "pctHighDiversity": 91.2
+ },
+ "cadence": {
+  "medianGapBetweenOwnSubmissionsSec": 541,
+  "p10GapSec": 455,
+  "p90GapSec": 616
+ },
+ "skill": {
+  "meanScoreSpreadAcrossAddresses": {
+   "min": 29.3,
+   "max": 97.8
+  },
+  "addressesWithZeroPerfect": 21,
+  "perfect100Achievers": 196,
+  "topByScore": [
+   {
+    "a": "0x972ba380",
+    "rounds": 1381,
+    "answerDiversity": 0.088,
+    "meanScore": 97.8,
+    "sdScore": 2.7,
+    "best": 100,
+    "perfect": 272,
+    "missions": 39,
+    "medianGapSec": 26
+   },
+   {
+    "a": "0x14a4b4f4",
+    "rounds": 1352,
+    "answerDiversity": 0.084,
+    "meanScore": 97.8,
+    "sdScore": 3.1,
+    "best": 100,
+    "perfect": 272,
+    "missions": 39,
+    "medianGapSec": 27
+   },
+   {
+    "a": "0xaaccda34",
+    "rounds": 1365,
+    "answerDiversity": 0.094,
+    "meanScore": 97.8,
+    "sdScore": 2.6,
+    "best": 100,
+    "perfect": 271,
+    "missions": 39,
+    "medianGapSec": 26
+   },
+   {
+    "a": "0x2e019a7e",
+    "rounds": 1368,
+    "answerDiversity": 0.098,
+    "meanScore": 97.8,
+    "sdScore": 2.6,
+    "best": 100,
+    "perfect": 271,
+    "missions": 39,
+    "medianGapSec": 26
+   },
+   {
+    "a": "0xa6d98c83",
+    "rounds": 836,
+    "answerDiversity": 0.423,
+    "meanScore": 97.1,
+    "sdScore": 2.5,
+    "best": 100,
+    "perfect": 3,
+    "missions": 53,
+    "medianGapSec": 37
+   },
+   {
+    "a": "0xb4d122b0",
+    "rounds": 803,
+    "answerDiversity": 0.421,
+    "meanScore": 97.1,
+    "sdScore": 2.5,
+    "best": 100,
+    "perfect": 3,
+    "missions": 51,
+    "medianGapSec": 37
+   },
+   {
+    "a": "0xc50488dc",
+    "rounds": 665,
+    "answerDiversity": 0.45,
+    "meanScore": 97,
+    "sdScore": 2.8,
+    "best": 100,
+    "perfect": 6,
+    "missions": 50,
+    "medianGapSec": 37
+   },
+   {
+    "a": "0x2290ae4a",
+    "rounds": 829,
+    "answerDiversity": 0.425,
+    "meanScore": 97,
+    "sdScore": 2.5,
+    "best": 100,
+    "perfect": 3,
+    "missions": 52,
+    "medianGapSec": 37
+   }
+  ]
+ },
+ "missionDifficulty": {
+  "easiest3": [
+   {
+    "id": "traj-syn-05",
+    "n": 56,
+    "mean": 100,
+    "min": 100,
+    "max": 100,
+    "addresses": 4
+   },
+   {
+    "id": "traj-syn-13",
+    "n": 547,
+    "mean": 100,
+    "min": 100,
+    "max": 100,
+    "addresses": 4
+   },
+   {
+    "id": "traj-real-19",
+    "n": 440,
+    "mean": 100,
+    "min": 100,
+    "max": 100,
+    "addresses": 4
+   }
+  ],
+  "hardest3": [
+   {
+    "id": "traj-real-80",
+    "n": 13,
+    "mean": 78.9,
+    "min": 68,
+    "max": 89,
+    "addresses": 3
+   },
+   {
+    "id": "traj-real-81",
+    "n": 1150,
+    "mean": 86.7,
+    "min": 83,
+    "max": 87,
+    "addresses": 184
+   },
+   {
+    "id": "traj-real-11",
+    "n": 676,
+    "mean": 90.7,
+    "min": 88,
+    "max": 92,
+    "addresses": 75
+   }
+  ],
+  "totalMissions": 67
+ },
+ "realVsSynthetic": {
+  "trajReal": {
+   "n": 48203,
+   "mean": 95.3
+  },
+  "trajSyn": {
+   "n": 16935,
+   "mean": 96.9
+  },
+  "other": {
+   "n": 0,
+   "mean": 0
+  }
+ },
+ "lengthVsScoreCorrelation": -0.395,
+ "hardMode": {
+  "n": 5126,
+  "meanScore": 98
+ }
+}

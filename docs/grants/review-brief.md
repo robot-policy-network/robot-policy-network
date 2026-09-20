@@ -255,11 +255,13 @@ Ranked by impact per unit of effort:
 
 | Document | Purpose |
 |---|---|
+| `traction-highlights.md` | **One-page evidence dossier** — the strongest verifiable numbers, with counterweights on the same page |
+| `traction-evidence/README.md` | The dataset, its integrity model, behavioral deep-dive, and probe caveats |
+| `traction-evidence/deep-analysis.json` + `deep-analysis-2.json` | Raw analysis outputs (participation, cohort, retention, diversity, difficulty, correlations) |
 | `../whitepaper.md` | Full protocol write-up with honest status table |
 | `../evaluation-reproducibility.md` | L0/L1/L2 verifiability analysis + L2 proposal |
 | `../security/red-team-findings.md` | Self-disclosed findings, incl. the gameable rubric |
-| `traction-evidence/README.md` | The dataset and how to re-derive it |
-| `traction-attribution-template.md` | Template for the 91-agent attribution answer |
+| `traction-attribution-template.md` | Template for the 217-address attribution answer |
 | `launch-content.md` | Community/X/directory/integration drafts |
 | `circle-developer-grant-draft.md` | The application itself (v5) |
 | `canonical-fact-sheet.md` | Claim governance: verified / confirmed / planned / do-not-claim |
