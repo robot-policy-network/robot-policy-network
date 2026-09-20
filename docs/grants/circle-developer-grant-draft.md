@@ -192,6 +192,13 @@ usage is heavy-repeat (median 297 rounds, top 1,381): this is an active mining
 community, not 217 casual users. Both facts are stated in the dataset README
 with the underlying per-address breakdown.
 
+**One number we highlight rather than bury.** Across those 65,138 rounds, the
+passing and failing populations are separated by **90.8 points** (pass mean
+95.8, stdev 2.9; fail mean 5.0, median 0). A failing plan does not run at all.
+That bimodal split is the empirical evidence that the evaluator discriminates —
+the property a settlement-gating score must have, and the thing a text rubric
+could never prove.
+
 Next: verified outcomes become the trigger condition for milestone-based USDC
 funding, so provable work becomes payable work with an auditable evidence
 trail, and each settlement simultaneously produces a curated training-data
