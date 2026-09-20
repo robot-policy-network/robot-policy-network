@@ -35,7 +35,7 @@ Always verify the current network and asset configuration before signing a trans
 
 `EvaluationEscrow` holds USDC for a job and releases it only when an
 evaluator-signed attestation **and** a payer-signed release authorization both
-validate. It is specified and tested (81 Foundry tests) but **not deployed** —
+validate. It is specified and tested (85 Foundry tests) but **not deployed** —
 see [`settlement-spec.md`](settlement-spec.md) and [`limitations.md`](limitations.md).
 
 The deployment is scripted in

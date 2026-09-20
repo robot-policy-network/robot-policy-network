@@ -20,7 +20,7 @@ _Last updated: 2026-09-20._
 | ARCROBO token: `0x90554cEaf18BD5545F4be6520a3077D327727297` | Arc explorer |
 | Arc-native USDC address: `0x3600000000000000000000000000000000000000` | `deployments/arc-mainnet.json` |
 | Live flow: challenge → mission plan → reproducible score → EIP-712 voucher → on-chain verification/recording | Contract source + live workflow |
-| `EvaluationEscrow` v1 spec frozen (`SPEC_VERSION = 1`), 81 passing Foundry tests | `docs/settlement-spec.md`, `forge test` in CI |
+| `EvaluationEscrow` v1 spec frozen (`SPEC_VERSION = 2`), 85 passing Foundry tests | `docs/settlement-spec.md`, `forge test` in CI |
 | Evaluation evidence and payment authorization are separate EIP-712 artifacts | `docs/settlement-spec.md` §1 |
 
 ## Founder-confirmed (not independently verifiable; user must reconfirm before use)

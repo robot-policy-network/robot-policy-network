@@ -543,12 +543,44 @@ contract EvaluationEscrowTest is Test {
     function test_Release_RevertsOnScoreBelowPassScore() public {
         uint256 jobId = _createJob();
         uint256 below = PASS_SCORE - 1;
-        bytes memory attestation = _attestationSig(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 1, deadline);
-        escrow.verifyResult(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 1, deadline, attestation);
+        // v2: status must be consistent with the score (§4.2), so a
+        // below-threshold result is attested as `failed`, not as `passed`.
+        bytes memory attestation = _attestationSig(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 2, deadline);
+        escrow.verifyResult(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 2, deadline, attestation);
 
         bytes memory sig = _releaseSig(jobId, provider, AMOUNT, RESULT_HASH);
         vm.expectRevert("ResultNotPassed");
         escrow.release(jobId, provider, AMOUNT, RESULT_HASH, sig);
+    }
+
+    /// @dev v2: the v1 contract accepted a `passed` attestation with a
+    ///      below-threshold score, leaving the inconsistency to be resolved at
+    ///      release time. verifyResult now rejects it outright.
+    function test_VerifyResult_RevertsOnPassedStatusWithFailingScore() public {
+        uint256 jobId = _createJob();
+        uint256 below = PASS_SCORE - 1;
+        bytes memory attestation = _attestationSig(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 1, deadline);
+        vm.expectRevert("StatusMismatch");
+        escrow.verifyResult(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 1, deadline, attestation);
+    }
+
+    /// @dev v2: the inverse inconsistency — a `failed` attestation carrying a
+    ///      passing score would previously have been releasable on the score
+    ///      alone, which is exactly the hole an external review identified.
+    function test_VerifyResult_RevertsOnFailedStatusWithPassingScore() public {
+        uint256 jobId = _createJob();
+        bytes memory attestation = _attestationSig(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, 95, 2, deadline);
+        vm.expectRevert("StatusMismatch");
+        escrow.verifyResult(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, 95, 2, deadline, attestation);
+    }
+
+    /// @dev v2: consistency holds at the boundary too.
+    function test_VerifyResult_AcceptsFailedStatusExactlyBelowPassScore() public {
+        uint256 jobId = _createJob();
+        uint256 below = PASS_SCORE - 1;
+        bytes memory attestation = _attestationSig(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 2, deadline);
+        escrow.verifyResult(jobId, TASK_HASH, PLAN_HASH, RESULT_HASH, below, 2, deadline, attestation);
+        assertEq(escrow.getJob(jobId).score, below);
     }
 
     function test_Release_AcceptsScoreExactlyAtPassScore() public {
@@ -755,10 +787,11 @@ contract EvaluationEscrowTest is Test {
         assertEq(usdc.balanceOf(payer), 1_000e6);
     }
 
-    /// @dev A passing result the payer never authorizes still falls back to the
-    ///      payer — but only after the deadline. A provider is never paid and
-    ///      then clawed back.
-    function test_RefundExpired_FromResultVerified_PassedButUnsigned() public {
+    /// @dev v2: a verified PASSING result can never be refunded — not by a
+    ///      stranger, not by the payer. Under v1 this exact sequence clawed back
+    ///      a provider's earned payment after the deadline. The payer's remedy
+    ///      is `release`, which remains available at any time.
+    function test_RefundExpired_RevertsOnPassedVerifiedJob() public {
         uint256 jobId = _createJob();
         _verifyPassing(jobId);
 
@@ -766,9 +799,29 @@ contract EvaluationEscrowTest is Test {
         escrow.refundExpired(jobId);
 
         vm.warp(uint256(deadline) + 1);
+        vm.expectRevert("ResultPassed");
         escrow.refundExpired(jobId);
-        assertEq(usdc.balanceOf(payer), 1_000e6);
-        assertEq(usdc.balanceOf(provider), 0);
+
+        // The payer's authority survives the deadline: release still works.
+        bytes memory sig = _releaseSig(jobId, provider, AMOUNT, RESULT_HASH);
+        escrow.release(jobId, provider, AMOUNT, RESULT_HASH, sig);
+        assertEq(usdc.balanceOf(provider), AMOUNT);
+        assertEq(usdc.balanceOf(payer), 1_000e6 - AMOUNT);
+    }
+
+    /// @dev v2: documents that release is deliberately NOT deadline-gated. The
+    ///      payer signed the release; the protocol honors it whenever it lands.
+    ///      (v1 also allowed this, but v1 additionally allowed anyone to
+    ///      refund the same job after the deadline — a race this test's
+    ///      sibling now proves is closed.)
+    function test_Release_AfterDeadline_PaysPassedProvider() public {
+        uint256 jobId = _createJob();
+        _verifyPassing(jobId);
+
+        vm.warp(uint256(deadline) + 30 days);
+        bytes memory sig = _releaseSig(jobId, provider, AMOUNT, RESULT_HASH);
+        escrow.release(jobId, provider, AMOUNT, RESULT_HASH, sig);
+        assertEq(usdc.balanceOf(provider), AMOUNT);
     }
 
     function test_RefundExpired_IsPermissionlessButPaysPayer() public {

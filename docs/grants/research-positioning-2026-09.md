@@ -69,7 +69,7 @@ Three layers, each defensible:
    protection, domain-separated from the settlement contract. **Live on Arc
    mainnet (chain 5042).**
 3. **Evidence/authorization-split USDC settlement** — `EvaluationEscrow`
-   (frozen SPEC_VERSION 1, 81 tests): an `EvaluationAttestation` can never
+   (frozen SPEC_VERSION 2, 85 tests): an `EvaluationAttestation` can never
    move funds; a `ReleaseAuthorization` alone is insufficient; `release()`
    requires both. **Specified + tested, not yet deployed.**
 

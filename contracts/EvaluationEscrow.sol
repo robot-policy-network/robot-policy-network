@@ -35,7 +35,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
  * ERC-20 interface exclusively, per Arc's own integration guidance. Every amount
  * here is in 6-decimal units (1_000_000 == 1.00 USDC).
  *
- * See docs/settlement-spec.md for the frozen protocol. SPEC_VERSION = 1.
+ * See docs/settlement-spec.md for the frozen protocol. SPEC_VERSION = 2.
  */
 contract EvaluationEscrow is Ownable, Pausable, ReentrancyGuard, EIP712 {
     using ECDSA for bytes32;
@@ -58,6 +58,12 @@ contract EvaluationEscrow is Ownable, Pausable, ReentrancyGuard, EIP712 {
     }
 
     // ─── Constants ──────────────────────────────────────────────────────────
+
+    /// @notice The protocol specification this contract implements.
+    /// @dev Readable on-chain so a deployment is self-describing. Note: the
+    ///      EIP-712 domain version ("1") is decoupled from SPEC_VERSION — v2
+    ///      changed no hash preimage and no typehash (spec changelog).
+    string public constant SPEC_VERSION = "2";
 
     uint8 internal constant _STATE_NONE = 0;
     uint8 internal constant _STATE_FUNDED = 1;
@@ -188,6 +194,10 @@ contract EvaluationEscrow is Ownable, Pausable, ReentrancyGuard, EIP712 {
         if (resultHash == bytes32(0)) revert("ZeroResultHash");
         if (score > 100) revert("BadScore");
         if (status != _STATUS_PASSED && status != _STATUS_FAILED) revert("BadStatus");
+        // v2: `status` is defined by §4.2 as "passed" iff score >= passScore.
+        // Enforcing that here closes the gap where a `failed` attestation with
+        // a passing score could later be released on the score alone.
+        if ((status == _STATUS_PASSED) != (score >= job.passScore)) revert("StatusMismatch");
 
         bytes32 structHash = keccak256(
             abi.encode(_ATTESTATION_TYPEHASH, jobId, taskHash, planHash, resultHash, score, status, sigDeadline)
@@ -231,16 +241,24 @@ contract EvaluationEscrow is Ownable, Pausable, ReentrancyGuard, EIP712 {
 
     /**
      * @notice Reclaim funds after the deadline. Permissionless to call, but the
-     *         refund always goes to the payer. This is the backstop for every
-     *         outcome that is not a completed release.
+     *         refund always goes to the payer. This is the backstop for unverified
+     *         and failing outcomes.
+     * @dev v2: a verified PASSING result can never be refunded — by anyone,
+     *         including the payer. Under v1 a permissionless `refundExpired`
+     *         after the deadline could claw back a provider's earned payment
+     *         (or let a payer take delivery for free), and it raced the payer's
+     *         own `release`. A passing job is now settled only by `release`,
+     *         which the payer can sign at any time. The cost is accepted
+     *         explicitly: if the payer never signs, the funds stay escrowed.
      */
     function refundExpired(uint256 jobId) external nonReentrant {
         Job storage job = _jobs[jobId];
         if (job.state == _STATE_NONE) revert("UnknownJob");
+        if (block.timestamp <= job.deadline) revert("NotExpired");
+        if (job.state == _STATE_RESULT_VERIFIED && job.score >= job.passScore) revert("ResultPassed");
         if (job.state != _STATE_FUNDED && job.state != _STATE_RESULT_VERIFIED) {
             revert("WrongState");
         }
-        if (block.timestamp <= job.deadline) revert("NotExpired");
 
         job.state = _STATE_REFUNDED;
         usdc.safeTransfer(job.payer, job.amount);

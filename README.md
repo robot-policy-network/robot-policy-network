@@ -47,7 +47,7 @@ Arc contract verifies and records the result
 | Document | What it is |
 |---|---|
 | [Whitepaper](docs/whitepaper.md) | The protocol end to end, with an honest live/proposed status table |
-| [Settlement specification](docs/settlement-spec.md) | **Frozen, `SPEC_VERSION = 1`** — the normative v1 protocol |
+| [Settlement specification](docs/settlement-spec.md) | **Frozen, `SPEC_VERSION = 2`** — the normative v1 protocol |
 | [Deployment verification](docs/deployment.md) | Arc addresses, evidence scope, and the deploy procedure |
 | [Evaluation reproducibility](docs/evaluation-reproducibility.md) | What a third party can and cannot re-verify, and the L2 proposal |
 | [Red-team findings](docs/security/red-team-findings.md) | Self-disclosed findings, including the gameable text rubric |
