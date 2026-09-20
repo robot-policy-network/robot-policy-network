@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-09-20",
+  "source": "Filebase (IPFS-backed S3) bucket 'unitree', prefix 'collect/' — full export",
+  "scoring": "100% deterministic simulator (mode='sim'); no LLM grading in these records",
+  "window": "2026-08-17 to 2026-09-04",
+  "totals": {
+    "rawObjectsIncludingSelfTest": 493,
+    "selfTestRecords": 1,
+    "scoredRecords": 483,
+    "pass": 426,
+    "fail": 57,
+    "onChainMintReceipts": 9
+  },
+  "participants": {
+    "uniqueParticipantAddresses": 91,
+    "uniquePassingAgents": 87,
+    "uniqueUserMinters": 6,
+    "excludedNonUserAddresses": {
+      "0xa1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1": "obvious placeholder/test",
+      "0xcb67cffa62e3323c9b2d95121fa3873495920c7d": "protocol poiSigner (not a user)"
+    },
+    "note": "91 counts only addresses that submitted a scored answer; 93 distinct addresses appear in raw records before exclusions"
+  },
+  "derived": {
+    "passRatePct": 88.2,
+    "avgPassScore": 91.6,
+    "avgFailScore": 13.7,
+    "uniqueMissions": 64
+  },
+  "recordsByDay": {
+    "2026-08-17": 1,
+    "2026-08-29": 1,
+    "2026-09-02": 15,
+    "2026-09-03": 343,
+    "2026-09-04": 132
+  },
+  "verification": "bash verify.sh re-hashes every record against manifest.json and re-derives these figures from the raw records"
+}
