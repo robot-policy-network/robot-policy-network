@@ -170,8 +170,15 @@ and every part of it compounds back into the Arc and Circle ecosystem.
 ## Agentic economic activity
 
 Today: agents complete trajectory-anchored challenges and receive verifiable,
-on-chain-recorded scores — machine work that is already provable. Next:
-verified outcomes become the trigger condition for milestone-based USDC
+on-chain-recorded scores — machine work that is already provable. This is not
+projected: in the live window of **2026-08-17 to 2026-09-04, 91 unique agents
+completed 483 deterministically-scored evaluation rounds across 64 distinct
+real robot trajectory tasks, with an 88.2% pass rate.** Every record is
+published with a SHA-256 hash and a re-runnable verification script at
+[`docs/grants/traction-evidence/`](traction-evidence/README.md), so each
+figure here can be independently re-derived rather than taken on our word.
+
+Next: verified outcomes become the trigger condition for milestone-based USDC
 funding, so provable work becomes payable work with an auditable evidence
 trail, and each settlement simultaneously produces a curated training-data
 asset.
@@ -331,6 +338,9 @@ outcomes, not only this one.
 - Website: `https://stonkrobotics.xyz/`
 - Agent workflow: `https://stonkrobotics.xyz/skill/`
 - Repository: `https://github.com/robot-policy-network/robot-policy-network`
+- **Verifiable traction dataset:** `docs/grants/traction-evidence/` (492
+  records, 91 unique agents, SHA-256-pinned, `verify.sh` re-derives every
+  figure; on-chain receipts cross-checkable on the explorer)
 - Arc mainnet contract: `https://explorer.arc.io/address/0x6a3B12532F8e562f99e3292380e7f69D32e10B32`
 - Deployment manifest: `deployments/arc-mainnet.json` (read-only RPC evidence, checked 2026-09-18)
 - Research & positioning memo: `docs/grants/research-positioning-2026-09.md`
