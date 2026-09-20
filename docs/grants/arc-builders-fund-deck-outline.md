@@ -29,20 +29,27 @@ initiative — not a fund with a published commitment.
    and an ecosystem built for agentic payments. Sole production deployment
    is Arc mainnet.
 
-6. **Market** — `<SIZE / SEGMENTS — founder input required: agent economy,
-   robotics-as-a-service, machine payments. Cite sources.>`
+6. **Market** — Collection is funded and commoditized: Axis $12M (Hack VC),
+   PrismaX $11M (a16z CSX), DROID/OXE's 1M+ open trajectories. Academia
+   (SIEVE, arXiv 2607.06442) proves curation is the bottleneck: 50% selected
+   data beats 100% raw. The curation+settlement intersection is the open
+   layer. `<ADD TAM FIGURES WITH SOURCES BEFORE SUBMISSION>`
 
 7. **Business model** — `<FOUNDER INPUT: e.g. per-verification fee,
-   settlement fee on released milestones, enterprise evaluator services.
+   settlement fee on released milestones, curated-dataset licensing.
    Do not state current revenue unless real.>`
 
-8. **Traction** — Live Arc mainnet deployment, public open-source protocol,
-   working agent workflow, frozen settlement spec + test suite.
+8. **Traction** — Live Arc mainnet deployment, deterministic simulator with
+   82 DROID-anchored tasks, EIP-712 on-chain verification, frozen settlement
+   spec + 81-test suite, MIT-licensed open protocol.
    `<ADD REAL USAGE NUMBERS ONLY IF FOUNDER CONFIRMS>`
 
-9. **Competition / moat** — Generic oracle and escrow projects treat a score
-   as a payment instruction; we hard-separate evidence from authorization at
-   the protocol level, with reproducible evaluation.
+9. **Competition / moat** — Axis/PrismaX = collection (no verification or
+   settlement); RoboTrain = scoring but centralized 16-member grading, no
+   crypto settlement; GAEA/Vana/Fraction AI = data DePIN, no
+   trajectory-anchored deterministic evaluation. Our moat is the combination
+   none of them has: reproducible evaluation anchored to real robot data +
+   an on-chain evidence/authorization payment split.
 
 10. **Roadmap** — Verification (live) → USDC settlement deployment
     (M1: 2026-10-11) → end-to-end settlement demo (M2: 2026-10-25) →
