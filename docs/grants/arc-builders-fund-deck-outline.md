@@ -9,7 +9,7 @@ initiative — not a fund with a published commitment.
 
 1. **Title** — StonkRobotics / Robot Policy Network: the evaluation and
    verification layer for agentic economic activity on Arc. Contact:
-   `<EMAIL>`.
+   Richard, ritsuyan4763@gmail.com.
 
 2. **Problem** — Agent and robot work is becoming economically meaningful,
    but outcomes are unverifiable and unpayable: scores are opaque,
@@ -44,13 +44,17 @@ initiative — not a fund with a published commitment.
    as a payment instruction; we hard-separate evidence from authorization at
    the protocol level, with reproducible evaluation.
 
-10. **Roadmap** — Verification (live) → USDC settlement deployment (M1–M2)
-    → Circle product integration (M3) → audited marketplace (M4+).
-    Dates `<TO CONFIRM>`.
+10. **Roadmap** — Verification (live) → USDC settlement deployment
+    (M1: 2026-10-11) → end-to-end settlement demo (M2: 2026-10-25) →
+    Circle Agent Stack integration (M3: 2026-11-22) → external security
+    review (M4: 2026-12-13) → audited marketplace (2027).
 
-11. **Team** — Solo founder `<PUBLIC NAME>`, full-stack + smart contracts.
-    `<CONFIRM bio details — no invented advisors or members.>`
+11. **Team** — Solo founder **Richard**, full-stack + smart contracts.
+    `<OPTIONAL: 1–2 句真实背景，没有就保持简洁>`
 
-12. **Ask** — `<AMOUNT / FORM — founder decides>`, use of funds:
-    deployment + demo, security review, integration. What Arc core-team
-    support would unblock: `<e.g. USDC settlement patterns, ecosystem intros>`.
+12. **Ask** — **$25,000**（与 Circle Developer Grant 一致的预算框架；若 Builders Fund
+    是投资形式则改为展示用款计划而非 grant 金额），use of funds:
+    deployment + demo (48%), Circle integration (32%), security review (20%).
+    What Arc core-team support would unblock: USDC settlement best
+    practices, evaluator decentralization patterns, ecosystem intros to
+    agent teams needing verifiable outcomes.

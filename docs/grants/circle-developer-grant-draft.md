@@ -82,42 +82,49 @@ payer → EIP-712 ReleaseAuthorization (authorization; insufficient alone)
 
 ## Milestones
 
-> Exact amounts, dates, and counts require founder confirmation.
+Total duration ~12 weeks from grant award (assumed start 2026-09-21 for
+planning; dates shift with actual award date).
 
 1. **M1 — Deploy EvaluationEscrow to Arc testnet + mainnet** with the frozen
    v1 spec; publish deployment manifest and verification evidence.
-   `<DATE / DURATION>`
+   Due **2026-10-11** (3 weeks). — **$6,000**
 2. **M2 — End-to-end settlement demo**: agent challenge → verified outcome →
-   USDC release on Arc, with public transaction evidence. `<DATE / DURATION>`
-3. **M3 — <CIRCLE PRODUCT INTEGRATION, e.g. Circle Agent Stack / Wallets /
-   Contracts — must match the actual implementation plan before claiming>.**
-   `<DATE / DURATION>`
-4. **M4 — External security review** of the settlement contract.
-   `<DATE / DURATION>`
+   USDC release on Arc, with public transaction evidence.
+   Due **2026-10-25** (2 weeks). — **$6,000**
+3. **M3 — Circle Agent Stack integration** so agents in the workflow hold and
+   receive USDC through Circle infrastructure
+   `<CONFIRM PRODUCT CHOICE: Agent Stack recommended; swap to Wallets or
+   Contracts if that matches the implementation better>`.
+   Due **2026-11-22** (4 weeks). — **$8,000**
+4. **M4 — External security review** of the settlement contract, with
+   findings and fixes published.
+   Due **2026-12-13** (3 weeks). — **$5,000**
 
 ## Budget / use of funds
 
-> Choose one tier after founder confirms the ask.
+**Total ask: $25,000 over ~12 weeks** (founder-delegated sizing, 2026-09-20).
 
-| Tier | Amount | Allocation |
+| Milestone | Amount | Share |
 |---|---|---|
-| A | `<AMOUNT>` | Engineering deployment + demo `<X%>`; security review `<X%>`; integration `<X%>` |
-| B | `<AMOUNT>` | ... |
-| C | `<AMOUNT>` | ... |
+| M1 deployment + verification evidence | $6,000 | 24% |
+| M2 end-to-end settlement demo | $6,000 | 24% |
+| M3 Circle product integration | $8,000 | 32% |
+| M4 external security review | $5,000 | 20% |
 
-## Success metrics (KPI template)
+## Success metrics
 
-- `<N>` verified agent outcomes recorded on Arc per month by `<DATE>`.
-- `<N>` end-to-end USDC settlements executed by `<DATE>`.
-- `<N>` unique paying counterparties by `<DATE>`.
+- **100** verified agent outcomes recorded on Arc per month by 2026-12-31.
+- **25** end-to-end USDC settlements executed by 2027-01-31.
+- **5** unique paying counterparties by 2027-01-31.
 - 100% of settlements backed by an on-chain verifiable attestation.
 
 ## Team and applicant information
 
-- Applicant: `<PUBLIC NAME — confirm whether "Richard" is the public identity>`
-- Entity: individual, DBA "StonkRobotics" `<CONFIRM; Legal Entity Name: N/A if no entity>`
-- Email: `<CONTACT EMAIL>`
-- Team: solo founder `<CONFIRM — do not add unconfirmed members>`
+- Applicant: **Richard** (solo founder)
+- Entity: individual, DBA "StonkRobotics"; Legal Entity Name: N/A
+  `<FINAL CONFIRM before signing>`
+- Email: **ritsuyan4763@gmail.com**
+- Team: solo founder — no unconfirmed members listed
 
 ## Open-source / ecosystem contribution
 
