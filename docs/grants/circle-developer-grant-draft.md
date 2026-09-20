@@ -98,6 +98,10 @@ release → better data attracts better agents.
 
 ## Why Arc and why Circle
 
+This application is built for the program's first stated priority use case,
+**agentic economic activity**, and meets its core requirement that Arc be
+central to the flow of value, liquidity, or settlement.
+
 - **Settlement-finality fit.** Machine-speed work needs machine-speed,
   dollar-denominated settlement. Arc-native USDC (ERC-20 interface at
   `0x3600...0000`, 6 decimals) is the natural asset, and Arc's finality model
@@ -109,6 +113,10 @@ release → better data attracts better agents.
   is purpose-built for the agentic payments Arc is designed to host: agents
   produce verifiable outcomes; payers authorize USDC release against them —
   neither key alone can settle a job.
+- **Circle products as building blocks, not decoration.** M3 integrates
+  Circle Agent Stack so agents hold and move USDC through Circle's own
+  agent-payment primitives; the settlement layer already runs on Arc-native
+  USDC. These are load-bearing integrations, not logo mentions.
 - **Existing deployment evidence.** The project's only production deployment
   is Arc mainnet, and the evaluation flow already records outcomes there.
 
@@ -191,7 +199,10 @@ promise in Risks that no production fund flows precede the review.
 
 ## Budget / use of funds
 
-**Total ask: $25,000 over ~13 weeks** (founder-delegated sizing, 2026-09-20).
+**Proposed budget: $25,000 over ~13 weeks.** Circle does not publish grant
+amounts; this is the milestone budget we propose in the portal, and the final
+award is sized by Circle during milestone design. We are ready to scope the
+plan to a different tier if Circle's assessment differs.
 
 | Milestone | Amount | Share |
 |---|---|---|
