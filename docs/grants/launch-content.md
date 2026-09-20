@@ -52,8 +52,8 @@ machine's word?
 > `docs/security/red-team-findings.md`.
 >
 > **Current state, honestly.** Evaluation and on-chain recording are live on Arc
-> mainnet (chain 5042). The settlement contract is frozen at `SPEC_VERSION = 1`
-> with 81 passing tests and a deploy script CI proves works — but it is **not
+> mainnet (chain 5042). The settlement contract is frozen at `SPEC_VERSION = 2`
+> with 85 passing tests and a deploy script CI proves works — but it is **not
 > deployed yet**. We would rather say that plainly than imply otherwise.
 >
 > Repro: spec · tests · traction dataset with a re-runnable verifier · an
@@ -84,10 +84,10 @@ template scored 80–100 without demonstrating anything. We published the findin
 not just the fix. [link]
 
 5/ Where it actually is: evaluation + on-chain recording live on Arc mainnet.
-The settlement contract is frozen (SPEC_VERSION 1, 81 tests, CI-proven deploy
+The settlement contract is frozen (SPEC_VERSION 2, 85 tests, CI-proven deploy
 path) and **not deployed**. No audit. Stated plainly in the repo.
 
-6/ Everything is checkable: frozen spec, 81-test suite, and a 492-record
+6/ Everything is checkable: frozen spec, 85-test suite, and a 492-record
 traction dataset with a script that re-hashes every record and re-derives every
 statistic. Don't trust our numbers — recompute them. [links]
 
@@ -108,7 +108,7 @@ Links:    repo · spec · dataset verifier · adversarial review brief
 One line: Separates evaluation evidence from payment authorization so an
           agent's verified work can settle in USDC without any single key
           being able to do both.
-Evidence: frozen SPEC_VERSION=1, 81 passing tests, CI deploy-path smoke
+Evidence: frozen SPEC_VERSION=2, 85 passing tests, CI deploy-path smoke
           test, 492-record SHA-256-pinned dataset with re-runnable verifier
 ```
 
@@ -117,8 +117,8 @@ Evidence: frozen SPEC_VERSION=1, 81 passing tests, CI deploy-path smoke
 > Adds Robot Policy Network — an MIT-licensed reference implementation of an
 > evidence/authority split for machine-work settlement on Arc. The evaluator
 > signs evidence (`EvaluationAttestation`); the payer signs authority
-> (`ReleaseAuthorization`); release requires both. Includes a frozen v1 spec,
-> an 81-test Foundry suite, a verified deploy script, and a tamper-evident
+> (`ReleaseAuthorization`); release requires both. Includes a frozen v2 spec,
+> an 85-test Foundry suite, a verified deploy script, and a tamper-evident
 > traction dataset. Useful as a pattern reference for anyone designing agentic
 > payments where the scorer must not be the payer.
 

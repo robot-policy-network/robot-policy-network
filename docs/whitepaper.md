@@ -3,7 +3,7 @@
 **Verifiable evaluation and USDC settlement for machine work**
 
 _Published 2026-09-20. Draft; the frozen protocol is
-[`settlement-spec.md`](settlement-spec.md) (`SPEC_VERSION = 1`)._
+[`settlement-spec.md`](settlement-spec.md) (`SPEC_VERSION = 2`)._
 
 ---
 
@@ -171,7 +171,7 @@ survive both without losing custody.
    [`evaluation-reproducibility.md`](evaluation-reproducibility.md) (L1 of
    L0/L1/L2), with a concrete proposal to restore recomputability without
    revealing references.
-3. **No independent audit exists.** CI (81 tests plus a deploy-path smoke test)
+3. **No independent audit exists.** CI (85 tests plus a deploy-path smoke test)
    is the current assurance.
 4. **The settlement contract is not deployed.**
 
@@ -182,8 +182,8 @@ survive both without losing custody.
 | Deterministic evaluation of trajectory-anchored tasks | **live** |
 | On-chain recording of verified results (Arc mainnet, chain 5042) | **live** |
 | Public traction dataset (492 records, SHA-256 pinned) | **published** |
-| Frozen settlement specification (`SPEC_VERSION = 1`) | **published** |
-| `EvaluationEscrow` implementation + 81-test suite | **written, tested** |
+| Frozen settlement specification (`SPEC_VERSION = 2`) | **published** |
+| `EvaluationEscrow` implementation + 85-test suite | **written, tested** |
 | Verified deploy script (unsafe-input guards, CI smoke test) | **written, tested** |
 | `EvaluationEscrow` on Arc mainnet | **not deployed** |
 | USDC settlement in production | **not live** |
@@ -224,6 +224,6 @@ The contribution here is not a smarter scorer or a faster chain — it is a
 protocol-level separation of the party who *claims* an outcome from the party who
 *authorizes* payment, so that neither can act alone. Everything else in this
 repository exists to make that separation testable: a deterministic evaluator, a
-canonical commitment scheme, a contract with a bounded owner, an 81-test suite,
+canonical commitment scheme, a contract with a bounded owner, an 85-test suite,
 and an honest account of where the trust still sits.
 

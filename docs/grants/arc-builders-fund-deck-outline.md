@@ -18,7 +18,7 @@ initiative — not a fund with a published commitment.
 3. **Solution** — Separate evaluation evidence from payment authorization.
    Reproducible scoring → EIP-712 `EvaluationAttestation` (evidence) +
    payer-signed `ReleaseAuthorization` → USDC settlement only when both
-   validate. Frozen v1 spec, 81 passing tests, live evaluation flow on Arc
+   validate. Frozen v2 spec, 85 passing tests, live evaluation flow on Arc
    mainnet.
 
 4. **Product demo** — Live today: challenge → mission plan → score →
@@ -41,7 +41,7 @@ initiative — not a fund with a published commitment.
 
 8. **Traction** — Live Arc mainnet deployment, deterministic simulator with
    82 DROID-anchored tasks, EIP-712 on-chain verification, frozen settlement
-   spec + 81-test suite, MIT-licensed open protocol.
+   spec + 85-test suite, MIT-licensed open protocol.
    `<ADD REAL USAGE NUMBERS ONLY IF FOUNDER CONFIRMS>`
 
 9. **Competition / moat** — Axis/PrismaX = collection (no verification or

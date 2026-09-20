@@ -1,9 +1,9 @@
 # Settlement protocol specification
 
-**Status: FROZEN — `SPEC_VERSION = 1`**
+**Status: FROZEN — `SPEC_VERSION = 2`**
 **Date: 2026-09-20**
 
-This document freezes the v1 protocol for verified evaluation results and USDC
+This document freezes the protocol for verified evaluation results and USDC
 job settlement. Any change to a hash preimage, a typehash, a state transition,
 or an error code requires a new `SPEC_VERSION` and a new contract deployment.
 Change history belongs in [`CHANGELOG.md`](../CHANGELOG.md).
@@ -12,6 +12,29 @@ Change history belongs in [`CHANGELOG.md`](../CHANGELOG.md).
 > The address in [`../deployments/arc-mainnet.json`](../deployments/arc-mainnet.json)
 > belongs to `UnitreeG1Fleet`, which is a collection contract and has no
 > settlement path. See [`limitations.md`](limitations.md).
+
+### Changelog
+
+**v1 → v2 (2026-09-20, pre-deployment).** Two semantic corrections found by an
+adversarial review. No hash preimage and no typehash changed, so every EIP-712
+signature valid under v1 remains valid under v2 — the domain version stays `1`
+and is deliberately decoupled from `SPEC_VERSION`.
+
+1. **`verifyResult` now enforces `status ≡ (score ≥ passScore)`** and reverts
+   with `StatusMismatch` otherwise. Under v1 an evaluator could sign
+   `status = failed` with a passing score, and `release` — which checks only
+   the score — would have paid it. §7 promised "the contract rejects releasing
+   against `status = 2` outright"; v1's implementation did not deliver that.
+   v2 does, at attestation time.
+2. **A verified passing result can no longer be refunded, by anyone.** Under
+   v1, `refundExpired` was permissionless and valid on any job after the
+   deadline — including jobs whose passing result the payer had not yet
+   released — so anyone (payer included) could claw back a provider's earned
+   payment, racing the payer's own `release`. v2 reverts with `ResultPassed`;
+   a passing job is settled only by `release`, which the payer may sign at any
+   time. Accepted cost: if the payer never signs, the funds remain escrowed.
+3. **New error codes:** `StatusMismatch` (`verifyResult`), `ResultPassed`
+   (`refundExpired`).
 
 ---
 
@@ -90,8 +113,10 @@ recompute a hash from a published record without access to our runtime.
    so that "absent" has exactly one encoding.
 6. Arrays preserve order.
 
-Implementations: [`web/lib/canonical.js`](../../unitree-g1-mint/web/lib/canonical.js)
-is the authoritative JavaScript implementation. It is the *only* implementation:
+Implementations: [`references/canonical.js`](../references/canonical.js) is the
+authoritative JavaScript implementation, pinned by
+[`references/canonical.test.mjs`](../references/canonical.test.mjs) (plain
+`node`, no dependencies) and exercised in CI. It is the *only* implementation:
 the contract does not canonicalize anything and recomputes no hash. It stores
 and compares the 32-byte commitments it is given.
 
@@ -111,7 +136,7 @@ Instead, every commitment is bound at the **signature layer**, where a mismatch
 is a revert rather than a silent reinterpretation. The payer signs over
 `resultHash` (§4.4), and the result preimage contains `planHash` (§4.2), so the
 plan a result was computed from is inside the bytes the payer authorized. That
-is the property v1 needs; it does not need the contract to re-derive it. See §10
+is the property the protocol needs; it does not need the contract to re-derive it. See §10
 for what this costs and why it was accepted.
 
 ---
@@ -201,7 +226,10 @@ EvaluationAttestation(
   independent check that the signed score is the scored score; a mismatch means
   the attestation is internally inconsistent and should be rejected off-chain.
 - `status` uses `uint8` rather than `bool` so a third terminal state can be
-  added without a preimage change; v1 defines only `1` and `2`.
+  added without a preimage change; v1 defines only `1` and `2`. Since v2 the
+  contract enforces `status ≡ (score ≥ passScore)` (`StatusMismatch`), so the
+  field is redundant with the score but self-consistent: an attestation can no
+  longer carry a `failed` label on a passing score.
 - `deadline` — unix seconds; the attestation is rejected at `block.timestamp > deadline`.
   The struct field is named `deadline`; the function parameter is `sigDeadline`,
   because a job has its own `deadline` and the two are independent: an
@@ -242,6 +270,10 @@ ReleaseAuthorization(
   on first success, so the same signature cannot be submitted twice.
 
 Both structs share the domain `EIP712("EvaluationEscrow", "1")` and verify
+against it. The domain's version string is **decoupled from `SPEC_VERSION`**:
+v2 changed settlement semantics and added error codes but changed no hash
+preimage and no typehash, so every signature valid under v1 remains valid
+under v2 and integrators' signer configuration does not move.
 against `chainId` and the escrow address. This domain is distinct from
 `UnitreeG1Fleet`'s, so no signature from the mint flow can ever be replayed here.
 
@@ -252,11 +284,12 @@ against `chainId` and the escrow address. This domain is distinct from
 ```
    (none) ──createJob──▶ FUNDED ──cancelJob──▶ CANCELLED
                            │  │
-               verifyResult│  └─refundExpired (after deadline)─┐
-                           ▼                                  │
-                    RESULT_VERIFIED ──release──▶ RELEASED      │
-                           │                                  │
-                           └─refundExpired (after deadline)───┴─▶ REFUNDED
+               verifyResult│  └─refundExpired (after deadline;
+                           ▼                     failing only)───┐
+                    RESULT_VERIFIED ──release──▶ RELEASED        │
+                           │                                     │
+                           └─refundExpired (after deadline       │
+                             and score < passScore)─────────────┴─▶ REFUNDED
 ```
 
 | State | Value | Meaning | Allowed next |
@@ -281,19 +314,27 @@ Transitions:
   provider starts work.
 - `verifyResult` → `RESULT_VERIFIED`. Requires `state == FUNDED`,
   `block.timestamp <= sigDeadline`, `block.timestamp <= job.deadline`, a valid
-  evaluator signature, `taskHash == job.taskHash`, and non-zero
-  `planHash`/`resultHash` with `score <= 100` and `status` in `{1, 2}`.
+  evaluator signature, `taskHash == job.taskHash`, non-zero
+  `planHash`/`resultHash`, `score <= 100`, `status` in `{1, 2}`, and — since
+  v2 — `status ≡ (score ≥ passScore)` (`StatusMismatch` otherwise).
   `planHash` and `resultHash` are recorded here; neither can be changed
   afterwards, because `verifyResult` runs once per job.
 - `release` → `RELEASED`. Requires `state == RESULT_VERIFIED`, a valid payer
-  signature, and `resultHash`/`provider`/`amount` matching the job.
-- `refundExpired` → `REFUNDED`. Requires `block.timestamp > job.deadline` and
-  `state` in `{FUNDED, RESULT_VERIFIED}`.
+  signature, and `resultHash`/`provider`/`amount` matching the job. **There is
+  deliberately no deadline check**: a passing result is settled whenever the
+  payer signs, because the payer's authorization is the authority and it was
+  given with full knowledge of the recorded state.
+- `refundExpired` → `REFUNDED`. Requires `block.timestamp > job.deadline`,
+  `state == FUNDED`, or `state == RESULT_VERIFIED` with `score < passScore`.
+  A verified **passing** result reverts with `ResultPassed`: under v1 this
+  transition let anyone — including the payer — claw back a provider's earned
+  payment and race the payer's own `release`.
 - `cancelJob` → `CANCELLED`. Requires `msg.sender == job.payer` and
-  `state == FUNDED`. It exists so a payer can recover funds from a job that will
-  never be evaluated; after a result is verified the payer must instead wait for
-  the deadline and call `refundExpired`, so a provider is never paid and then
-  clawed back.
+  `state == FUNDED`. It exists so a payer can recover funds from a job that
+  will never be evaluated. After a **failing** result is verified the payer
+  waits for the deadline and calls `refundExpired`; after a **passing** result
+  the payer's only paths are `release` or leaving the funds escrowed — a
+  provider is never paid and then clawed back.
 
 **One-way rule.** `RESULT_VERIFIED` cannot return to `FUNDED`. A result can be
 superseded only by a *new job*, never by a second attestation against the same
@@ -312,13 +353,14 @@ There is no rescoring path: a wrong result costs a new job.
 |---|---|
 | Provider never delivers | `refundExpired` after deadline → full refund to payer |
 | Task ran, `score < passScore` | Attestation with `status = 2`. `release` rejects it (`ResultNotPassed`); funds follow the deadline path |
-| Task passed, payer never signs | `refundExpired` after deadline → payer refunded |
+| Task passed, payer never signs | The result can never be refunded (v2: `ResultPassed`). The payer may `release` at any time; otherwise the funds remain escrowed |
 | Payer abandons before any result | `cancelJob` → immediate refund |
 | Evaluator signs a result for a different task | `verifyResult` reverts (`TaskMismatch`) |
 | Attestation carries a zero `planHash` or `resultHash` | `verifyResult` reverts (`ZeroPlanHash` / `ZeroResultHash`). "No plan" is not a state that can be attested |
 | Evaluator's `planHash` is not the plan that was scored | Not detectable on-chain — the contract cannot open `resultHash`. It is detectable *off-chain*: `planHash` is inside the `resultHash` preimage (§4.2), so any third party recomputing `resultHash` from the published plan gets a different hash and the attestation fails to verify (§10) |
 | Attestation expires before submission | `verifyResult` reverts (`AttestationExpired`); job falls back to the deadline path |
-| Result verified but release not signed before deadline | `refundExpired` succeeds — the deadline is the backstop for every non-release outcome |
+| Attestation's `status` disagrees with `score ≥ passScore` | `verifyResult` reverts (`StatusMismatch`) — v2; v1 accepted the mismatch and resolved it at release, which left `status` unenforced |
+| Result verified but release not signed before deadline | If the result **passed**: `release` remains available indefinitely and refund is blocked (`ResultPassed`). If it **failed**: `refundExpired` succeeds — the deadline backstop covers every non-passing outcome |
 | Neither `release` nor `refundExpired` is called | Funds remain in the escrow indefinitely. There is no automatic execution |
 
 `verifyResult` is permissionless: anyone holding a valid attestation may submit
@@ -340,8 +382,11 @@ evaluator's attestation, and the payer's release).
 - **The evaluator signature is evidence, not authority.** It cannot move funds.
 - **The payer signature is authority, not evidence.** It cannot be produced by
   the backend, which never holds payer keys.
-- **A `failed` result is not a payment instruction.** The contract rejects
-  releasing against `status = 2` outright rather than paying zero.
+- **A `failed` result is not a payment instruction.** v2 enforces
+  `status ≡ (score ≥ passScore)` at `verifyResult` (`StatusMismatch`), so a
+  `failed` attestation can never carry a passing score, and `release` rejects
+  any attestation whose score is below the threshold (`ResultNotPassed`)
+  rather than paying zero.
 - **Only deterministic results are settled.** The LLM-based scorer in
   `_poi.js` (`scoreWithRules`, and the `OPENAI_API_KEY` path) produces a score
   for the mint flow only. It must never reach `verifyResult`. A settlement
@@ -442,7 +487,7 @@ mismatch. Removes the evaluator's discretion over `planHash` at the cost of a
 second implementation of §3, in a second language, that must agree byte-for-byte
 with `canonical.js` forever.
 
-**v1 ships (a).** The reason is that (b) buys less than it appears to, and costs
+**v1 shipped (a); v2 keeps (a).** The reason is that (b) buys less than it appears to, and costs
 a class of bug that fails silently:
 
 - The plan is written *after* the job exists (the provider submits it), so a
@@ -457,12 +502,12 @@ a class of bug that fails silently:
   error. Every failure mode is a silent one, and the drift is only discoverable
   after a payer has funded a job that can no longer be settled.
 
-What v1 relies on instead is that `planHash` sits inside the `resultHash`
+What the protocol relies on instead is that `planHash` sits inside the `resultHash`
 preimage (§4.2) and `resultHash` is what the payer signs (§4.4). So:
 
 - The payer authorizes a payout against a result whose preimage names the plan.
 - Any third party can recompute `resultHash` from the published plan and result
-  object, using the published `canonical.js`, and compare it to the signed value.
+  object, using `references/canonical.js`, and compare it to the signed value.
 - A mismatch is a *failed verification* of a published artifact, which is exactly
   the check the protocol asks its users to perform, and it is observable without
   our runtime.

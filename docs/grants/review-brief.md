@@ -14,16 +14,31 @@ this document. Re-derive it. Every figure below has a stated verification path.
 
 | # | Claim | Evidence location | How to verify | Status |
 |---|---|---|---|---|
-| 1 | A frozen v1 settlement protocol exists, separating evaluation evidence from payment authorization | `docs/settlement-spec.md` (SPEC_VERSION 1) | Read §1 and §4; check the two typehashes; run the tests | **True, frozen** |
-| 2 | `EvaluationEscrow` implements it with 81 passing tests | `contracts/EvaluationEscrow.sol`, `test/EvaluationEscrow.t.sol` | Install deps, then `forge test` — expect 81 passed | **True** |
+| 1 | A frozen settlement protocol exists, separating evaluation evidence from payment authorization | `docs/settlement-spec.md` (**SPEC_VERSION 2**, frozen) | Read §1 and §4; check the two typehashes; read the v1→v2 changelog | **True, frozen** |
+| 2 | `EvaluationEscrow` implements it with 85 passing tests | `contracts/EvaluationEscrow.sol`, `test/EvaluationEscrow.t.sol` | Install deps, then `forge test` — expect 85 passed | **True — local Foundry implementation and tests with a mock ERC-20; not deployed, not audited, no real USDC settlement has ever executed** |
 | 3 | The settlement contract is **not deployed** | spec preamble, `docs/limitations.md` | Query the Arc explorer for the address — it does not exist | **True (deliberate)** |
-| 4 | An evaluation flow is live on Arc mainnet | contract `0x6a3B12532F8e562f99e3292380e7f69D32e10B32`, chain 5042 | Fetch the explorer page; read the runtime code | **True** |
-| 5 | 91 unique agents completed 483 deterministically-scored rounds over 64 missions, 88.2% pass | `docs/grants/traction-evidence/` | Run `bash verify.sh` — re-hashes 493 records and re-derives the stats | **True, re-computable** |
-| 6 | Scoring is 100% deterministic simulator, not an LLM | `mode: "sim"` in every scored record | `jq` the `mode` field across `records/` | **True** |
+| 4 | A deterministic evaluation and score-recording flow is live on Arc mainnet | contract `0x6a3B12532F8e562f99e3292380e7f69D32e10B32`, chain 5042 | Fetch the explorer page; read the runtime code. Note precisely what this means: scores are produced off-chain by our deterministic evaluator and **recorded** on-chain via voucher/mint; no evaluator attestation and no USDC flow through the settlement protocol exist on-chain | **True, with the scope above** |
+| 5 | 91 unique addresses submitted 483 scored rounds over 64 missions, 88.2% pass | `docs/grants/traction-evidence/` | Run `bash verify.sh` — re-hashes 493 records and re-derives the stats | **Recomputable from the published export; source provenance remains self-attested** (see §2.1) |
+| 6 | Scoring is 100% deterministic simulator, not an LLM | `mode: "sim"` in every scored record | `jq` the `mode` field across `records/` | **Recomputable from the published export; source provenance remains self-attested** |
 | 7 | The program's first official priority ("agentic economic activity") is our direct fit | `application-matrix.md` records official parameters | Visit `circle.com/grant` and the 2026-05-14 relaunch post | **True** |
-| 8 | Collection is funded; curation is the academic bottleneck | `research-positioning-2026-09.md` | Resolve arXiv 2505.09603 (DataMIL) and 2403.12945 (DROID) | **Citation verified 2026-09-20** |
-| 9 | Traction window is 2026-08-17 → 2026-09-04 | `SUMMARY.json` → `recordsByDay` | Check the `ts` fields in `records/` | **True** |
-| 10 | 9 on-chain mint receipts exist in the dataset | `records/tx-receipt/` | Count files; cross-check `nonce` in chain logs | **True** |
+| 8 | Robotics research indicates data quality and curation are important bottlenecks; this project tests whether verified evaluation improves that layer | `research-positioning-2026-09.md` | Resolve arXiv 2505.09603 (DataMIL) and 2403.12945 (DROID) | **Citations verified 2026-09-20. The citations support the *importance of curation*, not that this project has solved it** |
+| 9 | Traction window is 2026-08-17 → 2026-09-04 | `SUMMARY.json` → `scoredByDay` / `receiptsByDay` | Check the `ts` fields in `records/` | **Recomputable from the published export; source provenance remains self-attested** |
+| 10 | 9 on-chain mint receipts exist in the dataset | `records/tx-receipt/` | Count files; cross-check `nonce` in chain logs | **Recomputable from the published export** |
+
+### Dataset layers — read this before quoting any number
+
+The counts below answer different questions. Quoting "492" as participants, or
+"91" as records, would both be wrong:
+
+| Layer | Count | Meaning |
+|---|---|---|
+| Raw exported objects | **493** | Everything in the bucket, including one founder self-test |
+| Scored rounds | **483** | `pass` + `fail` records (426 + 57); excludes self-test |
+| Pass / Fail | **426 / 57** | Scored rounds by outcome; 88.2% pass rate |
+| On-chain mint receipts | **9** | `tx-receipt` records; a *separate* step from scoring (2 are founder end-to-end tests, 1 is the protocol's own signer) |
+| Unique participant addresses | **91** | Distinct addresses with ≥1 scored round, excluding 2 known non-user addresses |
+| Unique missions | **64** | Distinct `missionId` values |
+| Window | 2026-08-17 → 2026-09-04 | All 483 scored rounds fall on 09-02..09-04; the 2 pre-launch records are receipts |
 
 ## 2. Known weaknesses (stated before you find them)
 
@@ -115,9 +130,17 @@ Ranked by how much damage they do if a reviewer hits them cold.
    none of them?
 6. You say Arc is "strongest" but not exclusive. What concretely stops a
    competitor from deploying the same contract to Base tomorrow?
+   **Our honest answer, stated here so you can hold us to it:** nothing stops
+   them at the bytecode level. The contract is standard Solidity and the
+   pattern is open-source (MIT). Arc is the initial target because its
+   stablecoin-native settlement model — native USDC with an ERC-20 interface
+   over the same balance, designed for exactly this kind of flow — fits the
+   product best, not because the bytecode is unportable. Any exclusivity comes
+   from distribution, data, and integrations, not from bytecode lock-in.
 7. The evaluation layer has been live since ~August. How many distinct
    humans are behind those 91 addresses — could it be one person with 91
-   keys?
+   keys? **(This is a real open question; see `traction-attribution-template.md`,
+   which exists because we cannot yet answer it with evidence.)**
 8. What is your actual cost per verified evaluation, and who pays it?
 9. `EvaluationEscrow` is 292 lines with 1,060 lines of tests and no audit.
    Why should a payer trust it with funds after a $5,000 review?
@@ -143,18 +166,24 @@ Do not credit us with these; we have not claimed them anywhere:
 ## 5. Verification recipes
 
 ```bash
-# A. Contracts
-cd <repo> && forge install OpenZeppelin/openzeppelin-contracts@v5.0.2 \
-  foundry-rs/forge-std --no-git
-forge test              # expect: 81 passed, 0 failed
-forge fmt --check contracts/EvaluationEscrow.sol test/EvaluationEscrow.t.sol
+# A. Contracts (dependency installs must be separate commands, as CI runs them)
+cd <repo>
+forge install OpenZeppelin/openzeppelin-contracts@v5.0.2 --no-git
+forge install foundry-rs/forge-std --no-git
+forge test              # expect: 85 passed, 0 failed
+forge fmt --check contracts/EvaluationEscrow.sol test/EvaluationEscrow.t.sol \
+  script/DeployEvaluationEscrow.s.sol
 
-# B. Traction dataset (expects jq)
+# B. Canonical serializer (the only implementation of spec §3; zero deps)
+node references/canonical.test.mjs   # expect: ALL VECTORS PASS
+
+# C. Traction dataset (expects jq)
 cd docs/grants/traction-evidence
 bash verify.sh          # re-hashes 493 records; re-derives 483/426/57/91/64
 cat SUMMARY.json        # compare with the README headline table
 
-# C. Live links (must all return 200 with a browser User-Agent)
+# D. Live links (must all return 200 with a browser User-Agent; bare curl
+#    without a UA returns 403/502 on several of these due to anti-bot)
 curl -s -o /dev/null -w '%{http_code}\n' -A 'Mozilla/5.0' \
   https://stonkrobotics.xyz/skill
 curl -s -o /dev/null -w '%{http_code}\n' -A 'Mozilla/5.0' \
@@ -162,10 +191,18 @@ curl -s -o /dev/null -w '%{http_code}\n' -A 'Mozilla/5.0' \
 curl -s -o /dev/null -w '%{http_code}\n' -A 'Mozilla/5.0' \
   https://github.com/robot-policy-network/robot-policy-network
 
-# D. Citations
+# E. Citations
 curl -s -o /dev/null -w '%{http_code}\n' https://arxiv.org/abs/2505.09603
 curl -s -o /dev/null -w '%{http_code}\n' https://arxiv.org/abs/2403.12945
 ```
+
+**Where the automated proof lives.** The CI workflow is
+`.github/workflows/contract-ci.yml` on branch
+`ci/install-foundry-dependencies`; its jobs are: build → 85 Foundry tests →
+format check → anvil deploy smoke test (deploys `EvaluationEscrow`, asserts
+`owner`/`evaluator`/`usdc`/`nextJobId` read back as constructed, and asserts the
+`evaluator == owner` guard reverts) → canonical serialization vectors. Run
+history is public under the repository's Actions tab.
 
 ## 6. Scoring rubric we would apply to ourselves
 

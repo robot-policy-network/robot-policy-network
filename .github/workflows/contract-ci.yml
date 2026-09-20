@@ -19,6 +19,11 @@ jobs:
       - run: forge install foundry-rs/forge-std --no-git
       - run: forge build
       - run: forge test -vvv
+
+      # Proves the canonicalizer (the only implementation of spec §3) matches
+      # its pinned vectors. If this drifts, every protocol hash is suspect.
+      - name: Canonical serialization vectors
+        run: node references/canonical.test.mjs
       - name: Format check (settlement subsystem)
         run: forge fmt --check contracts/EvaluationEscrow.sol test/EvaluationEscrow.t.sol script/DeployEvaluationEscrow.s.sol
 

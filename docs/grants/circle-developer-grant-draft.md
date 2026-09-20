@@ -85,11 +85,11 @@ attributable performance *inputs* from which curated training assets
 
 **Layer 3 — Evidence/authorization-split USDC settlement (specified, tested,
 not yet deployed).** The v1 settlement protocol (`docs/settlement-spec.md`,
-frozen at `SPEC_VERSION = 1`) defines two independent EIP-712 artifacts: an
+frozen at `SPEC_VERSION = 2`) defines two independent EIP-712 artifacts: an
 `EvaluationAttestation` produced by the evaluator (evidence; can never move
 funds) and a `ReleaseAuthorization` signed by the payer (authority;
 insufficient alone). `release()` requires both. The `EvaluationEscrow`
-reference implementation passes 81 Foundry tests covering signature validity,
+reference implementation passes 85 Foundry tests covering signature validity,
 domain separation, deadlines, expiry, and settlement paths.
 
 The three layers form a flywheel — the first three stages run today, the
@@ -145,7 +145,7 @@ and every part of it compounds back into the Arc and Circle ecosystem.
 ## Why us and why now
 
 - **Why us:** the evaluation layer is already live and operating on Arc
-  mainnet, the settlement protocol is frozen with 81 passing tests, and the
+  mainnet, the settlement protocol is frozen with 85 passing tests, and the
   whole stack is open-source. We are past the idea stage; this grant funds
   deployment and integration, not research.
 - **Why now:** Arc is pre-mainnet and defining its flagship use cases. The
@@ -196,7 +196,7 @@ payer  → EIP-712 ReleaseAuthorization    (authority; insufficient alone)
 ```
 
 - **No independent security audit has been conducted.** M4 funds an external
-  review; the frozen spec and 81-test suite are the interim assurance.
+  review; the frozen spec and 85-test suite are the interim assurance.
 - **Trust assumptions are documented, not hidden.** Owner-controlled
   functions (`setEvaluator`, `pause`) can neither redirect an existing job's
   funds nor rewrite a recorded result; pausing blocks only *new* job creation
@@ -345,7 +345,7 @@ outcomes, not only this one.
 ## Risks and limitations
 
 - **Unaudited, undeployed settlement contract.** Mitigated by the frozen
-  spec, 81-test coverage, and M4's external review before any production
+  spec, 85-test coverage, and M4's external review before any production
   fund flows.
 - **Solo-founder execution risk.** Mitigated by the narrow 13-week scope and
   by shipping only already-specified components.

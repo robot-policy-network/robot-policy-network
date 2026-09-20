@@ -86,6 +86,7 @@ contract DeployEvaluationEscrow is Script {
 
         console2.log("");
         console2.log("deployed at       :", address(escrow));
+        console2.log("SPEC_VERSION      :", escrow.SPEC_VERSION());
         console2.log("owner()           :", escrow.owner());
         console2.log("evaluator()       :", escrow.evaluator());
         console2.log("usdc()            :", address(escrow.usdc()));
