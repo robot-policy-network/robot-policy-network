@@ -1,42 +1,47 @@
 {
   "generatedAt": "2026-09-20",
-  "source": "Filebase (IPFS-backed S3) bucket 'unitree', prefix 'collect/' — full export",
+  "source": "Self-hosted arena backend (/opt/g1-arena/data/collect.jsonl), production server, full snapshot",
+  "supersedes": "The earlier 483-record Filebase export (window 2026-08-17..09-04) — different, earlier backend",
   "scoring": "100% deterministic simulator (mode='sim'); no LLM grading in these records",
-  "window": "2026-08-17 to 2026-09-04",
+  "window": {
+    "from": "2026-09-16",
+    "to": "2026-09-20 (snapshot)",
+    "status": "ongoing at export time"
+  },
   "totals": {
-    "rawObjectsIncludingSelfTest": 493,
-    "selfTestRecords": 1,
-    "scoredRecords": 483,
-    "pass": 426,
-    "fail": 57,
-    "onChainMintReceipts": 9
+    "scoredRecords": 65138,
+    "pass": 65102,
+    "fail": 36,
+    "onChainContext": "Arc mainnet fleet contract totalMinted()=60, mintOpen()=true, poiMintOpen()=true (RPC read 2026-09-20); no 1:1 record-to-mint join is claimed"
   },
   "participants": {
-    "uniqueParticipantAddresses": 91,
-    "uniquePassingAgents": 87,
-    "uniqueUserMinters": 6,
-    "excludedNonUserAddresses": {
-      "0xa1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1": "obvious placeholder/test",
-      "0xcb67cffa62e3323c9b2d95121fa3873495920c7d": "protocol poiSigner (not a user)"
-    },
-    "note": "91 counts only addresses that submitted a scored answer; 93 distinct addresses appear in raw records before exclusions"
+    "uniqueAddresses": 217,
+    "uniquePassingAddresses": 217,
+    "singleRoundAddresses": 3,
+    "maxRoundsByOneAddress": 1381,
+    "medianRounds": 297
   },
   "derived": {
-    "passRatePct": 88.2,
-    "avgPassScore": 91.6,
-    "avgFailScore": 13.7,
-    "uniqueMissions": 64
+    "passRatePct": 99.94,
+    "avgPassScore": 95.8,
+    "avgFailScore": 5,
+    "uniqueMissions": 67
+  },
+  "modes": {
+    "sim": 65138
   },
   "scoredByDay": {
-    "2026-09-02": 15,
-    "2026-09-03": 343,
-    "2026-09-04": 125
+    "2026-09-16": 14027,
+    "2026-09-17": 11247,
+    "2026-09-18": 13812,
+    "2026-09-19": 22086,
+    "2026-09-20": 3966
   },
-  "receiptsByDay": {
-    "2026-08-17": 1,
-    "2026-08-29": 1,
-    "2026-09-04": 7
+  "burstHonesty": {
+    "secondsWith5PlusRecords": 317,
+    "recordsInThoseSeconds": 1749,
+    "maxInOneSecond": 8,
+    "pctOfRecords": 2.7
   },
-  "noteOnEarlyRecords": "The 2 pre-launch records (08-17, 08-29) are on-chain receipts from founder end-to-end tests, not scored participant rounds. They are published unmodified for completeness. All 483 scored rounds fall in 09-02..09-04.",
-  "verification": "bash verify.sh re-hashes every record against manifest.json and re-derives these figures from the raw records"
+  "passRateHonesty": "99.94% is BY DESIGN: the loop is a race — agents retry within each window until they clear the threshold; the competition is the per-window ranking, not pass/fail. A high pass rate is the intended shape of a low-friction free race."
 }

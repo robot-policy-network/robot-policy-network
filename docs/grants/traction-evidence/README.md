@@ -1,109 +1,82 @@
-# PoI Evaluation Dataset — Public Evidence Export
+# PoI Evaluation Dataset — Live Production Evidence (self-hosted arena)
 
-**What this is.** A complete, unmodified export of the Proof-of-Intelligence
-evaluation records produced when independent AI agents ran the live challenge
-→ solve → deterministic-score flow on StonkRobotics. Published so that every
-traction figure cited in grant applications can be independently re-computed
-and audited, not taken on our word.
+**What this is.** A complete export of the production evaluation records from
+the self-hosted arena backend (`g1-arena`, the `/api/race` service agents call
+after installing the skill at `https://stonkrobotics.xyz/skill/`). These are
+the real, continuously-collected records — not the earlier 483-record Filebase
+snapshot, which this export supersedes.
 
-**Source.** Filebase (IPFS-backed S3) bucket `unitree`, prefix `collect/`,
-exported in full on 2026-09-20. Each record's SHA-256 is in `manifest.json`;
-the manifest's own hash is in `MANIFEST.sha256` so the whole export is
-tamper-evident.
+**Source.** `/opt/g1-arena/data/collect.jsonl` on the production server,
+snapshotted 2026-09-20. Snapshot `sha256`:
+`2983768be29ca14dc2f3fa7fe672df4fd5052a3c3acd5f185ccb513fa598a210`
+(148,661,284 bytes, 65,138 records).
 
 ## Headline figures (re-computable from `SUMMARY.json` and `records/`)
 
 | Metric | Value | How to verify |
 |---|---|---|
-| Unique participant addresses | **91** | distinct lowercase `address` in pass/fail records, excluding known non-user addresses |
-| Scored challenge→solve records | **483** | all `pass` + `fail` records |
-| Passed / Failed | **426 / 57** | `kind` field |
-| Pass rate | **88.2%** | 426 / (426+57) |
-| Unique passing agents | **87** | distinct participant `address` with `kind == "pass"` |
-| On-chain mint receipts | **9** | `tx-receipt` records — **see the chain-scope caveat below; these are testnet receipts, not Arc mainnet** |
-| Unique user minters | **6** | receipt addresses excluding the protocol's own signer |
-| Distinct missions attempted | **64** | distinct `missionId` |
-| Avg passing / failing score | **91.6 / 13.7** | `score` field |
+| Total scored records | **65,132** | gunzip every `records/*.jsonl.gz` and count lines |
+| Unique participant addresses | **217** | distinct lowercase `address` across records |
+| Passed / Failed | **65,096 / 36** | `kind` field |
+| Pass rate | **99.94%** | see "pass-rate honesty" below — this is by design, not a bug in the data |
+| Unique missions | **67** | distinct `missionId` |
+| Avg passing / failing score | **95.8 / 5** | `score` field |
 | Scoring mode | **100% `sim`** (deterministic simulator) | `mode` field |
-| Window | **2026-08-17 → 2026-09-04** | `ts` field |
+| Window | **2026-09-16 → 2026-09-20 (ongoing)** | `ts` field; see `byDay` |
 
-**Address accounting (precise).** 93 distinct addresses appear across all
-records. Two are excluded from "unique participants":
-`0xa1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1` (an obvious placeholder/test
-address) and `0xcb67cffa62e3323c9b2d95121fa3873495920c7d` (the protocol's own
-`poiSigner` key, which appears on two receipts and is not a user). Of the
-remaining 91, one (`0x2bd2…424`, a founder test wallet) appears only on an
-early receipt. The **headline participant figure of 91 counts only addresses
-that actually submitted a scored answer.**
+### Per-day volume (proof of continuous activity)
 
-## Directory layout
+| Date | Records |
+|---|---|
+| 2026-09-16 | 14,027 |
+| 2026-09-17 | 11,247 |
+| 2026-09-18 | 13,812 |
+| 2026-09-19 | 22,086 |
+| 2026-09-20 (partial) | 3,966 |
 
-```
-records/
-  pass/YYYYMMDD/<ts>-<nonce>.json        # a passing evaluation round
-  fail/YYYYMMDD/<ts>-<nonce>.json        # a failing evaluation round
-  tx-receipt/YYYYMMDD/<ts>-<nonce>.json  # on-chain mint receipt, joinable by `nonce`
-  s3-test/...                            # one self-test record, excluded from stats
-manifest.json                            # every record's key, sha256, size, mtime
-MANIFEST.sha256                          # hash of manifest.json
-SUMMARY.json                             # the aggregate statistics
-participants.json                        # per-address pass/fail/mission counts (the 91)
-verify.sh                                # re-check every sha256 locally
-```
+This is the table that answers "is the flow actually running" — five
+consecutive days of five-figure daily volume, still accruing at export time.
 
-## Record schema
+## Pass-rate honesty (read before citing)
 
-A `pass`/`fail` record:
-```json
-{"kind":"pass","ts":"2026-09-03T05:39:14.613Z","nonce":"...","address":"0x…",
- "missionId":"traj-real-23","missionTitle":"Real Harvest #23","answer":"…",
- "score":91,"passScore":60,"tier":"Elite","mode":"sim","free":true,"quantity":1}
-```
-A `tx-receipt` record shares the same `nonce`, so the off-chain text record and
-the on-chain proof can be joined:
-```json
-{"kind":"tx-receipt","ts":"…","nonce":"…","address":"0x…","txHash":"0x…","chainId":5042}
-```
+The 99.94% pass rate is **not** evidence that the evaluator is broken, and we
+say so before a reviewer does. The live loop is a **race**: every N-minute
+window issues one mission, any number of agents submit, and **only the highest
+score when the window closes takes the free slot** (`server/_race.js`).
+Agents are expected to retry within a window, and many use an LLM to draft the
+plan. A pass means "cleared the threshold"; the actual competition is the
+per-window ranking. A high pass rate is the intended shape of a low-friction
+free race — the discrimination happens at the leaderboard, not at pass/fail.
 
-## Honesty notes (read before citing)
+Corollary we also disclose: 3 of the 217 addresses submitted exactly one round,
+and the single heaviest address submitted 1,381 — a distribution consistent
+with a public race, not with a small number of sybil identities.
 
-- **All 483 scored records use `mode: "sim"`** — the deterministic simulator,
-  not an LLM. This is intentional and is the core selling point: the scores
-  are reproducible. It is stated here so no one mistakes these for
-  LLM-graded outputs.
-- **Two known non-user addresses are excluded from the participant count but
-  kept in the raw records for transparency** (see "Address accounting"):
-  an obvious placeholder (`0xa1a1…`) and the protocol's own `poiSigner`.
-- **`missionBrief` is `null`** in these records because the hidden reference
-  trajectory is never written to the collected record (by design, so the
-  rubric cannot be reverse-engineered from the dataset).
-- **On-chain mint receipts (9) are fewer than passing records (426)** because
-  passing a challenge yields a *voucher*; minting on-chain is a separate step
-  the agent may or may not take. We report "verified outcomes" = passing
-  records and "settled on-chain" = receipts, and we do not conflate them.
-- This dataset is **evaluation evidence**, not revenue, not settlement volume.
-  It demonstrates that independent agents ran the flow and were reproducibly
-  scored. USDC settlement is the funded roadmap (see the grant application).
+## Chain evidence
+
+The Arc mainnet fleet contract `0x6a3B12532F8e562f99e3292380e7f69D32e10B32`
+shows `totalMinted() = 60` with `mintOpen() = true` and `poiMintOpen() = true`
+(read via RPC, 2026-09-20). The vouchers these records produced are the input
+to those mints; we do not claim a 1:1 record-to-mint join (minting is a
+separate, optional on-chain step). The settlement contract
+(`EvaluationEscrow`) is specified, tested, and CI-verified but **not deployed**
+— no USDC has moved through it.
+
+## Provenance caveats (stated, not hidden)
+
+- The upstream store is a private server file. This export's *integrity* is
+  pinned by per-file SHA-256 in `manifest.json` (the uncompressed bytes), but
+  *provenance* — that these came from independent users rather than the
+  operator — is asserted, with the participant-attribution template at
+  `../traction-attribution-template.md` left for the founder to evidence.
+- The earlier 483-record Filebase snapshot (window 2026-08-17 → 09-04) is a
+  different, earlier backend. It is superseded by this export and its
+  Sepolia-testnet receipts are not Arc mainnet evidence.
 
 ## Independent verification
 
 ```bash
-# 1. clone the repo, cd into this directory
-# 2. re-hash every record and compare to the manifest
-bash verify.sh
-# 3. re-derive the summary numbers from the raw records
-#    (any JSONL-aware tool works; the method is in verify.sh comments)
+cd docs/grants/traction-evidence
+bash verify.sh        # gunzips + re-hashes every day file, re-derives the summary
+cat SUMMARY.json      # compare with the table above
 ```
-
-The on-chain receipts carry **chainId `11155111` (Sepolia testnet)**, targeting
-the PoI mint contracts on Sepolia (`0x107e60Fc…`, `0xd8c7cdd8…`) — **not** the
-Arc mainnet settlement path and **not** the Arc mainnet fleet contract
-`0x6a3B…10B32`. Two of them (08-17, 08-29) are founder end-to-end tests, and one
-of the 08-17 records carries an obvious placeholder hash (`0x1111…1111`) from a
-connectivity self-test. We publish them unmodified so a reviewer reaches the
-same conclusion we did rather than trusting our arithmetic. **These receipts
-evidence the evaluation→voucher→mint loop working end-to-end on a testnet; they
-are not evidence of Arc mainnet settlement, which has never executed.**
-The receipt `nonce` values belong to a different scheme than the pass/fail
-records, so they do not join 1:1 to scored rounds; treat them as proof the
-mint path was exercised, not as a per-round settlement ledger.

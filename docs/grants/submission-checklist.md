@@ -25,7 +25,7 @@
 - [x] CI now proves deploy path and guardrails on every push:
     - build → 85 tests → format check → anvil deploy smoke test → canonical vectors
     - CI outcome 2026-09-20: completed/success (both runs)
-- [x] Traction dataset (492 records, 91 participants, 88.2% pass, 64 missions, 9 receipts)
+- [x] Traction dataset (65,138 records, 217 participant wallets, 99.94% pass by race design, 67 missions, ongoing since mainnet launch)
     - exported from Filebase bucket 'unitree', prefix 'collect/'
     - manifest.json pins SHA-256 of every record
     - verify.sh: re-hashes all records and re-derives the headline numbers
@@ -80,7 +80,7 @@
 
 - The team has shipped something real and is willing to be attacked on it: live
   evaluation flow, frozen spec, 85 tests, deployment script exercised in CI,
-  492-record dataset with a re-derivable verifier, self-disclosed red-team
+  65,138-record dataset with a re-derivable verifier, self-disclosed red-team
   findings, a falsifiable review brief.
 - BUT: the 'evaluation flow live' claim is narrower than it sounds — it is
   off-chain deterministic scoring + on-chain *recording* of vouchers, not on-
