@@ -188,14 +188,35 @@ application's strength is that it does not pretend otherwise.
 Ranked by impact per unit of effort:
 
 1. Merge the evidence and the spec to `main` so a reviewer sees them by
-   default.
+   default. **(PR open; blocked on protected-branch review.)**
 2. Deploy `EvaluationEscrow` to Arc testnet and record one real settlement
    transaction — that single hash would answer questions 1, 3, 7, and 8 above.
+   **(Deploy script now exists and is CI-proven; only the funded deploy +
+   keys remain.)**
 3. Get one independent developer to integrate the challenge API and write
-   something public about it.
+   something public about it. **(Invitation text drafted in
+   `launch-content.md` §5; needs an actual external taker.)**
 4. Publish the evaluator so executability scoring is reproducible by third
-   parties, not just deterministic on our server.
+   parties, not just deterministic on our server. **(Analysis + 4-step
+   proposal now in `../evaluation-reproducibility.md`; implementation is a
+   post-grant task.)**
 5. Answer the "91 agents, how many humans?" question with a documented
    attribution story (e.g. a KOL campaign or community event) filed alongside
-   the dataset.
+   the dataset. **(Template created at
+   `traction-attribution-template.md`; needs founder input.)**
+6. Ship a whitepaper. **(Done — `../whitepaper.md`, 10 sections, honest
+   live/proposed status table.)**
+
+### Related documents
+
+| Document | Purpose |
+|---|---|
+| `../whitepaper.md` | Full protocol write-up with honest status table |
+| `../evaluation-reproducibility.md` | L0/L1/L2 verifiability analysis + L2 proposal |
+| `../security/red-team-findings.md` | Self-disclosed findings, incl. the gameable rubric |
+| `traction-evidence/README.md` | The dataset and how to re-derive it |
+| `traction-attribution-template.md` | Template for the 91-agent attribution answer |
+| `launch-content.md` | Community/X/directory/integration drafts |
+| `circle-developer-grant-draft.md` | The application itself (v5) |
+| `canonical-fact-sheet.md` | Claim governance: verified / confirmed / planned / do-not-claim |
 
