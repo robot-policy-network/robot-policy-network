@@ -9,41 +9,39 @@ claims are sourced in [`research-positioning-2026-09.md`](research-positioning-2
 
 ## One-line summary
 
-StonkRobotics (Robot Policy Network) is the evaluation-verification-settlement
-layer for the machine economy on Arc: deterministic evaluation of AI agents
-against real robot trajectories, on-chain verifiable records, and a frozen
-protocol that hard-separates evaluation evidence from payment authorization
-for USDC settlement.
+StonkRobotics (Robot Policy Network) is the trust and settlement layer for the
+machine economy on Arc: the first system where autonomous agents do verifiable
+work and get paid in USDC — with evaluation evidence and payment authorization
+cryptographically separated so no score can ever move money by itself.
 
 ## Problem
 
-The machine economy has a trust gap, and the market has already priced the
-two layers around it while leaving the middle empty.
+Arc's stated ambition is to be the economic OS for the internet, and its first
+priority use case is agentic economic activity. But there is a missing
+primitive at the center of that ambition: **how does a machine get paid for
+work without a human trusting the machine's word?**
 
-**Collection is funded and commoditized.** Axis Robotics raised a $12M seed
-(Hack VC, 2026) and PrismaX raised $11M (a16z CSX, 2025) to scale robot-data
-collection — both widely covered (CoinDesk, company announcements). DROID
-(Khazatsky et al., RSS 2024 Best Paper; arXiv 2403.12945) and Open
-X-Embodiment (2023) already publish over a million raw trajectories. Raw data
-is abundant.
+Every current answer fails in one of two ways. Agent-payment tools let agents
+*spend* USDC on a human's behalf — the human still decides. Escrow and oracle
+projects treat an unverified score as a payment instruction — so a manipulated
+or hallucinated result can move real money. Neither produces what a machine
+economy actually needs: **a payment that is triggered by proof of work, not by
+a claim of work.**
 
-**Academia shows the bottleneck is shifting from collection to curation.**
-DataMIL (Dass et al., MIT; arXiv 2505.09603) demonstrates that
-performance-aware data selection for robot imitation learning beats naive
-use of large prior datasets — and that naive selection can actively *harm*
-downstream success rates. Validated on 60+ simulation and real-world tasks
-against Open X-Embodiment, it shows the value is no longer in amassing raw
-demonstrations but in selecting the right ones. More data does not reliably
-yield better policies; better-selected data does.
+The robot-AI side has the same hole. Collection is funded and commoditized —
+Axis Robotics raised a $12M seed (Hack VC, 2026) and PrismaX raised $11M
+(a16z CSX, 2025); DROID (RSS 2024 Best Paper; arXiv 2403.12945) and Open
+X-Embodiment already publish over a million raw trajectories. Academia shows
+the bottleneck has shifted from collection to curation: DataMIL (Dass et al.,
+MIT; arXiv 2505.09603) proves performance-aware data selection beats naive
+scaling, and that naive selection can actively *harm* success rates. Yet the
+intersection of curation and settlement is thin — RoboTrain (Virtuals, 2026)
+does scoring but with a centralized human grading team and no crypto
+settlement.
 
-**Yet the intersection of curation and settlement is thin.** RoboTrain
-(Virtuals Protocol, 2026) validates scoring-as-a-product but relies on a
-centralized human grading team and — per its own launch coverage — no crypto
-settlement. Generic oracle and escrow projects treat an unverified score as a
-payment instruction. The result: robot-training data cannot be trusted as an
-asset, and machine work cannot be safely paid, because there is no
-trustworthy bridge between "the agent claims it did the work" and "a payer
-should release funds."
+**Nobody has built the bridge: verifiable machine work → payable machine
+work.** That bridge is exactly what Arc needs to turn "agentic economic
+activity" from a category on a grants page into real, measurable USDC flow.
 
 ## Product and current implementation
 
@@ -101,6 +99,52 @@ release → better data attracts better agents.
 This application is built for the program's first stated priority use case,
 **agentic economic activity**, and meets its core requirement that Arc be
 central to the flow of value, liquidity, or settlement.
+
+## What Arc and Circle gain
+
+We are not asking Circle to fund a tool that happens to use USDC. We are
+building the missing primitive that makes Arc's machine-economy thesis real,
+and every part of it compounds back into the Arc and Circle ecosystem.
+
+- **A new, recurring source of USDC demand that only Arc can serve.** Every
+  verified machine outcome that settles is a USDC transfer that would not
+  exist otherwise. As agent work scales, this is not a one-time integration —
+  it is a growing transaction stream denominated natively in Arc USDC.
+
+- **A defensible reason the machine economy runs on Arc and nowhere else.**
+  The combination we need — a deterministic evaluator, a low-cost chain for
+  high-frequency signed records, and native USDC settlement with fast
+  finality — is only coherently available on Arc. On any other chain the
+  settlement leg requires a bridge or a wrapper. We are building a reason for
+  an entire category of machine-economic activity to be Arc-exclusive.
+
+- **The reference implementation for a whole category.** The
+  evidence/authorization split is a general pattern any agentic-payments
+  project on Arc will need: how do you pay for a verified outcome without
+  letting the outcome-writer move money? Shipped open-source (MIT), our
+  `EvaluationEscrow` becomes the pattern others build on — which means more
+  projects on Arc, more USDC flow, and more developers reading Arc docs.
+
+- **A concrete Agent Stack showcase.** M3 makes StonkRobotics a working,
+  public demonstration of Circle Agent Stack powering real agent payments —
+  the kind of reference the Circle developer platform can point to when
+  onboarding the next hundred agent teams.
+
+- **Alignment with how Circle already measures success.** The program rewards
+  "measurable paths to production deployment" and ecosystem impact. Our
+  milestones are production deployments and public on-chain transactions —
+  the most legible, auditable form of impact a grants program can ask for.
+
+## Why us and why now
+
+- **Why us:** the evaluation layer is already live and battle-tested on Arc
+  mainnet, the settlement protocol is frozen with 81 passing tests, and the
+  whole stack is open-source. We are past the idea stage; this grant funds
+  deployment and integration, not research.
+- **Why now:** Arc is pre-mainnet and defining its flagship use cases. The
+  project that becomes the canonical "how machines get paid on Arc" reference
+  will be the one that ships first with a credible, audited, open protocol.
+  That window is open now and closes as the ecosystem matures.
 
 - **Settlement-finality fit.** Machine-speed work needs machine-speed,
   dollar-denominated settlement. Arc-native USDC (ERC-20 interface at
@@ -164,9 +208,25 @@ Funding figures are from company announcements and press coverage (CoinDesk,
 company blogs); verify current figures before submission.
 
 Collection is funded; curation-plus-settlement is open. Our moat is the
-combination competitors structurally lack: a deterministic, reproducible
-evaluator anchored to real robot data, plus an on-chain evidence/authorization
-split that makes scores payable without making them payment instructions.
+combination competitors structurally lack, and it is hard to replicate because
+it is not any single feature:
+
+1. **A deterministic, reproducible evaluator** anchored to real robot data —
+   most "scoring" projects use a human panel or a non-deterministic LLM call,
+   which cannot produce a reproducible, accountable on-chain artifact.
+2. **An on-chain evidence/authorization split** that makes scores payable
+   without making them payment instructions — a protocol-level property, not
+   a UI choice, and the reason a payer can trust a settlement without trusting
+   the evaluator.
+3. **Arc-native settlement** — the low-cost, fast-finality, native-USDC
+   environment that makes high-frequency machine micropayments economically
+   coherent. Competitors on other chains would have to rebuild the settlement
+   leg against a bridge.
+
+Each layer alone is copyable; the three together, already live and frozen,
+are not. And because the protocol is open-source, the moat is not secrecy —
+it is the compounding, time-stamped, on-chain record of verified outcomes
+that a later entrant cannot backfill.
 
 ## Milestones
 
