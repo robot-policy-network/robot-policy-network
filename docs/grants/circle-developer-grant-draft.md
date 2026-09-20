@@ -306,7 +306,32 @@ Conditional on grant award:
 - Entity: individual, DBA "StonkRobotics"; Legal Entity Name: N/A
   `<FINAL CONFIRM before signing>`
 - Email: **ritsuyan4763@gmail.com**
-- Team: solo founder — no unconfirmed members listed
+
+**Proven shipping ability.** The applicant has previously built and shipped
+**AI2Human Network** (`https://ai2human.work/`), a verification layer for
+open-world AI agents that compiles proof requirements, reviews evidence, and
+settles conditional USDC — the same "prove → verify → settle" architecture as
+this proposal, applied to *human* execution. Its public artifacts are
+verifiable now: the GitHub organization `ai2humannetwork` (created 2026-06-27)
+publishes six repositories including Base settlement contracts, a structured
+proof kit, and protocol specifications; the live product is reachable and
+includes a whitepaper, reviewer console, and task board. AI2Human was also a
+**second-place finisher in the OKX OnchainOS AI Hackathon** `<LINK PENDING —
+founder to supply a resolvable URL before submission>`.
+
+**Why this matters for this application.** StonkRobotics extends the same
+thesis to *machine* execution: AI2Human verifies work that only a human can
+do; Robot Policy Network verifies work that only a deterministic evaluator
+should judge. Two implementations, one conviction — the agent economy needs
+verification before it can have settlement. The applicant is not proposing a
+thesis they have never shipped; they have shipped it once already and this
+grant funds the Arc-native, machine-side implementation.
+
+**Honest caveats.** AI2Human settles on Base, not Arc, and is a separate
+project outside this proposal; it is cited as track record only, not as an
+integrated system. The team remains a solo founder with no advisors listed.
+`<LINK PENDING: supply the OKX hackathon announcement URL, or delete the
+award sentence if no public record exists — do not cite an unverifiable award>`
 
 ## Open-source / ecosystem contribution
 
@@ -359,6 +384,8 @@ outcomes, not only this one.
 | 4 | **Evidence visibility on `main`** — the traction dataset currently lives on the `ci/install-foundry-dependencies` branch. `main` is a protected branch that requires an approving review; a PR is open. A reviewer landing on the default branch will not see the dataset until the PR merges. | Founder / repo admin | **Open — reviewer-visible issue** |
 | 5 | **Dataset provenance caveat** — the Filebase bucket that holds the source records is private (HTTP 403 to unauthenticated readers). Reviewers can verify the *export we published* (hashes, re-derived stats, on-chain receipts) but cannot independently re-pull the upstream bucket. The export's provenance therefore rests on our word plus the on-chain receipts. Stated here rather than hidden. | Founder | Known limitation |
 | 6 | **Circle portal fields** — business details, integration plan, proposed milestones. The long-form draft is ready but has not yet been transcribed into `circle.com/grant`. | Founder | Not started |
+| 7 | **OKX hackathon award link** — the Team section cites a second-place finish. Supply a resolvable public URL (announcement, certificate, or post naming AI2Human) or delete the sentence. An unverifiable award is worse than no award. | Founder | **Open — blocks the Team claim** |
+| 8 | **Two-project, two-chain question** — AI2Human settles on Base; this proposal settles on Arc. Expect a reviewer to ask why. Prepare a one-paragraph answer (different verification domains, different settlement assets) before an interview. | Founder | Open |
 
 ## Appendix A — adversarial self-review log
 

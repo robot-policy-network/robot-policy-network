@@ -54,9 +54,20 @@ Ranked by how much damage they do if a reviewer hits them cold.
    evaluation and on-chain recording. Our one-line summary ("trust and
    settlement layer") is tighter than the truth; the body states the split.
 
-4. **One founder, no audit, no external committers.** 0 stars, 0 forks,
-   0 watchers on the repository as of 2026-09-20. No third-party endorsement
-   of any kind, and no evidence anyone outside the founder has built on it.
+4. **One founder — with a verifiable prior shipping record, but no external
+   validation.** On the positive side the applicant has shipped **AI2Human
+   Network** (`ai2human.work`, GitHub org `ai2humannetwork`, 6 public repos
+   incl. Base settlement contracts, created 2026-06-27) — the same
+   "prove → verify → settle" thesis applied to human execution. That is real
+   evidence of shipping ability, which Circle's criteria explicitly weight.
+   On the negative side: `ai2humannetwork` has **0 followers and 0 stars**
+   across its repos, this repository has **0 stars / 0 forks / 0 watchers**,
+   no independent audit exists, and no third party is known to build on
+   either project. The OKX hackathon second-place claim is
+   **founder-confirmed but not independently verifiable** — the official
+   announcement appears to publish winners as an image. *Probe:* ask for a
+   resolvable URL for the award, and ask why one project settles on Base and
+   the other on Arc.
 
 5. **`main` does not contain the work.** The default branch is protected and
    lags 15 commits; all evidence lives on `ci/install-foundry-dependencies`.
@@ -163,7 +174,7 @@ curl -s -o /dev/null -w '%{http_code}\n' https://arxiv.org/abs/2403.12945
 | Technical design quality | **Strong** | Evidence/authority split is a real insight; determinism enforced; accepted limitation documented rather than hidden |
 | Verifiability of claims | **Strong** | Hashes, re-runnable script, live links, chain addresses |
 | Traction / adoption | **Weak** | 91 addresses, 9 receipts, 0 community signal, 0 revenue, no third party building |
-| Team | **Weak** | Solo founder, no track record presented, no advisors |
+| Team | **Mixed** | Solo founder, but with a verifiable shipped prior project (AI2Human Network: live product + 6 public repos). Award claim unverifiable; no advisors; no external validation |
 | Market positioning | **Strong** | Sits in a documented academic gap and a funded-but-different competitor set |
 | Execution risk | **High** | Unaudited, undeployed payment path; single point of failure |
 | Honesty | **Unusually strong** | This document is itself the evidence |

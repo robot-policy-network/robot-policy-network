@@ -29,6 +29,9 @@ _Last updated: 2026-09-20._
 |---|---|
 | Applicant / project lead identity: **Richard** | CONFIRMED 2026-09-20 |
 | Applicant email: **ritsuyan4763@gmail.com** | CONFIRMED 2026-09-20 |
+| **Founder track record — AI2Human Network** (prior/parallel project, same founder): GitHub org `ai2humannetwork` (created 2026-06-27, bio: "The execution and verification layer for the agent economy"), 6 public repos incl. Base settlement contracts, proof-kit, protocol specs, agent skills | **VERIFIED 2026-09-20 via GitHub API** |
+| **Founder track record — AI2Human live product**: `https://ai2human.work/` (verification layer for open-world AI agents; proof → review → conditional USDC settlement; whitepaper + live demo) | **VERIFIED 2026-09-20 (HTTP 200)** |
+| **OKX OnchainOS AI Hackathon — 2nd place (with AI2Human)** | FOUNDER-CONFIRMED — **verifiable link still needed**; the official winners announcement appears to publish the list as an image |
 | Grant ask: **$25,000 over ~13 weeks** (proposed budget; Circle sizes the actual award — Circle publishes no amounts) | CONFIRMED 2026-09-20 |
 | Milestones: fast schedule, M1–M4 from 2026-10-11 to 2026-12-13 | CONFIRMED 2026-09-20 |
 | Legal entity: none; apply as individual, DBA "StonkRobotics" | Assumed per plan — final confirm before signing |
