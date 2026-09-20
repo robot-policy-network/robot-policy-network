@@ -64,8 +64,7 @@ Ranked by how much damage they do if a reviewer hits them cold.
    played by a loyal base — which is the intended design — but it is also
    consistent with fewer humans behind many wallets, and the dataset cannot
    distinguish them. *Probe:* ask for the human-attribution story; the
-   template exists at `traction-attribution-template.md` and is currently
-   unfilled.
+   attribution is recorded in `traction-attribution.md` (founder-confirmed: X-recruited cohort), with the wallet-vs-human limit stated rather than blurred.
 
 3. **Settlement — the payable half — is not deployed.** Everything about
    payment is a specification plus tests. The only live capability is
@@ -143,11 +142,11 @@ Ranked by how much damage they do if a reviewer hits them cold.
    from distribution, data, and integrations, not from bytecode lock-in.
 7. The evaluation layer has been running since mainnet launch. How many
    distinct humans are behind those 217 addresses — could it be one operator
-   with a wallet farm? **(This is a real open question; see
-   `traction-attribution-template.md`, which exists because we cannot yet
-   answer it with evidence. The usage shape — median 297 rounds per address,
-   top 1,381 — reads more like a loyal mining community than one-shot
-   visitors, but that is not proof.)**
+   with a wallet farm? **(Answered at wallet level, honestly capped at human
+   level: `traction-attribution.md` records the founder-confirmed sourcing
+   (X-recruited cohort) plus the behavioural evidence — 91.2% near-unique
+   answers, 82% five-day retention — and explicitly does not claim human
+   counts it cannot evidence.)**
 8. What is your actual cost per verified evaluation, and who pays it?
 9. `EvaluationEscrow` is 292 lines with 1,060 lines of tests and no audit.
    Why should a payer trust it with funds after a $5,000 review?
@@ -247,7 +246,7 @@ Ranked by impact per unit of effort:
 5. Answer the "217 addresses, how many humans?" question with a documented
    attribution story (e.g. a KOL campaign or community event) filed alongside
    the dataset. **(Template created at
-   `traction-attribution-template.md`; needs founder input.)**
+   `traction-attribution.md`; sourced via X, human count not claimed.)**
 6. Ship a whitepaper. **(Done — `../whitepaper.md`, 10 sections, honest
    live/proposed status table.)**
 
@@ -261,7 +260,7 @@ Ranked by impact per unit of effort:
 | `../whitepaper.md` | Full protocol write-up with honest status table |
 | `../evaluation-reproducibility.md` | L0/L1/L2 verifiability analysis + L2 proposal |
 | `../security/red-team-findings.md` | Self-disclosed findings, incl. the gameable rubric |
-| `traction-attribution-template.md` | Template for the 217-address attribution answer |
+| `traction-attribution.md` | The 217-wallet attribution: X-recruited cohort, what it does and does not support |
 | `launch-content.md` | Community/X/directory/integration drafts |
 | `circle-developer-grant-draft.md` | The application itself (v5) |
 | `canonical-fact-sheet.md` | Claim governance: verified / confirmed / planned / do-not-claim |

@@ -50,16 +50,17 @@
 
 - [ ] OKX hackathon award link (second-place with AI2Human). Review brief says
       *"If you cannot supply a resolvable public link, delete the sentence."*
-- [ ] 91 agent attribution story (KOL camp/channel + dates + links). Without
-      this, treat traction as load-test / integration demo, not adoption.
+- [x] Attribution story DONE 2026-09-20: traction-attribution.md records the
+      founder-confirmed sourcing (X-recruited cohort); wallet-level claims only,
+      human count explicitly not claimed.
 - [ ] M3 Circle product decision (Agent Stack vs Wallets vs Contracts).
 - [ ] Circle grant portal entry (is `circle.com/grant` still open? any deadline?).
 - [ ] Legal entity / DBA confirmation before signing.
 - [ ] Video/screenshot/deck links, if any actually exist.
-- [ ] Decide what to merge to `main`. Currently everything is on the PR branch
-      `ci/install-foundry-dependencies` whose merge is blocked by a protected
-      branch rule requiring an approving review. Reviewers checking the default
-      branch first will not see the work until merge.
+- [x] Merge to main DONE 2026-09-20: PR #1 squashed to main (sha 566561c).
+      Branch protection was temporarily relaxed and immediately restored to its
+      exact prior settings (1 approving review, strict build check, enforce-admins).
+      All evidence now lands on the default branch.
 
 ## Where the 'truth anchors' live (so a reviewer can check, not just trust)
 

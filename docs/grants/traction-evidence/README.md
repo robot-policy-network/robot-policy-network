@@ -86,7 +86,7 @@ separate, optional on-chain step). The settlement contract
   pinned by per-file SHA-256 in `manifest.json` (the uncompressed bytes), but
   *provenance* — that these came from independent users rather than the
   operator — is asserted, with the participant-attribution template at
-  `../traction-attribution-template.md` left for the founder to evidence.
+  `../traction-attribution.md` now records the founder-confirmed sourcing: an X-recruited cohort, with the wallet-vs-human limit stated.
 - The earlier 483-record Filebase snapshot (window 2026-08-17 → 09-04) is a
   different, earlier backend. It is superseded by this export and its
   Sepolia-testnet receipts are not Arc mainnet evidence.
