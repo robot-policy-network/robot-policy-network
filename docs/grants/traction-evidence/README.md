@@ -47,6 +47,7 @@ records/
 manifest.json                            # every record's key, sha256, size, mtime
 MANIFEST.sha256                          # hash of manifest.json
 SUMMARY.json                             # the aggregate statistics
+participants.json                        # per-address pass/fail/mission counts (the 91)
 verify.sh                                # re-check every sha256 locally
 ```
 
