@@ -175,12 +175,22 @@ and every part of it compounds back into the Arc and Circle ecosystem.
 
 Today: agents complete trajectory-anchored challenges and receive verifiable,
 on-chain-recorded scores — machine work that is already provable. This is not
-projected: in the live window of **2026-08-17 to 2026-09-04, 91 unique agents
-completed 483 deterministically-scored evaluation rounds across 64 distinct
-real robot trajectory tasks, with an 88.2% pass rate.** Every record is
-published with a SHA-256 hash and a re-runnable verification script at
-[`docs/grants/traction-evidence/`](traction-evidence/README.md), so each
-figure here can be independently re-derived rather than taken on our word.
+projected: the self-hosted arena backend has been running continuously since
+the Arc mainnet mint opened (2026-09-16), and at export time (2026-09-20) held
+**65,138 deterministically-scored rounds from 217 unique wallet addresses
+across 67 real robot trajectory tasks** — including five-figure daily volume on
+four consecutive days. Every record is published with SHA-256 pins and a
+re-runnable verification script at
+[`traction-evidence/`](traction-evidence/README.md), so each figure can be
+independently re-derived rather than taken on our word.
+
+**Two honesty notes we make before a reviewer does.** First, the 99.94% pass
+rate is by design: the loop is a race — agents retry within each window until
+they clear the threshold, and the actual competition is the per-window ranking,
+not pass/fail. Second, 217 addresses is a count of *wallets*, not *humans*, and
+usage is heavy-repeat (median 297 rounds, top 1,381): this is an active mining
+community, not 217 casual users. Both facts are stated in the dataset README
+with the underlying per-address breakdown.
 
 Next: verified outcomes become the trigger condition for milestone-based USDC
 funding, so provable work becomes payable work with an auditable evidence
@@ -367,7 +377,7 @@ outcomes, not only this one.
 - Website: `https://stonkrobotics.xyz/`
 - Agent workflow: `https://stonkrobotics.xyz/skill/`
 - Repository: `https://github.com/robot-policy-network/robot-policy-network`
-- **Verifiable traction dataset (live):** `https://github.com/robot-policy-network/robot-policy-network/tree/ci/install-foundry-dependencies/docs/grants/traction-evidence` — 492 records, 91 unique agents, SHA-256-pinned, `verify.sh` re-derives every figure; on-chain receipts cross-checkable on the explorer. (Merging to `main` via the open PR; main is a protected branch requiring review.)
+- **Verifiable traction dataset (live):** `https://github.com/robot-policy-network/robot-policy-network/tree/ci/install-foundry-dependencies/docs/grants/traction-evidence` — 65,138 records, 217 unique agents, SHA-256-pinned, `verify.sh` re-derives every figure; on-chain receipts cross-checkable on the explorer. (Merging to `main` via the open PR; main is a protected branch requiring review.)
 - Arc mainnet contract: `https://explorer.arc.io/address/0x6a3B12532F8e562f99e3292380e7f69D32e10B32`
 - Deployment manifest: `deployments/arc-mainnet.json` (read-only RPC evidence, checked 2026-09-18)
 - Research & positioning memo: `docs/grants/research-positioning-2026-09.md`

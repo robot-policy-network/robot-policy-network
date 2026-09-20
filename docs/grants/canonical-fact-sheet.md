@@ -20,8 +20,10 @@ _Last updated: 2026-09-20._
 | ARCROBO token: `0x90554cEaf18BD5545F4be6520a3077D327727297` | Arc explorer |
 | Arc-native USDC address: `0x3600000000000000000000000000000000000000` | `deployments/arc-mainnet.json` |
 | Live flow: challenge → mission plan → reproducible score → EIP-712 voucher → on-chain verification/recording | Contract source + live workflow |
-| `EvaluationEscrow` v1 spec frozen (`SPEC_VERSION = 2`), 85 passing Foundry tests | `docs/settlement-spec.md`, `forge test` in CI |
+| `EvaluationEscrow` v2 spec frozen (`SPEC_VERSION = 2`), 85 passing Foundry tests | `docs/settlement-spec.md`, `forge test` in CI |
 | Evaluation evidence and payment authorization are separate EIP-712 artifacts | `docs/settlement-spec.md` §1 |
+| Live production traction: 65,138 scored evaluation rounds from 217 unique wallets across 67 missions, ongoing since mainnet launch (2026-09-16); 100% deterministic scoring; Arc mainnet `totalMinted() = 60` | `docs/grants/traction-evidence/` (SHA-256-pinned export + `verify.sh`); RPC read 2026-09-20. Note: 217 addresses = wallets, not humans; provenance operator-attested |
+| Canonical serializer published in-repo with pinned vectors (`references/canonical.js`) | `node references/canonical.test.mjs` — ALL VECTORS PASS; CI |
 
 ## Founder-confirmed (not independently verifiable; user must reconfirm before use)
 

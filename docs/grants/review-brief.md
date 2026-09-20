@@ -18,27 +18,27 @@ this document. Re-derive it. Every figure below has a stated verification path.
 | 2 | `EvaluationEscrow` implements it with 85 passing tests | `contracts/EvaluationEscrow.sol`, `test/EvaluationEscrow.t.sol` | Install deps, then `forge test` — expect 85 passed | **True — local Foundry implementation and tests with a mock ERC-20; not deployed, not audited, no real USDC settlement has ever executed** |
 | 3 | The settlement contract is **not deployed** | spec preamble, `docs/limitations.md` | Query the Arc explorer for the address — it does not exist | **True (deliberate)** |
 | 4 | A deterministic evaluation and score-recording flow is live on Arc mainnet | contract `0x6a3B12532F8e562f99e3292380e7f69D32e10B32`, chain 5042 | Fetch the explorer page; read the runtime code. Note precisely what this means: scores are produced off-chain by our deterministic evaluator and **recorded** on-chain via voucher/mint; no evaluator attestation and no USDC flow through the settlement protocol exist on-chain | **True, with the scope above** |
-| 5 | 91 unique addresses submitted 483 scored rounds over 64 missions, 88.2% pass | `docs/grants/traction-evidence/` | Run `bash verify.sh` — re-hashes 493 records and re-derives the stats | **Recomputable from the published export; source provenance remains self-attested** (see §2.1) |
-| 6 | Scoring is 100% deterministic simulator, not an LLM | `mode: "sim"` in every scored record | `jq` the `mode` field across `records/` | **Recomputable from the published export; source provenance remains self-attested** |
+| 5 | 217 unique addresses submitted 65,138 scored rounds over 67 missions, 99.94% pass (by race design — see pass-rate honesty) | `docs/grants/traction-evidence/` | Run `bash verify.sh` — re-hashes 5 day-files and re-derives the stats | **Recomputable from the published export; source provenance remains operator-attested** (see §2.1) |
+| 6 | Scoring is 100% deterministic simulator, not an LLM | `mode: "sim"` in every scored record | `jq` the `mode` field across records | **Recomputable from the published export; source provenance remains operator-attested** |
 | 7 | The program's first official priority ("agentic economic activity") is our direct fit | `application-matrix.md` records official parameters | Visit `circle.com/grant` and the 2026-05-14 relaunch post | **True** |
 | 8 | Robotics research indicates data quality and curation are important bottlenecks; this project tests whether verified evaluation improves that layer | `research-positioning-2026-09.md` | Resolve arXiv 2505.09603 (DataMIL) and 2403.12945 (DROID) | **Citations verified 2026-09-20. The citations support the *importance of curation*, not that this project has solved it** |
-| 9 | Traction window is 2026-08-17 → 2026-09-04 | `SUMMARY.json` → `scoredByDay` / `receiptsByDay` | Check the `ts` fields in `records/` | **Recomputable from the published export; source provenance remains self-attested** |
-| 10 | 9 mint receipts exist in the dataset, **all on Sepolia testnet** (chainId 11155111), not Arc mainnet | `records/tx-receipt/` | Count files; note chainId and target contracts are Sepolia PoI mint contracts, NOT `0x6a3B…` on 5042 | **Recomputable from the export — but these evidence the testnet mint loop, not Arc settlement (which has never executed)** |
+| 9 | Traction window is 2026-09-16 → ongoing (mainnet launch day start) | `SUMMARY.json` → `scoredByDay` | Check the `ts` fields in records | **Recomputable from the published export; source provenance remains operator-attested** |
+| 10 | The Arc mainnet fleet contract shows `totalMinted() = 60`, `mintOpen() = true`, `poiMintOpen() = true` | RPC read 2026-09-20 | `cast call 0x6a3B12532F8e562f99e3292380e7f69D32e10B32 'totalMinted()(uint256)' --rpc-url https://rpc.mainnet.arc.io` | **True — real on-chain mints; no 1:1 join to evaluation records is claimed** |
 
 ### Dataset layers — read this before quoting any number
 
-The counts below answer different questions. Quoting "492" as participants, or
-"91" as records, would both be wrong:
+The counts below answer different questions. Quoting "65,138" as participants,
+or "217" as records, would both be wrong:
 
 | Layer | Count | Meaning |
 |---|---|---|
-| Raw exported objects | **493** | Everything in the bucket, including one founder self-test |
-| Scored rounds | **483** | `pass` + `fail` records (426 + 57); excludes self-test |
-| Pass / Fail | **426 / 57** | Scored rounds by outcome; 88.2% pass rate |
-| On-chain mint receipts | **9** | `tx-receipt` records; a *separate* step from scoring, **all on Sepolia testnet** (2 founder end-to-end tests — one with a placeholder hash — and 1 the protocol's own signer) |
-| Unique participant addresses | **91** | Distinct addresses with ≥1 scored round, excluding 2 known non-user addresses |
-| Unique missions | **64** | Distinct `missionId` values |
-| Window | 2026-08-17 → 2026-09-04 | All 483 scored rounds fall on 09-02..09-04; the 2 pre-launch records are receipts |
+| Scored rounds (current arena, since mainnet launch) | **65,138** | `pass` + `fail` records (65,102 + 36); 100% `mode: "sim"` |
+| Pass / Fail | **65,102 / 36** | 99.94% pass — by design (retry-until-clear race); see pass-rate honesty |
+| Unique participant addresses | **217** | Distinct wallets with ≥1 scored round; median 297 rounds, max 1,381, only 3 single-round — a heavy-repeat mining community, not 217 casual users |
+| Unique missions | **67** | Distinct `missionId` values |
+| Window | 2026-09-16 → ongoing | Daily volume: 14,027 / 11,247 / 13,812 / 22,086 / 3,966 (partial) |
+| Arc mainnet mints | **60** | `totalMinted()` on `0x6a3B…`; separate optional on-chain step, no 1:1 join claimed |
+| Superseded earlier export | 483 records | Filebase era, window 2026-08-17 → 09-04; preserved in git history, superseded by this export |
 
 ## 2. Known weaknesses (stated before you find them)
 
@@ -53,17 +53,19 @@ Ranked by how much damage they do if a reviewer hits them cold.
    hash chain proves the export is unmodified since publication; it does not
    prove the records describe real agent runs.
 
-2. **A few records are pre-launch, and some arrive in sub-second bursts.**
-   Two pre-launch records (08-17, 08-29) are founder end-to-end receipts, not
-   participant rounds; they are published unmodified for completeness, and all
-   483 scored rounds fall in 09-02..09-04. Separately, 18 of 483 records
-   (3.7%) arrive inside sub-second bursts — the largest is 12 records in one
-   second (`2026-09-04T12:18:22Z`) from 12 distinct addresses. That pattern is
-   consistent with a parallel agent swarm (which is the intended usage) or
-   with one operator driving many keys; the dataset cannot distinguish them.
-   Also notable: **49 of the 91 participants submitted exactly one round**, and
-   no address exceeded 81 rounds. *Probe:* ask for the human-attribution story
-   behind 09-04's 47 distinct addresses.
+2. **Provenance is operator-attested, and the arena rewards heavy repeat
+   usage.** The upstream store is a private server file. You can verify the
+   published export (per-file SHA-256 in the manifest, re-derived stats,
+   `totalMinted() = 60` on-chain) but you cannot independently re-pull the
+   source. Separately, the usage shape is a *mining community*: only 3 of 217
+   addresses submitted exactly one round, the median address submitted 297
+   rounds, the top address 1,381, and 2.7% of records arrive in sub-second
+   bursts (max 8/second). That is consistent with a repeated-competition game
+   played by a loyal base — which is the intended design — but it is also
+   consistent with fewer humans behind many wallets, and the dataset cannot
+   distinguish them. *Probe:* ask for the human-attribution story; the
+   template exists at `traction-attribution-template.md` and is currently
+   unfilled.
 
 3. **Settlement — the payable half — is not deployed.** Everything about
    payment is a specification plus tests. The only live capability is
@@ -107,9 +109,10 @@ Ranked by how much damage they do if a reviewer hits them cold.
    qualitatively. If a figure is stale the competitive argument weakens, but
    the position does not collapse.
 
-9. **The "traction" is participation, not commerce.** 483 scored rounds, 9
-   receipts, zero revenue, zero paying counterparties. Reading the dataset as
-   commercial validation would be wrong, and the dataset README says so.
+9. **The "traction" is participation, not commerce.** 65,138 scored rounds, 60
+   Arc mainnet mints, zero revenue, zero paying counterparties. Reading the
+   dataset as commercial validation would be wrong, and the dataset README says
+   so.
 
 10. **Weakest link in the narrative.** "Each verified outcome becomes a
     curated training-data asset" is a roadmap item. The dataset proves agents
@@ -120,9 +123,9 @@ Ranked by how much damage they do if a reviewer hits them cold.
 ## 3. Questions a hostile reviewer should ask us
 
 1. If the upstream bucket is private, what stops you from having generated
-   these 492 records yourself?
-2. Who were the 91 agents? Can any of them be contacted to confirm they ran
-   the flow?
+   these 65,138 records yourself?
+2. Who were the 217 addresses? Can any of them be contacted to confirm they
+   ran the flow? (The earlier 483-record Filebase era had a separate 91.)
 3. Why does the dataset stop on 2026-09-04? Was the flow running on
    2026-09-20, and if so where are those records?
 4. Your KPI promises 100 verified outcomes per month. You hit 343 in one day
@@ -138,10 +141,13 @@ Ranked by how much damage they do if a reviewer hits them cold.
    over the same balance, designed for exactly this kind of flow — fits the
    product best, not because the bytecode is unportable. Any exclusivity comes
    from distribution, data, and integrations, not from bytecode lock-in.
-7. The evaluation layer has been live since ~August. How many distinct
-   humans are behind those 91 addresses — could it be one person with 91
-   keys? **(This is a real open question; see `traction-attribution-template.md`,
-   which exists because we cannot yet answer it with evidence.)**
+7. The evaluation layer has been running since mainnet launch. How many
+   distinct humans are behind those 217 addresses — could it be one operator
+   with a wallet farm? **(This is a real open question; see
+   `traction-attribution-template.md`, which exists because we cannot yet
+   answer it with evidence. The usage shape — median 297 rounds per address,
+   top 1,381 — reads more like a loyal mining community than one-shot
+   visitors, but that is not proof.)**
 8. What is your actual cost per verified evaluation, and who pays it?
 9. `EvaluationEscrow` is 292 lines with 1,060 lines of tests and no audit.
    Why should a payer trust it with funds after a $5,000 review?
@@ -180,7 +186,7 @@ node references/canonical.test.mjs   # expect: ALL VECTORS PASS
 
 # C. Traction dataset (expects jq)
 cd docs/grants/traction-evidence
-bash verify.sh          # re-hashes 493 records; re-derives 483/426/57/91/64
+bash verify.sh          # re-hashes 5 day-files; re-derives 65,138/65,102/36/217/67
 cat SUMMARY.json        # compare with the README headline table
 
 # D. Live links (must all return 200 with a browser User-Agent; bare curl
@@ -211,7 +217,7 @@ history is public under the repository's Actions tab.
 |---|---|---|
 | Technical design quality | **Strong** | Evidence/authority split is a real insight; determinism enforced; accepted limitation documented rather than hidden |
 | Verifiability of claims | **Strong** | Hashes, re-runnable script, live links, chain addresses |
-| Traction / adoption | **Weak** | 91 addresses, 9 receipts, 0 community signal, 0 revenue, no third party building |
+| Traction / adoption | **Mixed** | 65,138 scored rounds from 217 wallets over 5 days (ongoing), 60 on-chain mints — but heavy-repeat usage, 0 revenue, 0 community signal, no third party building |
 | Team | **Mixed** | Solo founder, but with a verifiable shipped prior project (AI2Human Network: live product + 6 public repos). Award claim unverifiable; no advisors; no external validation |
 | Market positioning | **Strong** | Sits in a documented academic gap and a funded-but-different competitor set |
 | Execution risk | **High** | Unaudited, undeployed payment path; single point of failure |
@@ -238,7 +244,7 @@ Ranked by impact per unit of effort:
    parties, not just deterministic on our server. **(Analysis + 4-step
    proposal now in `../evaluation-reproducibility.md`; implementation is a
    post-grant task.)**
-5. Answer the "91 agents, how many humans?" question with a documented
+5. Answer the "217 addresses, how many humans?" question with a documented
    attribution story (e.g. a KOL campaign or community event) filed alongside
    the dataset. **(Template created at
    `traction-attribution-template.md`; needs founder input.)**

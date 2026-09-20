@@ -1,10 +1,13 @@
 # Traction attribution — template for the 91-agent question
 
-**Why this file exists.** The traction dataset shows 91 unique agent addresses
-submitting 483 scored rounds. The single most damaging question a reviewer can
-ask is: *"How many humans are behind those 91 addresses?"* If we cannot answer
-with evidence, the honest default assumption is a sybil campaign, and the
-traction figure collapses from "adoption" to "one person with 91 keys."
+**Why this file exists.** The traction dataset shows 217 unique wallet
+addresses submitting 65,138 scored rounds since the Arc mainnet mint opened
+(2026-09-16), with heavy repeat usage (median 297 rounds per address, top
+1,381, only 3 single-round). The single most damaging question a reviewer can
+ask is: *"How many humans are behind those 217 addresses?"* If we cannot answer
+with evidence, the honest default assumption is a wallet farm, and the traction
+figure collapses from "an active mining community" to "one operator with many
+keys."
 
 **Status: TEMPLATE — every section needs founder input before this document is
 cited anywhere. Do not fill it with guesses.**
@@ -15,19 +18,21 @@ cited anywhere. Do not fill it with guesses.**
 
 These statements are derived from `participants.json` and are defensible today:
 
-- 91 addresses submitted at least one scored round; **49 submitted exactly one
-  round**; no address exceeded 81 rounds.
-- Distinct active addresses per day: 14 (09-02) → 33 (09-03) → 47 (09-04).
-- 18 of 483 records (3.7%) arrive inside sub-second bursts; the largest is 12
-  records in one second from 12 distinct addresses.
+- 217 addresses submitted at least one scored round; **only 3 submitted exactly
+  one round**; the median address submitted 297 rounds; the heaviest submitted
+  1,381.
+- Daily volume is large and sustained: 14,027 / 11,247 / 13,812 / 22,086 /
+  3,966 (partial) across 09-16..09-20 — the window starting exactly at the Arc
+  mainnet mint open.
+- 2.7% of records arrive inside sub-second bursts (max 8/second) — consistent
+  with parallel agent submissions during race windows.
 - All records use the deterministic simulator path (`mode: "sim"`).
 
-**What this pattern suggests:** many participants appear for one round and
-never return, while a small tail of addresses (81, 59, 38 rounds) account for a
-large share of volume. That is consistent with a broadcast/announcement that
-many independent agents tried once, plus a small number of heavy users. It is
-**also consistent with** one operator running many keys. The dataset cannot
-distinguish these, which is exactly why the attribution below matters.
+**What this pattern suggests:** a small, loyal, heavy-repeat mining community
+rather than one-shot visitors — which is the intended shape of an ongoing
+arena. It is **also consistent with** one operator running many keys. The
+dataset cannot distinguish these, which is exactly why the attribution below
+matters.
 
 ## Sections the founder must fill in
 
@@ -60,7 +65,7 @@ distinguish these, which is exactly why the attribution below matters.
 |---|---|
 | A public post/campaign driving agents to the flow | "91 agent addresses participated following a public campaign on <channel>, <date>" |
 | Named participants willing to confirm | "N independent operators have confirmed participation" |
-| Nothing attributable | Say exactly that, and do **not** imply independent adoption. "91 unique addresses ran the flow" remains true; "91 users" is not supportable. |
+| Nothing attributable | Say exactly that, and do **not** imply independent adoption. "217 unique addresses ran the flow" remains true; "217 users" is not supportable. |
 
 ## Non-negotiable rule
 
