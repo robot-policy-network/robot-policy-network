@@ -1,0 +1,47 @@
+{
+  "snapshotSource": "/opt/g1-arena/data/collect.jsonl",
+  "snapshotBytes": 148661284,
+  "snapshotSha256": "2983768be29ca14dc2f3fa7fe672df4fd5052a3c3acd5f185ccb513fa598a210",
+  "files": [
+    {
+      "file": "2026-09-16.jsonl.gz",
+      "records": 14027,
+      "rawBytes": 34378810,
+      "rawSha256": "f2b39c629a91132af68c7d8abd8148c6e2583cc8c5fc5103577feb510d45a084",
+      "gzBytes": 1284653,
+      "gzSha256": "3d948fe584bd8a64f8b46291d3f4d1a58c690b3ea41f3bf63d86778e647fa951"
+    },
+    {
+      "file": "2026-09-17.jsonl.gz",
+      "records": 11247,
+      "rawBytes": 25745136,
+      "rawSha256": "48c8b76c34406a974b05fdf6395a13a4dcb2bb2192e4671895b3acd360315c28",
+      "gzBytes": 1012136,
+      "gzSha256": "631d042d70eef663553a419fb81c967296994dc9aefc2ea3563c43feccb86247"
+    },
+    {
+      "file": "2026-09-18.jsonl.gz",
+      "records": 13812,
+      "rawBytes": 31225607,
+      "rawSha256": "3920029d68660fef79ebc4678e7f6b906adf607d52e8edb1186c5aa208196233",
+      "gzBytes": 1117809,
+      "gzSha256": "394346511f9f3d6e69fb8e5952ce6e36e422c9a396043961db1567d327874f6c"
+    },
+    {
+      "file": "2026-09-19.jsonl.gz",
+      "records": 22086,
+      "rawBytes": 48895888,
+      "rawSha256": "071bb9e8e91f628a65bee3155267ea622298910326f897d03ad9027d02b3224d",
+      "gzBytes": 1897133,
+      "gzSha256": "fcea1ec96058ffb1454934e0c3845ab37acdd832ee87de6400fccad313211a58"
+    },
+    {
+      "file": "2026-09-20.jsonl.gz",
+      "records": 3966,
+      "rawBytes": 8415843,
+      "rawSha256": "494e5af08bc5dd2d49cdc6c411bdb94d7f09ae15d56299eeda1be0eeddbb0e84",
+      "gzBytes": 336006,
+      "gzSha256": "ba0c3d68e7c5b5c8f49b36dbef5e7f2481a2270f8fd3e1085ee67e0a1e5e14e8"
+    }
+  ]
+}

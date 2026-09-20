@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-09-20",
+  "source": "Self-hosted arena backend (/opt/g1-arena/data/collect.jsonl), production server, full snapshot",
+  "supersedes": "The earlier 483-record Filebase export (window 2026-08-17..09-04) — different, earlier backend",
+  "scoring": "100% deterministic simulator (mode='sim'); no LLM grading in these records",
+  "window": {
+    "from": "2026-09-16",
+    "to": "2026-09-20 (snapshot)",
+    "status": "ongoing at export time"
+  },
+  "totals": {
+    "scoredRecords": 65138,
+    "pass": 65102,
+    "fail": 36,
+    "onChainContext": "Arc mainnet fleet contract totalMinted()=60, mintOpen()=true, poiMintOpen()=true (RPC read 2026-09-20); no 1:1 record-to-mint join is claimed"
+  },
+  "participants": {
+    "uniqueAddresses": 217,
+    "uniquePassingAddresses": 217,
+    "singleRoundAddresses": 3,
+    "maxRoundsByOneAddress": 1381,
+    "medianRounds": 297
+  },
+  "derived": {
+    "passRatePct": 99.94,
+    "avgPassScore": 95.8,
+    "avgFailScore": 5,
+    "uniqueMissions": 67
+  },
+  "modes": {
+    "sim": 65138
+  },
+  "scoredByDay": {
+    "2026-09-16": 14027,
+    "2026-09-17": 11247,
+    "2026-09-18": 13812,
+    "2026-09-19": 22086,
+    "2026-09-20": 3966
+  },
+  "burstHonesty": {
+    "secondsWith5PlusRecords": 317,
+    "recordsInThoseSeconds": 1749,
+    "maxInOneSecond": 8,
+    "pctOfRecords": 2.7
+  },
+  "passRateHonesty": "99.94% is BY DESIGN: the loop is a race — agents retry within each window until they clear the threshold; the competition is the per-window ranking, not pass/fail. A high pass rate is the intended shape of a low-friction free race."
+}
