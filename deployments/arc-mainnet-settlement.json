@@ -1,0 +1,67 @@
+{
+  "network": "Arc mainnet",
+  "chainId": 5042,
+  "rpc": "https://rpc.mainnet.arc.io",
+  "artifact": "EvaluationEscrow",
+  "specVersion": "2",
+  "deployedAt": "2026-09-20",
+  "contracts": {
+    "evaluationEscrow": {
+      "address": "0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491",
+      "deployTx": "0x(see broadcast/DeployEvaluationEscrow.s.sol/5042/run-latest.json)",
+      "owner": "0x92bF31eE080FB02addC121E6B6538ADc7d67157c",
+      "evaluator": "0x5dF7E403C3536cF8EBF6195aB51B57e869681979",
+      "usdc": "0x3600000000000000000000000000000000000000",
+      "status": "deployed; runtime code and state verified by read-only RPC on 2026-09-20"
+    }
+  },
+  "settlementProof": {
+    "claim": "A complete machine-work settlement executed on Arc mainnet: a payer escrowed USDC, an evaluator attested a result, and USDC was released only after BOTH signatures validated.",
+    "jobId": 1,
+    "payer": "0x92bF31eE080FB02addC121E6B6538ADc7d67157c",
+    "provider": "0x5dF7E403C3536cF8EBF6195aB51B57e869681979",
+    "evaluator": "0x5dF7E403C3536cF8EBF6195aB51B57e869681979",
+    "amountUsdc": "0.5",
+    "amountUnits6dp": 500000,
+    "passScore": 60,
+    "score": 87,
+    "status": "passed",
+    "taskHash": "0x428c8402c98d92b5c6d8a8d65892d06cea4cc2197420c7ef863b0454dde2e6b7",
+    "planHash": "0xae86e64485b990c6fb97ac3f5b9f0c5b9c052beb07be15cff19d7c8cfc48a41c",
+    "resultHash": "0xb14683f10c36bc4cd7b27525bc5417ae407d1bd23c1e466fe85b38170c386c6f",
+    "steps": [
+      {
+        "step": "createJob",
+        "tx": "0x087d419b4914509aabfd8bd5c9bdb28bc49a195a27f83f1c99984a74bd89a961",
+        "effect": "0.5 USDC transferred from payer to the escrow; JobCreated(jobId=1)"
+      },
+      {
+        "step": "verifyResult",
+        "tx": "0xad894353ba6f14bae0f51158ee0ee15327dca5e6934499ecac53cdf0f86f14e8",
+        "effect": "evaluator-signed EIP-712 EvaluationAttestation accepted; job state 1 -> 2 (RESULT_VERIFIED). No funds moved."
+      },
+      {
+        "step": "release",
+        "tx": "0x4a8ccd2d47d83c98eff02244f016f926f0565046de4b013d89f21c149cbd0c71",
+        "effect": "payer-signed ReleaseAuthorization validated against the recorded resultHash; job state 2 -> 3 (RELEASED); 0.5 USDC transferred to the provider"
+      }
+    ],
+    "observedBalanceChange": {
+      "providerUsdcBefore": 0,
+      "providerUsdcAfter": 500000,
+      "delta": 500000
+    },
+    "jobStateAfter": 3,
+    "independentlyCheckable": [
+      "cast call 0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491 'getJob(uint256)(...)' 1 --rpc-url https://rpc.mainnet.arc.io",
+      "cast call 0x3600000000000000000000000000000000000000 'balanceOf(address)(uint256)' 0x5dF7E403C3536cF8EBF6195aB51B57e869681979 --rpc-url https://rpc.mainnet.arc.io"
+    ],
+    "honestNotes": [
+      "This is a founder-funded demo with 0.5 USDC of the founder's own money. No third-party or user funds have ever touched the contract.",
+      "The demo ran on the ES module `cast` path rather than `forge script --broadcast` because Arc's native USDC calls a system precompile (0x1800...0001::isBlocklisted) inside transferFrom; the Arc node handles it natively, but forge's local revm simulation cannot and therefore refuses to broadcast. See docs/arc-integration-notes.md.",
+      "The contract owner (0x92bF...) is a demo key whose private key was shared during this session and must be treated as compromised. A production deployment must use a fresh owner key; owner powers are limited to rotating the default evaluator and pausing new job creation, and can never touch an existing job's funds.",
+      "The evaluator and the provider are the same address in this demo. In production they are distinct roles.",
+      "The amount is a demo amount (0.5 USDC); this is evidence that the path works, not a claim about volume."
+    ]
+  }
+}

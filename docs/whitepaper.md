@@ -18,7 +18,7 @@ work can be provably evaluated and settled in USDC without any single key being
 able to do both. We describe the deterministic evaluation method, the EIP-712
 artifact pair, the settlement contract, the security model and its accepted
 limitations, and the current status of each component — including which parts
-are live and which are specified but not yet deployed.
+are live, which are deployed, and which are still specification.
 
 ## 1. The problem
 
@@ -173,7 +173,11 @@ survive both without losing custody.
    revealing references.
 3. **No independent audit exists.** CI (85 tests plus a deploy-path smoke test)
    is the current assurance.
-4. **The settlement contract is not deployed.**
+4. **The settlement contract is deployed, but with a demo owner.** It runs at
+   `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` on Arc mainnet and has executed a real settlement, but its owner key
+   was handled in a session where it was exposed; a production deployment needs
+   a fresh owner key. Owner powers are bounded (rotate the default evaluator,
+   pause new job creation) and can never touch an existing job's funds.
 
 ## 7. What is live, and what is not
 
@@ -185,8 +189,8 @@ survive both without losing custody.
 | Frozen settlement specification (`SPEC_VERSION = 2`) | **published** |
 | `EvaluationEscrow` implementation + 85-test suite | **written, tested** |
 | Verified deploy script (unsafe-input guards, CI smoke test) | **written, tested** |
-| `EvaluationEscrow` on Arc mainnet | **not deployed** |
-| USDC settlement in production | **not live** |
+| `EvaluationEscrow` on Arc mainnet | **deployed** — `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491`, SPEC_VERSION 2 |
+| USDC settlement executed end to end | **executed once** — 0.5 USDC moved after both signatures validated (`0x4a8ccd2d47d83c98…`); founder-funded demo, not production volume |
 | Curated training-data assets (labels, hard cases, traces) | **roadmap** |
 
 ## 8. Relation to prior work

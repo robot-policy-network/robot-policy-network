@@ -85,7 +85,9 @@
   findings, a falsifiable review brief.
 - BUT: the 'evaluation flow live' claim is narrower than it sounds — it is
   off-chain deterministic scoring + on-chain *recording* of vouchers, not on-
-  chain settlement. USDC has not moved through this protocol, even once.
+  chain settlement. USDC **has** now moved through the protocol — once, on
+  2026-09-20, 0.5 USDC of the founder's own money (`0x4a8ccd2d47d83c98…`). That is
+  a proof of the path; it is not volume, revenue, or third-party adoption.
 - A 'second-place ARG/X hackathon' is claimed but not yet independently
   verifiable from the links I can reach.
 - The strongest remaining weakness is attribution: 91 agents could still be one

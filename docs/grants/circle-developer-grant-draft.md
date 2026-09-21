@@ -84,7 +84,12 @@ attributable performance *inputs* from which curated training assets
 (consensus labels, hard cases, reasoning traces — see roadmap) are derived.
 
 **Layer 3 — Evidence/authorization-split USDC settlement (specified, tested,
-not yet deployed).** The v1 settlement protocol (`docs/settlement-spec.md`,
+deployed and exercised on mainnet).** The settlement contract runs at
+`0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` on Arc mainnet (SPEC_VERSION 2) and has executed a complete
+settlement: 0.5 USDC escrowed, an evaluator attestation recorded, and the
+funds released only after the payer's separate authorization validated — every
+transaction hash is published in `deployments/arc-mainnet-settlement.json`.
+The protocol (`docs/settlement-spec.md`,
 frozen at `SPEC_VERSION = 2`) defines two independent EIP-712 artifacts: an
 `EvaluationAttestation` produced by the evaluator (evidence; can never move
 funds) and a `ReleaseAuthorization` signed by the payer (authority;
@@ -228,7 +233,9 @@ payer  → EIP-712 ReleaseAuthorization    (authority; insufficient alone)
   not re-computed on-chain, so a payer who skips off-chain recomputation
   trusts the evaluator to have bound the right plan. The protocol makes that
   check cheap and publishable; it does not make it automatic.
-- **The settlement contract is not deployed.** Only the evaluation/recording
+- **The settlement contract is deployed and has executed one settlement**, but
+  the demo ran on founder funds only (0.5 USDC) and its owner key must be
+  rotated for production. Only the evaluation/recording
   flow is live. This application funds its deployment, not its invention.
 
 ## Market and competition

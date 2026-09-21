@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {Script, console2} from "forge-std/Script.sol";
+import {Script} from "forge-std/Script.sol";
 import {EvaluationEscrow} from "../contracts/EvaluationEscrow.sol";
 import {DemoUSDC} from "../contracts/DemoUSDC.sol";
 import {MessageHashUtils} from "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
@@ -57,15 +57,6 @@ contract EndToEndSettlement is Script {
         EvaluationEscrow escrow = new EvaluationEscrow(usdc, evaluator);
         vm.stopBroadcast();
 
-        console2.log("=== End-to-end settlement proof ===");
-        console2.log("chain id:", block.chainid);
-        console2.log("evaluator:", evaluator);
-        console2.log("payer:", vm.addr(payerPk));
-        console2.log("usdc:", usdc);
-        console2.log("escrow:", address(escrow));
-        console2.log("SPEC_VERSION:", escrow.SPEC_VERSION());
-        console2.log("amount:", amount);
-
         _fund(escrow, usdc, evaluator, payerPk, amount);
         _verifyAndRelease(escrow, usdc, evaluator, payerPk, amount);
     }
@@ -79,7 +70,6 @@ contract EndToEndSettlement is Script {
         require(ok, "E2E: approve failed");
         uint256 jobId = escrow.createJob(evaluator, amount, _taskHash(), 60, uint64(_deadline()));
         vm.stopBroadcast();
-        console2.log("jobId:", jobId);
     }
 
     /// @dev Steps 2-4: evaluator attests, payer authorizes, USDC moves.
@@ -94,6 +84,7 @@ contract EndToEndSettlement is Script {
         uint256 sigDeadline = _deadline();
 
         // evidence: the evaluator signs; this alone cannot move funds
+        vm.startBroadcast(payerPk);
         escrow.verifyResult(
             jobId,
             _taskHash(),
@@ -105,17 +96,18 @@ contract EndToEndSettlement is Script {
             _attestation(escrow, jobId, sigDeadline)
         );
         require(escrow.getJob(jobId).state == 2, "E2E: not RESULT_VERIFIED");
+        vm.stopBroadcast();
 
         uint256 before = _balanceOf(usdc, evaluator);
 
         // authority: the payer signs; verification alone was not enough
+        vm.startBroadcast(payerPk);
         escrow.release(jobId, evaluator, amount, _resultHash(), _release(escrow, jobId, evaluator, amount));
 
+        vm.stopBroadcast();
         require(escrow.getJob(jobId).state == 3, "E2E: not RELEASED");
         uint256 paid = _balanceOf(usdc, evaluator) - before;
         require(paid == amount, "E2E: provider not paid exactly");
-        console2.log("provider USDC received:", paid);
-        console2.log("PASS: funded, verified and released end to end.");
     }
 
     // ─── deterministic artifacts (recomputed, never stored, to save stack) ──

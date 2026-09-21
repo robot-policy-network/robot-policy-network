@@ -31,7 +31,23 @@ The project references Arc native USDC at:
 
 Always verify the current network and asset configuration before signing a transaction.
 
-## Deploying `EvaluationEscrow` (not yet deployed)
+## `EvaluationEscrow` — deployed on Arc mainnet
+
+**Live address:** `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` (chain 5042, SPEC_VERSION 2), owner
+`0x92bF31eE080FB02addC121E6B6538ADc7d67157c`, evaluator
+`0x5dF7E403C3536cF8EBF6195aB51B57e869681979`, USDC
+`0x3600000000000000000000000000000000000000`.
+
+**A settlement has executed against it** — evidence with every transaction hash:
+[`../deployments/arc-mainnet-settlement.json`](../deployments/arc-mainnet-settlement.json).
+
+| step | tx |
+|---|---|
+| createJob (0.5 USDC escrowed) | `0x087d419b4914509aabfd8bd5c9bdb28bc49a195a27f83f1c99984a74bd89a961` |
+| verifyResult (evaluator attestation) | `0xad894353ba6f14bae0f51158ee0ee15327dca5e6934499ecac53cdf0f86f14e8` |
+| release (payer authorization → USDC moved) | `0x4a8ccd2d47d83c98eff02244f016f926f0565046de4b013d89f21c149cbd0c71` |
+
+### Redeploying from scratch
 
 `EvaluationEscrow` holds USDC for a job and releases it only when an
 evaluator-signed attestation **and** a payer-signed release authorization both

@@ -8,10 +8,16 @@ job settlement. Any change to a hash preimage, a typehash, a state transition,
 or an error code requires a new `SPEC_VERSION` and a new contract deployment.
 Change history belongs in [`CHANGELOG.md`](../CHANGELOG.md).
 
-> **Deployment status.** `EvaluationEscrow` is **not deployed** on Arc mainnet.
-> The address in [`../deployments/arc-mainnet.json`](../deployments/arc-mainnet.json)
-> belongs to `UnitreeG1Fleet`, which is a collection contract and has no
-> settlement path. See [`limitations.md`](limitations.md).
+> **Deployment status (updated 2026-09-20).** `EvaluationEscrow` **is deployed**
+> on Arc mainnet at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` (SPEC_VERSION 2), and a **complete settlement has
+> executed against it** — a payer escrowed 0.5 USDC, an evaluator attested a
+> result, and USDC was released only after both signatures validated. Every
+> transaction hash is recorded in
+> [`../deployments/arc-mainnet-settlement.json`](../deployments/arc-mainnet-settlement.json).
+> The other address in [`../deployments/arc-mainnet.json`](../deployments/arc-mainnet.json)
+> belongs to `UnitreeG1Fleet`, a collection contract with no settlement path.
+> Note that the demo was founder-funded; no third-party funds have touched the
+> contract. See [`limitations.md`](limitations.md).
 
 ### Changelog
 

@@ -44,7 +44,9 @@ _Last updated: 2026-09-20._
 ## Planned (roadmap only — never present as live)
 
 - General-purpose USDC job escrow and milestone-based settlement on Arc.
-- `EvaluationEscrow` deployment to Arc mainnet (spec frozen, not deployed).
+- Production deployment of `EvaluationEscrow` with a fresh owner key and an
+  independent review (the current deployment is a founder-funded demo whose
+  owner key must be treated as compromised).
 - Provider/robot-policy marketplace.
 - Integration of Circle products (Agent Stack, Wallets, or Contracts — exact
   selection must match the milestone plan before it is claimed).
