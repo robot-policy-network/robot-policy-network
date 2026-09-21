@@ -48,8 +48,8 @@
 
 ## What still requires original input from the applicant
 
-- [ ] OKX hackathon award link (second-place with AI2Human). Review brief says
-      *"If you cannot supply a resolvable public link, delete the sentence."*
+- [x] X Layer (OKX) hackathon 2nd-prize link - RESOLVED 2026-09-20:
+      https://x.com/ai2humannetwork/status/2071909716704293211 (public, resolvable)
 - [x] Attribution story DONE 2026-09-20: traction-attribution.md records the
       founder-confirmed sourcing (X-recruited cohort); wallet-level claims only,
       human count explicitly not claimed.
@@ -88,8 +88,8 @@
   chain settlement. USDC **has** now moved through the protocol — once, on
   2026-09-20, 0.5 USDC of the founder's own money (`0x4a8ccd2d47d83c98…`). That is
   a proof of the path; it is not volume, revenue, or third-party adoption.
-- A 'second-place ARG/X hackathon' is claimed but not yet independently
-  verifiable from the links I can reach.
+- The X Layer (OKX) hackathon 2nd-prize is verifiable at
+  https://x.com/ai2humannetwork/status/2071909716704293211 (resolved 2026-09-20).
 - The strongest remaining weakness is attribution: 91 agents could still be one
   operator. Until that is answered with evidence, traction should be framed as
   a negotiated load test.

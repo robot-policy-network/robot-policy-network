@@ -345,8 +345,7 @@ verifiable now: the GitHub organization `ai2humannetwork` (created 2026-06-27)
 publishes six repositories including Base settlement contracts, a structured
 proof kit, and protocol specifications; the live product is reachable and
 includes a whitepaper, reviewer console, and task board. AI2Human was also a
-**second-place finisher in the OKX OnchainOS AI Hackathon** `<LINK PENDING —
-founder to supply a resolvable URL before submission>`.
+**2nd-prize winner in an X Layer (OKX) hackathon** — public record: https://x.com/ai2humannetwork/status/2071909716704293211.
 
 **Why this matters for this application.** StonkRobotics extends the same
 thesis to *machine* execution: AI2Human verifies work that only a human can
@@ -359,8 +358,9 @@ grant funds the Arc-native, machine-side implementation.
 **Honest caveats.** AI2Human settles on Base, not Arc, and is a separate
 project outside this proposal; it is cited as track record only, not as an
 integrated system. The team remains a solo founder with no advisors listed.
-`<LINK PENDING: supply the OKX hackathon announcement URL, or delete the
-award sentence if no public record exists — do not cite an unverifiable award>`
+*(The hackathon award is publicly recorded on the founder's own account:
+https://x.com/ai2humannetwork/status/2071909716704293211 — verified resolvable
+2026-09-20.)*
 
 ## Open-source / ecosystem contribution
 

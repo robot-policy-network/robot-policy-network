@@ -83,10 +83,10 @@ Ranked by how much damage they do if a reviewer hits them cold.
    On the negative side: `ai2humannetwork` has **0 followers and 0 stars**
    across its repos, this repository has **0 stars / 0 forks / 0 watchers**,
    no independent audit exists, and no third party is known to build on
-   either project. The OKX hackathon second-place claim is
-   **founder-confirmed but not independently verifiable** — the official
-   announcement appears to publish winners as an image. *Probe:* ask for a
-   resolvable URL for the award, and ask why one project settles on Base and
+   either project. The X Layer (OKX) hackathon second-prize claim is
+   **now independently verifiable** — public post on the founder's account
+   naming the win: https://x.com/ai2humannetwork/status/2071909716704293211
+   (resolved 2026-09-20). *Probe:* ask why one project settles on Base and
    the other on Arc.
 
 5. **`main` does not contain the work.** The default branch is protected and
