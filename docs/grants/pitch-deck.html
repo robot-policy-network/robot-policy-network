@@ -69,17 +69,17 @@ li:before{content:'—';position:absolute;left:0;color:#4ea8ff}
 <div class="brow"><span class="blab">Sep 19</span><div class="btrack"><div class="bbar" style="width:100%;background:#4ea8ff"></div></div><span class="bval">22,086</span></div>
 <div class="brow"><span class="blab">Sep 20</span><div class="btrack"><div class="bbar" style="width:18%;background:#4ea8ff"></div></div><span class="bval">3,966</span></div>
 </div>
-<p class=sub style="margin-top:22px">Every record is in a published, SHA-256-pinned export with a re-runnable verifier. 65,138 scored rounds · 217 wallets · 67 real robot tasks.</p>
+<p class=sub style="margin-top:22px">Sep 20 is a partial day (as of export). 80 of 120 hourly windows had activity; the median active window held 121 wallets. Every record is in a published, SHA-256-pinned export with a re-runnable verifier. 65,138 scored rounds · 217 wallets · 67 real robot tasks.</p>
 </div>
 
 <div class=slide>
 <div class=kicker>Traction — the discriminator</div>
-<h2>The score separates executable from not, by 90.8 points</h2>
+<h2>The evaluator grades difficulty, not just pass/fail</h2>
 <div style='max-width:760px'>
 <div class="brow"><span class="blab">pass  (n=65,102)</span><div class="btrack"><div class="bbar" style="width:96%;background:#37d67a"></div></div><span class="bval">95.8</span></div>
 <div class="brow"><span class="blab">fail  (n=36)</span><div class="btrack"><div class="bbar" style="width:5%;background:#37d67a"></div></div><span class="bval">5.0</span></div>
 </div>
-<p class=sub style="margin-top:22px">A failing plan does not execute, so it scores a median of zero. This is the property a settlement-gating score must have — and the thing a text rubric cannot show.</p>
+<p class=sub style="margin-top:22px">Two things to see. First, the pass/fail split is 90.8 points — a failing plan does not execute. But the sharper evidence is gradation: the hardest real-trajectory task drew 184 distinct wallets and scored them in a tight 83–87 band while easier tasks sit at 100. A scorer that rubber-stamps produces neither a cliff nor a curve.</p>
 </div>
 
 <div class=slide>
@@ -100,7 +100,7 @@ actually serviced, and any constraint violations.</p>
 <tr><td>Submit a plan that does not run</td><td><code>seedsClean/n</code> is <b>multiplicative</b> — a hard violation on any seed cuts the whole score; on all seeds it is zero</td></tr>
 <tr><td>Draw a straight line between targets</td><td><code>align</code> = coverage <b>+ progression</b>. Coverage alone lets a straight line score 0.95</td></tr>
 <tr><td>Service the right targets in the wrong order</td><td><code>pick</code> = LCS on the <b>sequence</b>, not membership</td></tr>
-<tr><td>Copy a winning plan</td><td><code>precision</code> uses <b>per-target</b> constants: <code>offset=stem_mm</code>, <code>force=2·stem_mm·(2−ripe)</code></td></tr>
+<tr><td>Reuse a winning plan on the next mission</td><td><code>precision</code> uses <b>per-target</b> constants (<code>offset=stem_mm</code>, <code>force=2·stem_mm·(2−ripe)</code>) — the constants differ target to target</td></tr><tr><td>Copy a winning plan inside the same window</td><td>the race closes on <b>strictly-better</b> score — a copied plan scores identically to the original and cannot displace it</td></tr>
 <tr><td>Drive extra laps for efficiency marks</td><td><code>eff</code> is an <b>asymmetric</b> ratio capped at 1 — undershooting is free, overshooting costs</td></tr>
 <tr><td>Reverse-engineer the rubric</td><td>feedback names only public-state terms, never reference coordinates</td></tr>
 <tr><td>Arbitrage integer rounding</td><td>ranking uses <b>2-decimal</b> scores — a generic plan lands 95–97, which would otherwise be a mass tie</td></tr>
@@ -161,6 +161,31 @@ pay itself — the payer's separate signature is required.</p>
 <tr><td>Provider balance</td><td><b>0 → 500000</b> (0.5 USDC) · job state <b>3 (RELEASED)</b></td></tr>
 </table>
 <p class=foot>Founder-funded. No third-party funds have touched the contract.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Evidence — the community</div>
+<h2>A mining community, not a spike</h2>
+<table>
+<tr><th>Signal</th><th>Value</th><th>What it shows</th></tr>
+<tr><td>Wallets active all 5 days</td><td><b>123 of 217 (57%)</b></td><td>82% returned on 4+ days</td></tr>
+<tr><td>Wallets per active hourly window</td><td><b>median 121</b> (80 of 120 windows had activity)</td><td>the community shows up every hour</td></tr>
+<tr><td>Addresses with near-unique answers</td><td><b>198 of 217 (91.2%)</b></td><td>diversity median 0.988 — not one script replaying</td></tr>
+<tr><td>Median rounds per address</td><td><b>297</b></td><td>heavy-repeat usage is the intended shape</td></tr>
+<tr><td>Atomic actions submitted</td><td><b>2.5M</b></td><td>mean 38.1 ops per plan</td></tr>
+</table>
+<p class=foot>217 addresses are wallets, not humans. Provenance is operator-attested; the dataset cannot count people. Disclosed in traction-attribution.md.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>The moat</div>
+<h2>The moat is the combination, not any single feature</h2>
+<ul>
+<li><b>A deterministic, reproducible evaluator</b> anchored to real robot data — most "scoring" projects use a human panel or a non-deterministic LLM call</li>
+<li><b>An on-chain evidence/authority split</b> deployed and exercised — a protocol-level property, not a UI choice</li>
+<li><b>Arc-native settlement</b> — low-cost, fast-finality, native-USDC environment</li>
+</ul>
+<p style="margin-top:24px">Each alone is copyable. The three together, already live and frozen, are not. And because the protocol is open-source, the moat is not secrecy — it is the <b>time-stamped, on-chain record of verified outcomes</b> that a later entrant cannot backfill.</p>
 </div>
 
 <div class=slide>

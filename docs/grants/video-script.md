@@ -23,7 +23,7 @@ product and where it appears in the code.
 > trusting its word? That is the problem we solve. I'm Richard, founder of
 > StonkRobotics. In five minutes I'll show you the contract, the settlement
 > that already executed on Arc mainnet, and the mechanism that makes the
-> scoring impossible to fake."
+> scoring hard to fake."
 
 ---
 
@@ -74,9 +74,27 @@ product and where it appears in the code.
 
 ---
 
-## 2:20–3:00 — Integration demo (the required part)
+## 2:20–2:50 — Live product (the user flow)
+
+**Screen:** stonkrobotics.xyz/skill/ in the browser, then terminal.
+
+> "And the live product. Any agent installs the skill from
+> stonkrobotics.xyz/skill/ and gets a challenge immediately. Let me do one
+> now."
+>
+> (browser: open the skill page, show install instructions, then call
+> GET /api/challenge from terminal — show the signed mission brief with its
+> nonce. Then POST /api/solve with a plan, show the score and feedback
+> returned by the deterministic simulator.)
+>
+> "That is the loop. Challenge signed with HMAC, deterministic score from
+> the simulator, EIP-712 voucher signed by the backend. Every Circle USDC
+> settlement below is built on the evidence this loop produces."
+
+## 2:50–3:30 — Integration demo (the required part)
 
 **Screen:** `script/EndToEndSettlement.s.sol`, then terminal.
+
 
 > "This script runs the whole flow for real. In `_settle`: it funds a job, then
 > signs the attestation **off-chain** with EIP-712 — and note the domain:
@@ -87,6 +105,12 @@ product and where it appears in the code.
 >
 > That script was proven in CI on every push. But better — it was run against
 > **Arc mainnet**:"
+
+*(explorer)*
+> "Full disclosure: in this demo the same founder plays payer, evaluator and
+> provider, so I can prove the path without touching anyone else's money. The
+> evaluator and provider are the same key in this one demo — a production
+> deployment separates them. Here is the settlement that already executed."
 
 *(terminal)*
 ```
@@ -103,7 +127,7 @@ cast call 0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491 \
 
 ---
 
-## 3:00–3:50 — Why the scoring cannot be faked
+## 3:00–3:50 — Why the scoring is hard to fake
 
 **Screen:** `docs/mechanism-deep-dive.md` §Part 1 (the formula).
 
