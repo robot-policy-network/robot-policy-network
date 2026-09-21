@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=UTF-8>
+<title>StonkRobotics — Circle Developer Grants</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:#111;color:#eee}
+.slide{min-height:100vh;padding:60px 80px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #333}
+h1{font-size:3em;margin-bottom:20px;color:#fff}
+h2{font-size:2em;margin-bottom:30px;color:#4fc3f7;border-bottom:2px solid #4fc3f7;padding-bottom:10px}
+p,li{font-size:1.3em;line-height:1.7}
+.big{font-size:4em;color:#4fc3f7;font-weight:bold}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.tag{background:#4fc3f7;color:#111;padding:2px 10px;border-radius:4px;font-weight:bold}
+.mono{font-family:monospace;font-size:0.9em;color:#aaa}
+.green{color:#4caf50}.red{color:#f44336}
+li{margin:12px 0;list-style:none;padding-left:20px;border-left:3px solid #4fc3f7}
+table{width:100%;border-collapse:collapse;margin:20px 0}
+td,th{padding:12px;border:1px solid #444;font-size:1.1em}
+th{background:#222;color:#4fc3f7}
+</style>
+</head>
+<body>
+
+<div class=slide>
+<h1>StonkRobotics</h1>
+<p style='font-size:1.5em;color:#4fc3f7'>The trust and settlement layer for the machine economy on Arc</p>
+<p style='margin-top:40px;font-size:1.2em;color:#888'>Richard — Founder<br>Circle Developer Grants — Cohort 2<br>2026-09-20</p>
+</div>
+
+<div class=slide>
+<h2>The Problem</h2>
+<p class='big' style='margin-bottom:30px'>How does a machine get paid for work<br>without a human trusting the machine's word?</p>
+<p>Agent-payment tools: the human still decides.<br>Escrow/oracle designs: an unverified score moves money.<br>Human review: does not scale.</p>
+<p style='margin-top:30px;color:#4fc3f7'>We need: <b>a payment triggered by proof of work, not by a claim of work.</b></p>
+</div>
+
+<div class=slide>
+<h2>The Design: Evidence ≠ Authority</h2>
+<table>
+<tr><th></th><th>Evidence</th><th>Authority</th></tr>
+<tr><td><b>Who</b></td><td>Evaluator</td><td>Payer</td></tr>
+<tr><td><b>Artifact</b></td><td>EvaluationAttestation</td><td>ReleaseAuthorization</td></tr>
+<tr><td><b>Proves</b></td><td>this plan scored X against task T</td><td>pay P this amount for job J</td></tr>
+<tr><td><b>Can move funds?</b></td><td class=red>NO</td><td class=red>NO (alone)</td></tr>
+</table>
+<p style='margin-top:30px;font-size:1.4em;color:#4fc3f7'>release() requires BOTH. Neither key can settle alone.</p>
+</div>
+
+<div class=slide>
+<h2>What Is Live on Arc Mainnet</h2>
+<div class=grid>
+<div>
+<p><span class=tag>DEPLOYED</span></p>
+<p>EvaluationEscrow on Arc mainnet<br><span class=mono>0x479FF86C...7491</span></p>
+<p style='margin-top:20px'><span class=tag>SETTLED</span></p>
+<p>0.5 USDC escrowed, attested, released<br><span class=mono>tx 0x4a8ccd2d...</span></p>
+</div>
+<div>
+<p><span class=tag>65,138 ROUNDS</span></p>
+<p>217 wallets, 67 missions<br>5 days, ongoing</p>
+<p style='margin-top:20px'><span class=tag>90.8 PTS</span></p>
+<p>pass/fail separation<br>pass 95.8, fail 5.0</p>
+</div>
+</div>
+</div>
+
+<div class=slide>
+<h2>Evaluation Is Execution-Anchored</h2>
+<p>Agents submit structured action plans for tasks sliced from real robot trajectories (DROID dataset).</p>
+<p style='margin-top:20px'>A deterministic simulator executes each plan across seeded perturbations.</p>
+<p style='margin-top:20px'><b>A plan that does not run scores zero.</b></p>
+<p style='margin-top:30px;color:#888'>67 missions · 2.5M atomic actions · 100% mode:sim · no LLM grading</p>
+</div>
+
+<div class=slide>
+<h2>Traction You Can Verify</h2>
+<table>
+<tr><th>Metric</th><th>Value</th><th>How to check</th></tr>
+<tr><td>Scored rounds</td><td>65,138</td><td>bash verify.sh</td></tr>
+<tr><td>Unique wallets</td><td>217</td><td>jq participants.json</td></tr>
+<tr><td>Real robot tasks</td><td>67</td><td>distinct missionId</td></tr>
+<tr><td>On-chain mints</td><td>60</td><td>totalMinted() on 0x6a3B</td></tr>
+<tr><td>Settlement</td><td>1 executed</td><td>deployments/arc-mainnet-settlement.json</td></tr>
+</table>
+<p style='margin-top:20px;color:#888'>Every number is re-derivable. Do not trust us — recompute.</p>
+</div>
+
+<div class=slide>
+<h2>Why Arc and Why Circle</h2>
+<li>Program's first priority: <b>agentic economic activity</b></li>
+<li>Arc-native USDC is the settlement asset</li>
+<li>Circle <b>Agent Stack</b> integration = M3 (agents transact through Circle primitives)</li>
+<li>Evidence/authority split is purpose-built for agentic payments</li>
+</div>
+
+<div class=slide>
+<h2>Milestones</h2>
+<table>
+<tr><th>Milestone</th><th>Due</th><th>Budget</th><th>Status</th></tr>
+<tr><td>M1 Deploy</td><td>—</td><td>—</td><td class=green>DONE</td></tr>
+<tr><td>M2 Settlement</td><td>—</td><td>—</td><td class=green>DONE</td></tr>
+<tr><td>M3 Agent Stack</td><td>2026-11-22</td><td>$8,000</td><td>funded by this grant</td></tr>
+<tr><td>M4 Security review</td><td>2026-12-20</td><td>$5,000</td><td>funded by this grant</td></tr>
+</table>
+<p style='margin-top:20px'>M1 and M2 already complete on founder funds. This grant funds the remaining gaps.</p>
+</div>
+
+<div class=slide>
+<h2>Team</h2>
+<p><b>Richard</b> — solo founder</p>
+<p style='margin-top:20px'>Prior: <b>AI2Human Network</b> (ai2human.work) — verification layer for open-world AI agents.<br>Same thesis: task → proof → verify → settle. Shipped on Base.</p>
+<p style='margin-top:20px'>2nd prize, X Layer (OKX) hackathon.</p>
+<p style='margin-top:30px;color:#888'>We ship. The contract is deployed. A settlement has executed.</p>
+</div>
+
+<div class=slide>
+<h2>Links</h2>
+<p class=mono style='font-size:1.1em;line-height:2.2'>
+stonkrobotics.xyz<br>
+github.com/robot-policy-network/robot-policy-network<br>
+explorer.arc.io/address/0x479FF86C...7491<br>
+docs/grants/traction-evidence/ — verify.sh<br>
+docs/grants/review-brief.md — attack us<br>
+docs/arc-integration-notes.md — field notes for Arc builders
+</p>
+</div>
+
+</body>
+</html>
