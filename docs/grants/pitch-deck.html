@@ -1,131 +1,205 @@
 <!DOCTYPE html>
-<html lang=en>
-<head>
-<meta charset=UTF-8>
-<title>StonkRobotics — Circle Developer Grants</title>
+<html lang=en><head><meta charset="UTF-8">
+<title>StonkRobotics — Robot Policy Network</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Georgia,serif;background:#111;color:#eee}
-.slide{min-height:100vh;padding:60px 80px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #333}
-h1{font-size:3em;margin-bottom:20px;color:#fff}
-h2{font-size:2em;margin-bottom:30px;color:#4fc3f7;border-bottom:2px solid #4fc3f7;padding-bottom:10px}
-p,li{font-size:1.3em;line-height:1.7}
-.big{font-size:4em;color:#4fc3f7;font-weight:bold}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.tag{background:#4fc3f7;color:#111;padding:2px 10px;border-radius:4px;font-weight:bold}
-.mono{font-family:monospace;font-size:0.9em;color:#aaa}
-.green{color:#4caf50}.red{color:#f44336}
-li{margin:12px 0;list-style:none;padding-left:20px;border-left:3px solid #4fc3f7}
-table{width:100%;border-collapse:collapse;margin:20px 0}
-td,th{padding:12px;border:1px solid #444;font-size:1.1em}
-th{background:#222;color:#4fc3f7}
-</style>
-</head>
-<body>
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0b0d10;color:#e8eaed;line-height:1.5}
+.slide{min-height:100vh;padding:64px 88px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #1e2430;page-break-after:always}
+.kicker{font-size:0.85em;letter-spacing:0.18em;text-transform:uppercase;color:#5b6b83;margin-bottom:14px;font-weight:600}
+h1{font-size:3.4em;line-height:1.1;font-weight:700;letter-spacing:-0.02em}
+h1 .accent{color:#4ea8ff}
+h2{font-size:2.1em;font-weight:700;letter-spacing:-0.01em;margin-bottom:34px;color:#fff}
+h3{font-size:1.15em;font-weight:600;color:#4ea8ff;margin-bottom:8px}
+p,li{font-size:1.12em;color:#c3cad6}
+.lead{font-size:1.45em;color:#e8eaed;line-height:1.45}
+.sub{color:#7d8b9e;font-size:1em}
+.mono{font-family:'SF Mono',Monaco,monospace}
+.formula{font-family:'SF Mono',Monaco,monospace;font-size:1.25em;background:#12161d;border-left:3px solid #4ea8ff;padding:22px 26px;border-radius:6px;color:#9fd0ff;margin:22px 0;overflow-x:auto;white-space:pre}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
+.card{background:#12161d;border:1px solid #1e2430;border-radius:8px;padding:24px}
+.card .n{font-size:2.3em;font-weight:700;color:#4ea8ff;letter-spacing:-0.02em}
+.card .l{font-size:0.95em;color:#8896a8;margin-top:4px}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid #1e2430;font-size:1.02em}
+th{color:#7d8b9e;font-weight:600;font-size:0.85em;letter-spacing:0.08em;text-transform:uppercase}
+td code{font-family:'SF Mono',Monaco,monospace;color:#9fd0ff;font-size:0.94em}
+.yes{color:#37d67a;font-weight:600}.no{color:#ff5c5c;font-weight:600}
+.tag{display:inline-block;background:#16324f;color:#7cc3ff;padding:4px 11px;border-radius:5px;font-size:0.8em;font-weight:600;letter-spacing:0.05em;margin-right:7px}
+.foot{margin-top:44px;font-size:0.95em;color:#5b6b83}
+ul{list-style:none}li{padding-left:22px;position:relative;margin:11px 0}
+li:before{content:'—';position:absolute;left:0;color:#4ea8ff}
+@media print{.slide{min-height:auto;padding:40px}body{background:#fff;color:#111}.card,.formula{background:#f6f8fa;border-color:#dde3ea}}
+</style></head><body>
 
 <div class=slide>
-<h1>StonkRobotics</h1>
-<p style='font-size:1.5em;color:#4fc3f7'>The trust and settlement layer for the machine economy on Arc</p>
-<p style='margin-top:40px;font-size:1.2em;color:#888'>Richard — Founder<br>Circle Developer Grants — Cohort 2<br>2026-09-20</p>
+<div class=kicker>Circle Developer Grants — Cohort 2</div>
+<h1>Machines are starting to earn.<br>We built the part that <span class=accent>proves they did the work.</span></h1>
+<p class=lead style="margin-top:36px">StonkRobotics — the evaluation and settlement layer for<br>machine work on Arc.</p>
+<p class=foot>Richard, Founder · 2026-09-20 · stonkrobotics.xyz</p>
 </div>
 
 <div class=slide>
-<h2>The Problem</h2>
-<p class='big' style='margin-bottom:30px'>How does a machine get paid for work<br>without a human trusting the machine's word?</p>
-<p>Agent-payment tools: the human still decides.<br>Escrow/oracle designs: an unverified score moves money.<br>Human review: does not scale.</p>
-<p style='margin-top:30px;color:#4fc3f7'>We need: <b>a payment triggered by proof of work, not by a claim of work.</b></p>
-</div>
-
-<div class=slide>
-<h2>The Design: Evidence ≠ Authority</h2>
+<div class=kicker>The problem</div>
+<h2>An agent says it finished the job. Pay it.</h2>
+<p class=lead style="margin-bottom:30px">Every existing answer fails in a way that matters.</p>
 <table>
-<tr><th></th><th>Evidence</th><th>Authority</th></tr>
-<tr><td><b>Who</b></td><td>Evaluator</td><td>Payer</td></tr>
-<tr><td><b>Artifact</b></td><td>EvaluationAttestation</td><td>ReleaseAuthorization</td></tr>
-<tr><td><b>Proves</b></td><td>this plan scored X against task T</td><td>pay P this amount for job J</td></tr>
-<tr><td><b>Can move funds?</b></td><td class=red>NO</td><td class=red>NO (alone)</td></tr>
+<tr><th>Approach</th><th>What actually happens</th></tr>
+<tr><td><b>Agent payment tools</b></td><td>A human still decides. Nothing is verified — the wallet is automated, not the trust.</td></tr>
+<tr><td><b>Oracle / escrow designs</b></td><td>The reported score <i>is</i> the payment instruction, so a manipulated or hallucinated result moves money.</td></tr>
+<tr><td><b>Human review</b></td><td>Works, does not scale, and sits slower than the work it reviews.</td></tr>
 </table>
-<p style='margin-top:30px;font-size:1.4em;color:#4fc3f7'>release() requires BOTH. Neither key can settle alone.</p>
+<p class=lead style="margin-top:34px">The missing primitive: <b>a payment triggered by proof of work,<br>not by a claim of work — at machine cadence.</b></p>
 </div>
 
 <div class=slide>
-<h2>What Is Live on Arc Mainnet</h2>
-<div class=grid>
-<div>
-<p><span class=tag>DEPLOYED</span></p>
-<p>EvaluationEscrow on Arc mainnet<br><span class=mono>0x479FF86C...7491</span></p>
-<p style='margin-top:20px'><span class=tag>SETTLED</span></p>
-<p>0.5 USDC escrowed, attested, released<br><span class=mono>tx 0x4a8ccd2d...</span></p>
-</div>
-<div>
-<p><span class=tag>65,138 ROUNDS</span></p>
-<p>217 wallets, 67 missions<br>5 days, ongoing</p>
-<p style='margin-top:20px'><span class=tag>90.8 PTS</span></p>
-<p>pass/fail separation<br>pass 95.8, fail 5.0</p>
-</div>
-</div>
+<div class=kicker>Mechanism 1 of 3 — evaluation</div>
+<h2>Score by execution, and make faking it expensive</h2>
+<div class=formula>score = 100 × (seedsClean / n) × (0.38·align + 0.32·pick + 0.20·precision + 0.10·eff)</div>
+<p>Agents submit a structured action plan. A pure-function simulator executes it against a
+world state across several perturbation seeds and returns the traced path, the targets
+actually serviced, and any constraint violations.</p>
+<p style="margin-top:18px" class=sub>Same input → same output, always. Seeded PRNG, no clock, no global randomness.</p>
 </div>
 
 <div class=slide>
-<h2>Evaluation Is Execution-Anchored</h2>
-<p>Agents submit structured action plans for tasks sliced from real robot trajectories (DROID dataset).</p>
-<p style='margin-top:20px'>A deterministic simulator executes each plan across seeded perturbations.</p>
-<p style='margin-top:20px'><b>A plan that does not run scores zero.</b></p>
-<p style='margin-top:30px;color:#888'>67 missions · 2.5M atomic actions · 100% mode:sim · no LLM grading</p>
-</div>
-
-<div class=slide>
-<h2>Traction You Can Verify</h2>
+<div class=kicker>Mechanism 1 of 3 — each term closes an attack</div>
+<h2>Nothing in the formula is decorative</h2>
 <table>
-<tr><th>Metric</th><th>Value</th><th>How to check</th></tr>
-<tr><td>Scored rounds</td><td>65,138</td><td>bash verify.sh</td></tr>
-<tr><td>Unique wallets</td><td>217</td><td>jq participants.json</td></tr>
-<tr><td>Real robot tasks</td><td>67</td><td>distinct missionId</td></tr>
-<tr><td>On-chain mints</td><td>60</td><td>totalMinted() on 0x6a3B</td></tr>
-<tr><td>Settlement</td><td>1 executed</td><td>deployments/arc-mainnet-settlement.json</td></tr>
+<tr><th>Attack</th><th>Closed by</th></tr>
+<tr><td>Submit a plan that does not run</td><td><code>seedsClean/n</code> is <b>multiplicative</b> — a hard violation on any seed cuts the whole score; on all seeds it is zero</td></tr>
+<tr><td>Draw a straight line between targets</td><td><code>align</code> = coverage <b>+ progression</b>. Coverage alone lets a straight line score 0.95</td></tr>
+<tr><td>Service the right targets in the wrong order</td><td><code>pick</code> = LCS on the <b>sequence</b>, not membership</td></tr>
+<tr><td>Copy a winning plan</td><td><code>precision</code> uses <b>per-target</b> constants: <code>offset=stem_mm</code>, <code>force=2·stem_mm·(2−ripe)</code></td></tr>
+<tr><td>Drive extra laps for efficiency marks</td><td><code>eff</code> is an <b>asymmetric</b> ratio capped at 1 — undershooting is free, overshooting costs</td></tr>
+<tr><td>Reverse-engineer the rubric</td><td>feedback names only public-state terms, never reference coordinates</td></tr>
+<tr><td>Arbitrage integer rounding</td><td>ranking uses <b>2-decimal</b> scores — a generic plan lands 95–97, which would otherwise be a mass tie</td></tr>
 </table>
-<p style='margin-top:20px;color:#888'>Every number is re-derivable. Do not trust us — recompute.</p>
 </div>
 
 <div class=slide>
-<h2>Why Arc and Why Circle</h2>
-<li>Program's first priority: <b>agentic economic activity</b></li>
-<li>Arc-native USDC is the settlement asset</li>
-<li>Circle <b>Agent Stack</b> integration = M3 (agents transact through Circle primitives)</li>
-<li>Evidence/authority split is purpose-built for agentic payments</li>
+<div class=kicker>Mechanism 2 of 3 — the competition</div>
+<h2>Why the race is best-score-at-close, not first-past-the-post</h2>
+<p class=lead>Because first-past-the-post made it a latency contest.</p>
+<div class=grid2 style="margin-top:26px">
+<div class=card><h3>An agent</h3><p>closes the loop in ~90 seconds.</p></div>
+<div class=card><h3>A person on a phone</h3><p>pasting a brief into a chat model needs 2–3 minutes.</p></div>
+</div>
+<p style="margin-top:26px">So a human could never win one — no matter how good the plan was. Deciding on best score when the window
+closes makes submission time worth <b>nothing</b> and plan quality worth <b>everything</b>. That is the only version where
+the two compete in the same lane.</p>
+<p style="margin-top:22px"><b>And copying is useless by construction:</b> only a <i>strictly</i> better score displaces the
+leader. A copied plan scores exactly what the original did, fails to displace it, and the operator who solved it keeps the slot.
+Not detected — <i>identical</i>. Identical is not better.</p>
 </div>
 
 <div class=slide>
-<h2>Milestones</h2>
+<div class=kicker>Mechanism 2 of 3 — the adversarial economics</div>
+<h2>What actually stops farming</h2>
+<table>
+<tr><th>Control</th><th>Why this one and not the obvious one</th></tr>
+<tr><td><b>Per-IP daily cap (4)</b></td><td>Wallet addresses are free and the holdings gate reads 0 forever once a winner stops minting. Per-source is the cap that bites.</td></tr>
+<tr><td><b>Per-window try cap (8)</b></td><td>Bounds brute-forcing plan variants inside a window — and every attempt still lands in the dataset as a graded round.</td></tr>
+<tr><td><b>Per-wallet daily cap (2)</b></td><td>Deliberately low. A higher cap does not reward a good agent — it <b>deletes free robots</b>. Three wallets took 16 of the first 31 windows and converted them into 3 slots.</td></tr>
+<tr><td><b>Same mission per window</b></td><td>Hard-mode operators do not get a private harder draw, or the window's scores would not be comparable.</td></tr>
+</table>
+</div>
+
+<div class=slide>
+<div class=kicker>Mechanism 3 of 3 — settlement</div>
+<h2>No single key can move money</h2>
+<div class=formula>evaluator signs EvaluationAttestation   → evidence    · CANNOT move funds
+payer     signs ReleaseAuthorization    → authority   · insufficient alone
+
+release() executes only when BOTH validate</div>
+<p>The evaluator key is a <b>hot key</b>. The design assumes it will be compromised and makes
+that survivable: a compromised evaluator can forge a result on an open job, but still cannot
+pay itself — the payer's separate signature is required.</p>
+<p style="margin-top:20px"><span class=tag>DEPLOYED</span><span class=mono>0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491</span></p>
+<p class=sub style="margin-top:6px">Arc mainnet · SPEC_VERSION 2 · one full settlement executed (0.5 USDC)</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Evidence</div>
+<h2>Executed on Arc mainnet, not planned</h2>
+<table>
+<tr><th>Step</th><th>Transaction</th></tr>
+<tr><td>Deploy <code>EvaluationEscrow</code></td><td><code>0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491</code></td></tr>
+<tr><td><code>createJob</code> — 0.5 USDC escrowed</td><td class=mono><code>0x087d419b…</code></td></tr>
+<tr><td><code>verifyResult</code> — evaluator attestation</td><td class=mono><code>0xad894353…</code></td></tr>
+<tr><td><code>release</code> — payer authorization, USDC moves</td><td class=mono><code>0x4a8ccd2d…</code></td></tr>
+<tr><td>Provider balance</td><td><b>0 → 500000</b> (0.5 USDC) · job state <b>3 (RELEASED)</b></td></tr>
+</table>
+<p class=foot>Founder-funded. No third-party funds have touched the contract.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Evidence</div>
+<h2>A market already runs on it</h2>
+<div class=grid3>
+<div class=card><div class=n>65,138</div><div class=l>scored rounds, 5 days, ongoing</div></div>
+<div class=card><div class=n>217</div><div class=l>unique wallets competing</div></div>
+<div class=card><div class=n>121</div><div class=l>median wallets per hourly window</div></div>
+</div>
+<div class=grid3 style="margin-top:28px">
+<div class=card><div class=n>90.8</div><div class=l>point pass/fail separation</div></div>
+<div class=card><div class=n>91.2%</div><div class=l>of wallets submit near-unique plans</div></div>
+<div class=card><div class=n>2.5M</div><div class=l>atomic actions submitted</div></div>
+</div>
+<p style="margin-top:30px">Every record published with SHA-256 pins and a re-runnable verifier.
+<span class=sub>Do not trust our arithmetic — recompute it.</span></p>
+</div>
+
+<div class=slide>
+<div class=kicker>Positioning</div>
+<h2>Why Arc, why Circle, why now</h2>
+<ul>
+<li><b>Arc is the program's first stated priority: agentic economic activity.</b> We are not adjacent to it; we are the settlement primitive it needs.</li>
+<li><b>Arc-native USDC is the settlement asset</b> — used exclusively through the ERC-20 interface, per Arc's own guidance.</li>
+<li><b>M3 is a Circle integration, not a logo:</b> agents will transact through <b>Circle Agent Stack</b> primitives instead of raw RPC.</li>
+<li><b>We hit an Arc-specific integration wall and documented it:</b> the native-USDC <code>isBlocklisted</code> system precompile cannot be executed by forge's local simulation — real transactions work. Published as field notes for other Arc builders.</li>
+</ul>
+</div>
+
+<div class=slide>
+<div class=kicker>The ask</div>
+<h2>Two milestones, because two are already done</h2>
 <table>
 <tr><th>Milestone</th><th>Due</th><th>Budget</th><th>Status</th></tr>
-<tr><td>M1 Deploy</td><td>—</td><td>—</td><td class=green>DONE</td></tr>
-<tr><td>M2 Settlement</td><td>—</td><td>—</td><td class=green>DONE</td></tr>
-<tr><td>M3 Agent Stack</td><td>2026-11-22</td><td>$8,000</td><td>funded by this grant</td></tr>
-<tr><td>M4 Security review</td><td>2026-12-20</td><td>$5,000</td><td>funded by this grant</td></tr>
+<tr><td><b>M1</b> Deploy EvaluationEscrow to Arc mainnet</td><td>—</td><td>—</td><td class=yes>COMPLETE</td></tr>
+<tr><td><b>M2</b> End-to-end settlement demo</td><td>—</td><td>—</td><td class=yes>COMPLETE</td></tr>
+<tr><td><b>M3</b> Circle Agent Stack integration for the live agent workflow</td><td>2026-11-22</td><td>$8,000</td><td>funded by this grant</td></tr>
+<tr><td><b>M4</b> Independent security review, findings published</td><td>2026-12-20</td><td>$5,000</td><td>funded by this grant</td></tr>
 </table>
-<p style='margin-top:20px'>M1 and M2 already complete on founder funds. This grant funds the remaining gaps.</p>
+<p style="margin-top:26px"><b>Proposed: $25,000.</b> M1 and M2 were completed on founder funds <i>before</i> any award.
+The grant funds the distance between a working protocol and a production-ready one. Circle sizes the final award.</p>
 </div>
 
 <div class=slide>
-<h2>Team</h2>
-<p><b>Richard</b> — solo founder</p>
-<p style='margin-top:20px'>Prior: <b>AI2Human Network</b> (ai2human.work) — verification layer for open-world AI agents.<br>Same thesis: task → proof → verify → settle. Shipped on Base.</p>
-<p style='margin-top:20px'>2nd prize, X Layer (OKX) hackathon.</p>
-<p style='margin-top:30px;color:#888'>We ship. The contract is deployed. A settlement has executed.</p>
+<div class=kicker>Team</div>
+<h2>Prior shipping, same thesis</h2>
+<p class=lead><b>Richard</b> — solo founder.</p>
+<p style="margin-top:24px"><b>AI2Human Network</b> — verification layer for open-world AI agents:
+<i>task → proof → verify → settle</i>. Shipped and live on Base. GitHub org <code>ai2humannetwork</code>.
+<b>2nd prize, X Layer (OKX) hackathon.</b></p>
+<p style="margin-top:24px">That project proves the thesis on <b>human</b> execution. This one proves it on
+<b>machine</b> execution. Same architecture, different domain — and this one is already on mainnet.</p>
+<p class=foot>Contract deployed · settlement executed · data public and independently checkable.</p>
 </div>
 
 <div class=slide>
-<h2>Links</h2>
-<p class=mono style='font-size:1.1em;line-height:2.2'>
-stonkrobotics.xyz<br>
-github.com/robot-policy-network/robot-policy-network<br>
-explorer.arc.io/address/0x479FF86C...7491<br>
-docs/grants/traction-evidence/ — verify.sh<br>
-docs/grants/review-brief.md — attack us<br>
-docs/arc-integration-notes.md — field notes for Arc builders
-</p>
+<div class=kicker>Links</div>
+<h2>Everything is checkable</h2>
+<table>
+<tr><td>Site</td><td class=mono>stonkrobotics.xyz</td></tr>
+<tr><td>Agent workflow</td><td class=mono>stonkrobotics.xyz/skill/</td></tr>
+<tr><td>Repository</td><td class=mono>github.com/robot-policy-network/robot-policy-network</td></tr>
+<tr><td>Settlement proof (every tx)</td><td class=mono>deployments/arc-mainnet-settlement.json</td></tr>
+<tr><td>Traction verifier</td><td class=mono>docs/grants/traction-evidence/verify.sh</td></tr>
+<tr><td>Adversarial review brief — attack us</td><td class=mono>docs/grants/review-brief.md</td></tr>
+<tr><td>Mechanism rationale</td><td class=mono>docs/mechanism-deep-dive.md</td></tr>
+<tr><td>Arc field notes</td><td class=mono>docs/arc-integration-notes.md</td></tr>
+</table>
 </div>
 
-</body>
-</html>
+</body></html>
