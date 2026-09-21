@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html lang=en><head><meta charset="UTF-8">
+<meta name=viewport content="width=device-width,initial-scale=1">
 <title>StonkRobotics — Robot Policy Network</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0b0d10;color:#e8eaed;line-height:1.5}
 .slide{min-height:100vh;padding:64px 88px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #1e2430;page-break-after:always}
-.kicker{font-size:0.85em;letter-spacing:0.18em;text-transform:uppercase;color:#5b6b83;margin-bottom:14px;font-weight:600}
-h1{font-size:3.4em;line-height:1.1;font-weight:700;letter-spacing:-0.02em}
+.kicker{font-size:.85em;letter-spacing:.18em;text-transform:uppercase;color:#5b6b83;margin-bottom:14px;font-weight:600}
+h1{font-size:3.2em;line-height:1.08;font-weight:700;letter-spacing:-.02em}
 h1 .accent{color:#4ea8ff}
-h2{font-size:2.1em;font-weight:700;letter-spacing:-0.01em;margin-bottom:34px;color:#fff}
-h3{font-size:1.15em;font-weight:600;color:#4ea8ff;margin-bottom:8px}
-p,li{font-size:1.12em;color:#c3cad6}
-.lead{font-size:1.45em;color:#e8eaed;line-height:1.45}
-.sub{color:#7d8b9e;font-size:1em}
+h2{font-size:2em;font-weight:700;letter-spacing:-.01em;margin-bottom:26px;color:#fff}
+h3{font-size:1.1em;font-weight:600;color:#4ea8ff;margin-bottom:8px}
+p,li{font-size:1.08em;color:#c3cad6}
+.lead{font-size:1.4em;color:#e8eaed;line-height:1.45}
+.sub{color:#7d8b9e;font-size:.95em}
 .mono{font-family:'SF Mono',Monaco,monospace}
-.formula{font-family:'SF Mono',Monaco,monospace;font-size:1.25em;background:#12161d;border-left:3px solid #4ea8ff;padding:22px 26px;border-radius:6px;color:#9fd0ff;margin:22px 0;overflow-x:auto;white-space:pre}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:44px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
-.card{background:#12161d;border:1px solid #1e2430;border-radius:8px;padding:24px}
-.card .n{font-size:2.3em;font-weight:700;color:#4ea8ff;letter-spacing:-0.02em}
-.card .l{font-size:0.95em;color:#8896a8;margin-top:4px}
+.formula{font-family:'SF Mono',Monaco,monospace;font-size:1.18em;background:#12161d;border-left:3px solid #4ea8ff;padding:20px 24px;border-radius:6px;color:#9fd0ff;margin:20px 0;overflow-x:auto;white-space:pre}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px}
+.card{background:#12161d;border:1px solid #1e2430;border-radius:8px;padding:22px}
+.card .n{font-size:2.2em;font-weight:700;color:#4ea8ff;letter-spacing:-.02em}
+.card .l{font-size:.92em;color:#8896a8;margin-top:4px}
 table{width:100%;border-collapse:collapse;margin-top:8px}
-th,td{text-align:left;padding:13px 16px;border-bottom:1px solid #1e2430;font-size:1.02em}
-th{color:#7d8b9e;font-weight:600;font-size:0.85em;letter-spacing:0.08em;text-transform:uppercase}
-td code{font-family:'SF Mono',Monaco,monospace;color:#9fd0ff;font-size:0.94em}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid #1e2430;font-size:1em}
+th{color:#7d8b9e;font-weight:600;font-size:.82em;letter-spacing:.08em;text-transform:uppercase}
+td code{font-family:'SF Mono',Monaco,monospace;color:#9fd0ff;font-size:.92em}
 .yes{color:#37d67a;font-weight:600}.no{color:#ff5c5c;font-weight:600}
-.tag{display:inline-block;background:#16324f;color:#7cc3ff;padding:4px 11px;border-radius:5px;font-size:0.8em;font-weight:600;letter-spacing:0.05em;margin-right:7px}
-.foot{margin-top:44px;font-size:0.95em;color:#5b6b83}
-ul{list-style:none}li{padding-left:22px;position:relative;margin:11px 0}
+.tag{display:inline-block;background:#16324f;color:#7cc3ff;padding:4px 11px;border-radius:5px;font-size:.8em;font-weight:600;margin-right:7px}
+.foot{margin-top:36px;font-size:.92em;color:#5b6b83}
+ul{list-style:none}li{padding-left:22px;position:relative;margin:10px 0}
 li:before{content:'—';position:absolute;left:0;color:#4ea8ff}
-@media print{.slide{min-height:auto;padding:40px}body{background:#fff;color:#111}.card,.formula{background:#f6f8fa;border-color:#dde3ea}}
+.src{font-size:.82em;color:#5b6b83;margin-top:10px}
+.src b{color:#8896a8}
+.brow{display:flex;align-items:center;gap:14px;margin:10px 0}
+.blab{width:96px;font-size:.85em;color:#8896a8;text-align:right;flex:none}
+.btrack{flex:1;background:#1a1f29;border-radius:4px;height:26px;position:relative;overflow:hidden}
+.bbar{height:100%;border-radius:4px 0 0 4px}
+.bval{font-family:'SF Mono',Monaco,monospace;font-size:.9em;color:#9fd0ff;flex:none;width:70px}
+@media print{.slide{min-height:auto;padding:40px;page-break-after:always}body{background:#fff;color:#111}.card,.formula{background:#f6f8fa;border-color:#dde3ea}.btrack{background:#e6eaf0}}
 </style></head><body>
-
 <div class=slide>
 <div class=kicker>Circle Developer Grants — Cohort 2</div>
 <h1>Machines are starting to earn.<br>We built the part that <span class=accent>proves they did the work.</span></h1>
@@ -50,6 +57,29 @@ li:before{content:'—';position:absolute;left:0;color:#4ea8ff}
 <tr><td><b>Human review</b></td><td>Works, does not scale, and sits slower than the work it reviews.</td></tr>
 </table>
 <p class=lead style="margin-top:34px">The missing primitive: <b>a payment triggered by proof of work,<br>not by a claim of work — at machine cadence.</b></p>
+</div>
+
+<div class=slide>
+<div class=kicker>Traction — the five days</div>
+<h2>Daily volume, from a public, re-runnable dataset</h2>
+<div style='max-width:760px'>
+<div class="brow"><span class="blab">Sep 16</span><div class="btrack"><div class="bbar" style="width:64%;background:#4ea8ff"></div></div><span class="bval">14,027</span></div>
+<div class="brow"><span class="blab">Sep 17</span><div class="btrack"><div class="bbar" style="width:51%;background:#4ea8ff"></div></div><span class="bval">11,247</span></div>
+<div class="brow"><span class="blab">Sep 18</span><div class="btrack"><div class="bbar" style="width:63%;background:#4ea8ff"></div></div><span class="bval">13,812</span></div>
+<div class="brow"><span class="blab">Sep 19</span><div class="btrack"><div class="bbar" style="width:100%;background:#4ea8ff"></div></div><span class="bval">22,086</span></div>
+<div class="brow"><span class="blab">Sep 20</span><div class="btrack"><div class="bbar" style="width:18%;background:#4ea8ff"></div></div><span class="bval">3,966</span></div>
+</div>
+<p class=sub style="margin-top:22px">Every record is in a published, SHA-256-pinned export with a re-runnable verifier. 65,138 scored rounds · 217 wallets · 67 real robot tasks.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Traction — the discriminator</div>
+<h2>The score separates executable from not, by 90.8 points</h2>
+<div style='max-width:760px'>
+<div class="brow"><span class="blab">pass  (n=65,102)</span><div class="btrack"><div class="bbar" style="width:96%;background:#37d67a"></div></div><span class="bval">95.8</span></div>
+<div class="brow"><span class="blab">fail  (n=36)</span><div class="btrack"><div class="bbar" style="width:5%;background:#37d67a"></div></div><span class="bval">5.0</span></div>
+</div>
+<p class=sub style="margin-top:22px">A failing plan does not execute, so it scores a median of zero. This is the property a settlement-gating score must have — and the thing a text rubric cannot show.</p>
 </div>
 
 <div class=slide>
@@ -134,30 +164,49 @@ pay itself — the payer's separate signature is required.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Evidence</div>
-<h2>A market already runs on it</h2>
-<div class=grid3>
-<div class=card><div class=n>65,138</div><div class=l>scored rounds, 5 days, ongoing</div></div>
-<div class=card><div class=n>217</div><div class=l>unique wallets competing</div></div>
-<div class=card><div class=n>121</div><div class=l>median wallets per hourly window</div></div>
+<div class=kicker>Market</div>
+<h2>The two markets meet, and the bridge does not exist</h2>
+<div class=grid2>
+<div class=card><div class=n>$305B</div><div class=l>stablecoin market cap (USDC $74.4B across 157 chains)</div><div class=src>DefiLlama, live — <b>defillama.com/stablecoins</b></div></div>
+<div class=card><div class=n>$7.8B → $52.6B</div><div class=l>AI agents market, 2025 → 2030 (46.3% CAGR)</div><div class=src>MarketsandMarkets — <b>marketsandmarkets.com/PressReleases/ai-agents.asp</b></div></div>
 </div>
-<div class=grid3 style="margin-top:28px">
-<div class=card><div class=n>90.8</div><div class=l>point pass/fail separation</div></div>
-<div class=card><div class=n>91.2%</div><div class=l>of wallets submit near-unique plans</div></div>
-<div class=card><div class=n>2.5M</div><div class=l>atomic actions submitted</div></div>
-</div>
-<p style="margin-top:30px">Every record published with SHA-256 pins and a re-runnable verifier.
-<span class=sub>Do not trust our arithmetic — recompute it.</span></p>
+<p style="margin-top:30px">The value flows and the agents that earn them are both real and both growing.
+What does not exist is the trust layer that lets the first pay the second.
+<b>That bridge is what we built.</b></p>
 </div>
 
 <div class=slide>
-<div class=kicker>Positioning</div>
-<h2>Why Arc, why Circle, why now</h2>
+<div class=kicker>Business model</div>
+<h2>Take rate on verified work, not on hype</h2>
+<table>
+<tr><th>Stream</th><th>Mechanism</th><th>Status</th></tr>
+<tr><td><b>Settlement fee</b></td><td>Small % on USDC released through EvaluationEscrow</td><td>model — contract is deployed</td></tr>
+<tr><td><b>Priority verification</b></td><td>Paid tier above the free race window</td><td>model — free tier is live</td></tr>
+<tr><td><b>Curated evaluation data</b></td><td>Licensed (task, plan, score) triples — 65,138 already exist</td><td>model — dataset is published</td></tr>
+</table>
+<p class=foot>We have $0 revenue today and we say so. These are the models the architecture enables, not current income.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Competition</div>
+<h2>Collection is funded. The curation + settlement layer is open.</h2>
+<table>
+<tr><th>Player</th><th>Raises</th><th>Layer</th><th>Gap we fill</th></tr>
+<tr><td>Axis Robotics</td><td>$12M seed (Hack VC)</td><td>collection engine</td><td>no verification protocol, no settlement</td></tr>
+<tr><td>PrismaX</td><td>$11M (a16z CSX)</td><td>collection + teleop + models</td><td>internal scoring, not on-chain verifiable</td></tr>
+<tr><td>RoboTrain (Virtuals)</td><td>Virtuals launch</td><td>teleop + human scoring</td><td>centralized grading, no crypto settlement</td></tr>
+<tr><td><b>StonkRobotics</b></td><td>—</td><td><b>evaluation → verification → settlement</b></td><td><b>the intersection, live on Arc mainnet</b></td></tr>
+</table>
+<p class=src>Funding figures reported in company announcements / press (CoinDesk, company blogs). We compete on the layer none of them occupy.</p>
+</div>
+<div class=slide>
+<div class=kicker>Why Arc, why Circle, why now</div>
+<h2>Built for the program's first stated priority</h2>
 <ul>
-<li><b>Arc is the program's first stated priority: agentic economic activity.</b> We are not adjacent to it; we are the settlement primitive it needs.</li>
+<li><b>Agentic economic activity is the program's stated first use case.</b> We are not adjacent to it; we are the settlement primitive it needs.</li>
 <li><b>Arc-native USDC is the settlement asset</b> — used exclusively through the ERC-20 interface, per Arc's own guidance.</li>
 <li><b>M3 is a Circle integration, not a logo:</b> agents will transact through <b>Circle Agent Stack</b> primitives instead of raw RPC.</li>
-<li><b>We hit an Arc-specific integration wall and documented it:</b> the native-USDC <code>isBlocklisted</code> system precompile cannot be executed by forge's local simulation — real transactions work. Published as field notes for other Arc builders.</li>
+<li><b>We hit an Arc-specific integration wall and documented it:</b> the native-USDC <code>isBlocklisted</code> system precompile cannot run in forge's local simulation; real transactions can. Published as field notes for other Arc builders.</li>
 </ul>
 </div>
 
@@ -168,10 +217,10 @@ pay itself — the payer's separate signature is required.</p>
 <tr><th>Milestone</th><th>Due</th><th>Budget</th><th>Status</th></tr>
 <tr><td><b>M1</b> Deploy EvaluationEscrow to Arc mainnet</td><td>—</td><td>—</td><td class=yes>COMPLETE</td></tr>
 <tr><td><b>M2</b> End-to-end settlement demo</td><td>—</td><td>—</td><td class=yes>COMPLETE</td></tr>
-<tr><td><b>M3</b> Circle Agent Stack integration for the live agent workflow</td><td>2026-11-22</td><td>$8,000</td><td>funded by this grant</td></tr>
+<tr><td><b>M3</b> Circle Agent Stack integration</td><td>2026-11-22</td><td>$8,000</td><td>funded by this grant</td></tr>
 <tr><td><b>M4</b> Independent security review, findings published</td><td>2026-12-20</td><td>$5,000</td><td>funded by this grant</td></tr>
 </table>
-<p style="margin-top:26px"><b>Proposed: $25,000.</b> M1 and M2 were completed on founder funds <i>before</i> any award.
+<p style="margin-top:24px"><b>Proposed: $25,000.</b> M1 and M2 were completed on founder funds <i>before</i> any award.
 The grant funds the distance between a working protocol and a production-ready one. Circle sizes the final award.</p>
 </div>
 
@@ -201,5 +250,4 @@ The grant funds the distance between a working protocol and a production-ready o
 <tr><td>Arc field notes</td><td class=mono>docs/arc-integration-notes.md</td></tr>
 </table>
 </div>
-
 </body></html>
