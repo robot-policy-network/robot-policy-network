@@ -39,240 +39,271 @@ li:before{content:'—';position:absolute;left:0;color:#4ea8ff}
 .bval{font-family:'SF Mono',Monaco,monospace;font-size:.9em;color:#9fd0ff;flex:none;width:70px}
 @media print{.slide{min-height:auto;padding:40px;page-break-after:always}body{background:#fff;color:#111}.card,.formula{background:#f6f8fa;border-color:#dde3ea}.btrack{background:#e6eaf0}}
 </style></head><body>
+
 <div class=slide>
 <div class=kicker>Circle Developer Grants — Cohort 2</div>
 <h1>Machines are starting to earn.<br>We built the part that <span class=accent>proves they did the work.</span></h1>
 <p class=lead style="margin-top:36px">StonkRobotics — the evaluation and settlement layer for<br>machine work on Arc.</p>
-<p class=foot>Richard, Founder · 2026-09-20 · stonkrobotics.xyz</p>
+<p class=foot>Richard, Founder · 2026-09-20 · stonkrobotics.xyz · github.com/robot-policy-network</p>
 </div>
 
 <div class=slide>
 <div class=kicker>The problem</div>
 <h2>An agent says it finished the job. Pay it.</h2>
-<p class=lead style="margin-bottom:30px">Every existing answer fails in a way that matters.</p>
+<p class=lead style="margin-bottom:28px">Every existing answer fails in a way that matters.</p>
 <table>
 <tr><th>Approach</th><th>What actually happens</th></tr>
 <tr><td><b>Agent payment tools</b></td><td>A human still decides. Nothing is verified — the wallet is automated, not the trust.</td></tr>
 <tr><td><b>Oracle / escrow designs</b></td><td>The reported score <i>is</i> the payment instruction, so a manipulated or hallucinated result moves money.</td></tr>
 <tr><td><b>Human review</b></td><td>Works, does not scale, and sits slower than the work it reviews.</td></tr>
 </table>
-<p class=lead style="margin-top:34px">The missing primitive: <b>a payment triggered by proof of work,<br>not by a claim of work — at machine cadence.</b></p>
+<p class=lead style="margin-top:32px">The missing primitive: <b>a payment triggered by evidence of work,<br>not by a claim of work — at machine cadence.</b></p>
+</div>
+
+<div class=slide>
+<div class=kicker>The design</div>
+<h2>Evidence and authority are different keys</h2>
+<div class=formula>evaluator signs EvaluationAttestation   → evidence    · CANNOT move funds
+payer     signs ReleaseAuthorization    → authority   · insufficient alone
+
+release() executes only when BOTH validate</div>
+<p>The evaluator key is a <b>hot key on our server</b>. The design assumes it
+will be compromised and makes that specific failure survivable: a compromised
+evaluator can forge a result on an open job, but <b>still cannot pay itself</b> —
+the payer's separate signature is required.</p>
+<p style="margin-top:18px" class=sub>What this does <i>not</i> claim: that the
+score is trustless. See the next two pages.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Settlement — live, and honestly scoped</div>
+<h2>Executed on Arc mainnet, not planned</h2>
+<table>
+<tr><th>Step</th><th>Transaction</th></tr>
+<tr><td>Deploy <code>EvaluationEscrow</code></td><td><code>0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491</code></td></tr>
+<tr><td><code>createJob</code> — 0.5 USDC escrowed</td><td class=mono><code>0x087d419b…</code></td></tr>
+<tr><td><code>verifyResult</code> — evaluator attestation, no funds move</td><td class=mono><code>0xad894353…</code></td></tr>
+<tr><td><code>release</code> — payer authorization, USDC moves</td><td class=mono><code>0x4a8ccd2d…</code></td></tr>
+<tr><td>Result</td><td>provider <b>0 → 500000</b> · job state <b>3 (RELEASED)</b></td></tr>
+</table>
+<p style="margin-top:22px"><b>What this proves:</b> the full path executes with real USDC.</p>
+<p><b>What it does not prove:</b> in this demo the payer, evaluator and provider
+are <b>all founder-controlled keys</b>, and the evaluator is the <i>same address</i>
+as the provider — so it demonstrates the process, not the security property
+against a hostile counterparty. <b>No independent audit.</b> This instance is a
+demo; a production deployment uses a fresh owner key (M6).</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Trust boundary and known limits</div>
+<h2>What we do not claim</h2>
+<table>
+<tr><th>Limitation</th><th>Status</th></tr>
+<tr><td><b>The evaluator is a single centralized server.</b> "Reproducible" means the scorer is deterministic — not that a third party can recompute it today (simulator unreleased, reference server-side)</td><td>recomputation is M5</td></tr>
+<tr><td><b><code>planHash</code> is not recomputed on-chain.</b> A payer that skips off-chain recomputation trusts the evaluator bound the right plan</td><td>accepted, spec §10</td></tr>
+<tr><td><b>A payer who never signs leaves funds escrowed.</b> The provider has no on-chain claim and no recourse path</td><td>deliberate v2 trade</td></tr>
+<tr><td><b>Near-copies can win.</b> Only an <i>exact</i> copy is neutralised; a copy plus a marginal tweak can be strictly better</td><td>known, bounded by unpublished plans</td></tr>
+<tr><td><b>Weak pricing signal inside the passing band.</b> A generic plan lands 95–97; the pass mean is 95.8</td><td>known</td></tr>
+</table>
+<p style="margin-top:20px">The accurate summary of the security claim is <b>"an evaluator compromise cannot move funds"</b> — not "trustless work". We publish this list because a reviewer will find it anyway.</p>
 </div>
 
 <div class=slide>
 <div class=kicker>Traction — the five days</div>
-<h2>Daily volume, from a public, re-runnable dataset</h2>
-<div style='max-width:760px'>
+<h2>Daily volume, from a published, re-runnable dataset</h2>
+<div style="max-width:760px">
 <div class="brow"><span class="blab">Sep 16</span><div class="btrack"><div class="bbar" style="width:64%;background:#4ea8ff"></div></div><span class="bval">14,027</span></div>
 <div class="brow"><span class="blab">Sep 17</span><div class="btrack"><div class="bbar" style="width:51%;background:#4ea8ff"></div></div><span class="bval">11,247</span></div>
 <div class="brow"><span class="blab">Sep 18</span><div class="btrack"><div class="bbar" style="width:63%;background:#4ea8ff"></div></div><span class="bval">13,812</span></div>
 <div class="brow"><span class="blab">Sep 19</span><div class="btrack"><div class="bbar" style="width:100%;background:#4ea8ff"></div></div><span class="bval">22,086</span></div>
 <div class="brow"><span class="blab">Sep 20</span><div class="btrack"><div class="bbar" style="width:18%;background:#4ea8ff"></div></div><span class="bval">3,966</span></div>
 </div>
-<p class=sub style="margin-top:22px">Sep 20 is a partial day (as of export). 80 of 120 hourly windows had activity; the median active window held 121 wallets. Every record is in a published, SHA-256-pinned export with a re-runnable verifier. 65,138 scored rounds · 217 wallets · 67 real robot tasks.</p>
+<p class=sub style="margin-top:22px">Sep 20 is a partial day. 65,138 scored rounds · 217 wallets · 67 real robot tasks · 80 of 120 hourly windows had activity.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Traction — the discriminator</div>
-<h2>The evaluator grades difficulty, not just pass/fail</h2>
-<div style='max-width:760px'>
-<div class="brow"><span class="blab">pass  (n=65,102)</span><div class="btrack"><div class="bbar" style="width:96%;background:#37d67a"></div></div><span class="bval">95.8</span></div>
-<div class="brow"><span class="blab">fail  (n=36)</span><div class="btrack"><div class="bbar" style="width:5%;background:#37d67a"></div></div><span class="bval">5.0</span></div>
+<div class=kicker>Traction — what the score does, and does not, separate</div>
+<h2>Strong across missions, weak inside the passing band</h2>
+<div class=grid2>
+<div class=card><div class=n>83–87</div><div class=l>the hardest real-trajectory task, where 184 distinct wallets landed — evidence of gradation <i>across</i> missions</div></div>
+<div class=card><div class=n>95.8 ± 2.9</div><div class=l>the passing mean and spread — a generic plan lands 95–97, so the score barely separates a template from a competent agent <i>within</i> the band</div></div>
 </div>
-<p class=sub style="margin-top:22px">Two things to see. First, the pass/fail split is 90.8 points — a failing plan does not execute. But the sharper evidence is gradation: the hardest real-trajectory task drew 184 distinct wallets and scored them in a tight 83–87 band while easier tasks sit at 100. A scorer that rubber-stamps produces neither a cliff nor a curve.</p>
+<p style="margin-top:26px">99.94% pass rate is <b>by race design</b> (agents retry until they clear the
+threshold), so pass/fail carries little information. We report the gradation and
+the weakness in the same breath rather than claiming a sharp discriminator.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Mechanism 1 of 3 — evaluation</div>
+<div class=kicker>Traction — the community, including the ugly part</div>
+<h2>Deep engagement, closed cohort, and a scripted top of table</h2>
+<table>
+<tr><th>Signal</th><th>Value</th></tr>
+<tr><td>Wallets active all 5 days</td><td><b>123 of 217 (57%)</b> · 82% returned on 4+ days</td></tr>
+<tr><td>Median rounds per address</td><td><b>297</b> · median answer diversity <b>0.988</b></td></tr>
+<tr><td class=no>The four heaviest wallets</td><td class=no>~1,350 rounds each, ~26-second cadence, <b>answer diversity ≈0.09</b> — cache replay, not planning</td></tr>
+<tr><td class=no>New addresses after day one</td><td class=no><b>9</b> (208 of 217 arrived on launch day)</td></tr>
+<tr><td class=no>Third-party USDC settled · revenue</td><td class=no><b>0 · $0</b></td></tr>
+</table>
+<p style="margin-top:20px">The 0.988 median diversity is real and so is the 0.09 at the top of the
+table. Both are in the published dataset; we show them together.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Mechanism — evaluation</div>
 <h2>Score by execution, and make faking it expensive</h2>
 <div class=formula>score = 100 × (seedsClean / n) × (0.38·align + 0.32·pick + 0.20·precision + 0.10·eff)</div>
-<p>Agents submit a structured action plan. A pure-function simulator executes it against a
-world state across several perturbation seeds and returns the traced path, the targets
-actually serviced, and any constraint violations.</p>
-<p style="margin-top:18px" class=sub>Same input → same output, always. Seeded PRNG, no clock, no global randomness.</p>
+<p>Agents submit a structured action plan. A pure-function simulator executes it
+against a world state across several perturbation seeds and returns the traced
+path, the targets actually serviced, and any constraint violations.</p>
+<p style="margin-top:16px" class=sub>Same input → same output, always. Seeded PRNG,
+no clock, no global randomness. The weights are a tuned heuristic chosen by the
+founder, not derived from first principles — stated plainly because a reviewer
+will ask why 0.38 and not 0.40.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Mechanism 1 of 3 — each term closes an attack</div>
+<div class=kicker>Mechanism — each term closes an attack</div>
 <h2>Nothing in the formula is decorative</h2>
 <table>
 <tr><th>Attack</th><th>Closed by</th></tr>
 <tr><td>Submit a plan that does not run</td><td><code>seedsClean/n</code> is <b>multiplicative</b> — a hard violation on any seed cuts the whole score; on all seeds it is zero</td></tr>
 <tr><td>Draw a straight line between targets</td><td><code>align</code> = coverage <b>+ progression</b>. Coverage alone lets a straight line score 0.95</td></tr>
 <tr><td>Service the right targets in the wrong order</td><td><code>pick</code> = LCS on the <b>sequence</b>, not membership</td></tr>
-<tr><td>Reuse a winning plan on the next mission</td><td><code>precision</code> uses <b>per-target</b> constants (<code>offset=stem_mm</code>, <code>force=2·stem_mm·(2−ripe)</code>) — the constants differ target to target</td></tr><tr><td>Copy a winning plan inside the same window</td><td>the race closes on <b>strictly-better</b> score — a copied plan scores identically to the original and cannot displace it</td></tr>
+<tr><td>Reuse a winning plan on the next mission</td><td><code>precision</code> uses <b>per-target</b> constants (<code>offset=stem_mm</code>, <code>force=2·stem_mm·(2−ripe)</code>) — different targets, different numbers</td></tr>
+<tr><td>Copy a plan inside the same window</td><td>the race closes on a <b>strictly better</b> score — an exact copy cannot displace its original</td></tr>
 <tr><td>Drive extra laps for efficiency marks</td><td><code>eff</code> is an <b>asymmetric</b> ratio capped at 1 — undershooting is free, overshooting costs</td></tr>
 <tr><td>Reverse-engineer the rubric</td><td>feedback names only public-state terms, never reference coordinates</td></tr>
-<tr><td>Arbitrage integer rounding</td><td>ranking uses <b>2-decimal</b> scores — a generic plan lands 95–97, which would otherwise be a mass tie</td></tr>
+<tr><td>Arbitrage integer rounding</td><td>ranking uses <b>2-decimal</b> scores; a generic plan lands 95–97, which would otherwise be a mass tie</td></tr>
 </table>
+<p class=src>Known gap, stated: an exact copy is neutralised, a <b>near-copy plus a marginal tweak</b> is not. Plans are not published per-window, which limits but does not eliminate it.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Mechanism 2 of 3 — the competition</div>
-<h2>Why the race is best-score-at-close, not first-past-the-post</h2>
+<div class=kicker>Mechanism — the competition</div>
+<h2>Why the race closes on best score, not first past the post</h2>
 <p class=lead>Because first-past-the-post made it a latency contest.</p>
-<div class=grid2 style="margin-top:26px">
+<div class=grid2 style="margin-top:24px">
 <div class=card><h3>An agent</h3><p>closes the loop in ~90 seconds.</p></div>
 <div class=card><h3>A person on a phone</h3><p>pasting a brief into a chat model needs 2–3 minutes.</p></div>
 </div>
-<p style="margin-top:26px">So a human could never win one — no matter how good the plan was. Deciding on best score when the window
-closes makes submission time worth <b>nothing</b> and plan quality worth <b>everything</b>. That is the only version where
-the two compete in the same lane.</p>
-<p style="margin-top:22px"><b>And copying is useless by construction:</b> only a <i>strictly</i> better score displaces the
-leader. A copied plan scores exactly what the original did, fails to displace it, and the operator who solved it keeps the slot.
-Not detected — <i>identical</i>. Identical is not better.</p>
+<p style="margin-top:24px">So a human could never win one, however good the plan.
+Deciding at the close makes submission time worth <b>nothing</b> and plan quality
+worth <b>everything</b> — the only version where the two compete in one lane.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Mechanism 2 of 3 — the adversarial economics</div>
+<div class=kicker>Mechanism — the adversarial economics</div>
 <h2>What actually stops farming</h2>
 <table>
 <tr><th>Control</th><th>Why this one and not the obvious one</th></tr>
-<tr><td><b>Per-IP daily cap (4)</b></td><td>Wallet addresses are free and the holdings gate reads 0 forever once a winner stops minting. Per-source is the cap that bites.</td></tr>
-<tr><td><b>Per-window try cap (8)</b></td><td>Bounds brute-forcing plan variants inside a window — and every attempt still lands in the dataset as a graded round.</td></tr>
-<tr><td><b>Per-wallet daily cap (2)</b></td><td>Deliberately low. A higher cap does not reward a good agent — it <b>deletes free robots</b>. Three wallets took 16 of the first 31 windows and converted them into 3 slots.</td></tr>
+<tr><td><b>Per-source (IP) daily cap: 4</b></td><td>Wallet addresses are free and the holdings gate reads 0 forever once a winner stops minting. Per-source is the cap that bites.</td></tr>
+<tr><td><b>Per-window try cap: 8</b></td><td>Bounds brute-forcing plan variants — and every attempt still lands in the dataset as a graded round.</td></tr>
+<tr><td><b>Per-wallet daily cap: 2</b></td><td>Deliberately low. A higher cap does not reward a good agent — it <b>deletes free slots</b>. Three wallets took 16 of the first 31 windows and turned them into 3 slots.</td></tr>
 <tr><td><b>Same mission per window</b></td><td>Hard-mode operators do not get a private harder draw, or the window's scores would not be comparable.</td></tr>
 </table>
 </div>
 
 <div class=slide>
-<div class=kicker>Mechanism 3 of 3 — settlement</div>
-<h2>No single key can move money</h2>
-<div class=formula>evaluator signs EvaluationAttestation   → evidence    · CANNOT move funds
-payer     signs ReleaseAuthorization    → authority   · insufficient alone
-
-release() executes only when BOTH validate</div>
-<p>The evaluator key is a <b>hot key</b>. The design assumes it will be compromised and makes
-that survivable: a compromised evaluator can forge a result on an open job, but still cannot
-pay itself — the payer's separate signature is required.</p>
-<p style="margin-top:20px"><span class=tag>DEPLOYED</span><span class=mono>0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491</span></p>
-<p class=sub style="margin-top:6px">Arc mainnet · SPEC_VERSION 2 · one full settlement executed (0.5 USDC)</p>
-</div>
-
-<div class=slide>
-<div class=kicker>Evidence</div>
-<h2>Executed on Arc mainnet, not planned</h2>
-<table>
-<tr><th>Step</th><th>Transaction</th></tr>
-<tr><td>Deploy <code>EvaluationEscrow</code></td><td><code>0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491</code></td></tr>
-<tr><td><code>createJob</code> — 0.5 USDC escrowed</td><td class=mono><code>0x087d419b…</code></td></tr>
-<tr><td><code>verifyResult</code> — evaluator attestation</td><td class=mono><code>0xad894353…</code></td></tr>
-<tr><td><code>release</code> — payer authorization, USDC moves</td><td class=mono><code>0x4a8ccd2d…</code></td></tr>
-<tr><td>Provider balance</td><td><b>0 → 500000</b> (0.5 USDC) · job state <b>3 (RELEASED)</b></td></tr>
-</table>
-<p class=foot>Founder-funded. No third-party funds have touched the contract.</p>
-</div>
-
-<div class=slide>
-<div class=kicker>Evidence — the community</div>
-<h2>A mining community, not a spike</h2>
-<table>
-<tr><th>Signal</th><th>Value</th><th>What it shows</th></tr>
-<tr><td>Wallets active all 5 days</td><td><b>123 of 217 (57%)</b></td><td>82% returned on 4+ days</td></tr>
-<tr><td>Wallets per active hourly window</td><td><b>median 121</b> (80 of 120 windows had activity)</td><td>the community shows up every hour</td></tr>
-<tr><td>Addresses with near-unique answers</td><td><b>198 of 217 (91.2%)</b></td><td>diversity median 0.988 — not one script replaying</td></tr>
-<tr><td>Median rounds per address</td><td><b>297</b></td><td>heavy-repeat usage is the intended shape</td></tr>
-<tr><td>Atomic actions submitted</td><td><b>2.5M</b></td><td>mean 38.1 ops per plan</td></tr>
-</table>
-<p class=foot>217 addresses are wallets, not humans. Provenance is operator-attested; the dataset cannot count people. Disclosed in traction-attribution.md.</p>
-</div>
-
-<div class=slide>
-<div class=kicker>The moat</div>
-<h2>The moat is the combination, not any single feature</h2>
-<ul>
-<li><b>A deterministic, reproducible evaluator</b> anchored to real robot data — most "scoring" projects use a human panel or a non-deterministic LLM call</li>
-<li><b>An on-chain evidence/authority split</b> deployed and exercised — a protocol-level property, not a UI choice</li>
-<li><b>Arc-native settlement</b> — low-cost, fast-finality, native-USDC environment</li>
-</ul>
-<p style="margin-top:24px">Each alone is copyable. The three together, already live and frozen, are not. And because the protocol is open-source, the moat is not secrecy — it is the <b>time-stamped, on-chain record of verified outcomes</b> that a later entrant cannot backfill.</p>
-</div>
-
-<div class=slide>
 <div class=kicker>Market</div>
-<h2>The two markets meet, and the bridge does not exist</h2>
+<h2>Two growing markets, and the bridge between them is missing</h2>
 <div class=grid2>
-<div class=card><div class=n>$305B</div><div class=l>stablecoin market cap (USDC $74.4B across 157 chains)</div><div class=src>DefiLlama, live — <b>defillama.com/stablecoins</b></div></div>
+<div class=card><div class=n>$305B</div><div class=l>stablecoin market cap · USDC $74.4B across 157 chains</div><div class=src>DefiLlama, live — <b>defillama.com/stablecoins</b></div></div>
 <div class=card><div class=n>$7.8B → $52.6B</div><div class=l>AI agents market, 2025 → 2030 (46.3% CAGR)</div><div class=src>MarketsandMarkets — <b>marketsandmarkets.com/PressReleases/ai-agents.asp</b></div></div>
 </div>
-<p style="margin-top:30px">The value flows and the agents that earn them are both real and both growing.
-What does not exist is the trust layer that lets the first pay the second.
-<b>That bridge is what we built.</b></p>
+<p style="margin-top:26px">The value flows and the agents that earn them are both real and both growing.
+The trust layer that lets the first pay the second does not exist.</p>
+<p style="margin-top:14px"><b>What we have not sized:</b> the addressable market for a settlement layer
+specifically. We have a wedge — a live arena, 217 wallets, one executed settlement —
+not a bottom-up SOM. We would rather say that than invent a number.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Business model</div>
-<h2>Take rate on verified work, not on hype</h2>
+<div class=kicker>Business model — and what does not exist yet</div>
+<h2>Three models the architecture enables. None is live.</h2>
 <table>
-<tr><th>Stream</th><th>Mechanism</th><th>Status</th></tr>
-<tr><td><b>Settlement fee</b></td><td>Small % on USDC released through EvaluationEscrow</td><td>model — contract is deployed</td></tr>
-<tr><td><b>Priority verification</b></td><td>Paid tier above the free race window</td><td>model — free tier is live</td></tr>
-<tr><td><b>Curated evaluation data</b></td><td>Licensed (task, plan, score) triples — 65,138 already exist</td><td>model — dataset is published</td></tr>
+<tr><th>Stream</th><th>Mechanism</th><th>Truth</th></tr>
+<tr><td>Settlement fee</td><td>A take rate on USDC released</td><td class=no><b>Not possible in the deployed contract</b> — <code>release()</code> transfers the full escrowed amount. A fee path is a v3 change.</td></tr>
+<tr><td>Priority verification</td><td>Paid tier above the free race window</td><td class=no>free tier only; <b>0 paid entries</b></td></tr>
+<tr><td>Curated evaluation data</td><td>Licensing (task, plan, score) triples</td><td class=no>dataset published; <b>no buyer</b></td></tr>
 </table>
-<p class=foot>We have $0 revenue today and we say so. These are the models the architecture enables, not current income.</p>
+<p class=foot>Revenue today: <b>$0</b>. These are architectural possibilities, and the arena is the price-discovery vehicle — not current income.</p>
 </div>
 
 <div class=slide>
 <div class=kicker>Competition</div>
-<h2>Collection is funded. The curation + settlement layer is open.</h2>
+<h2>Collection is funded. The verification layer is open.</h2>
 <table>
 <tr><th>Player</th><th>Raises</th><th>Layer</th><th>Gap we fill</th></tr>
 <tr><td>Axis Robotics</td><td>$12M seed (Hack VC)</td><td>collection engine</td><td>no verification protocol, no settlement</td></tr>
 <tr><td>PrismaX</td><td>$11M (a16z CSX)</td><td>collection + teleop + models</td><td>internal scoring, not on-chain verifiable</td></tr>
 <tr><td>RoboTrain (Virtuals)</td><td>Virtuals launch</td><td>teleop + human scoring</td><td>centralized grading, no crypto settlement</td></tr>
-<tr><td><b>StonkRobotics</b></td><td>—</td><td><b>evaluation → verification → settlement</b></td><td><b>the intersection, live on Arc mainnet</b></td></tr>
+<tr><td><b>StonkRobotics</b></td><td>—</td><td><b>evaluation → verification → settlement</b></td><td><b>the intersection, on Arc mainnet</b></td></tr>
 </table>
-<p class=src>Funding figures reported in company announcements / press (CoinDesk, company blogs). We compete on the layer none of them occupy.</p>
+<p class=src>Funding figures as reported in company announcements and press. We compete on the layer none of them occupies — and the funded players could enter it next, which is why the on-chain record matters more than the code.</p>
 </div>
+
 <div class=slide>
-<div class=kicker>Why Arc, why Circle, why now</div>
-<h2>Built for the program's first stated priority</h2>
+<div class=kicker>The moat</div>
+<h2>The moat is the combination — and the clock</h2>
 <ul>
-<li><b>Agentic economic activity is the program's stated first use case.</b> We are not adjacent to it; we are the settlement primitive it needs.</li>
-<li><b>Arc-native USDC is the settlement asset</b> — used exclusively through the ERC-20 interface, per Arc's own guidance.</li>
-<li><b>M3 is a Circle integration, not a logo:</b> agents will transact through <b>Circle Agent Stack</b> primitives instead of raw RPC.</li>
-<li><b>We hit an Arc-specific integration wall and documented it:</b> the native-USDC <code>isBlocklisted</code> system precompile cannot run in forge's local simulation; real transactions can. Published as field notes for other Arc builders.</li>
+<li><b>A deterministic, execution-anchored evaluator</b> — most "scoring" projects use a human panel or a non-deterministic LLM call, which cannot anchor an on-chain artifact</li>
+<li><b>An on-chain evidence/authority split</b> — deployed and executed; a protocol-level property, not a UI choice</li>
+<li><b>Arc-native settlement</b> — low-cost, fast-finality, native USDC</li>
+</ul>
+<p style="margin-top:22px">Each alone is copyable; the three together, already frozen and running, are harder. But the honest moat is not the code — it is open-source. It is the <b>time-stamped record of verified outcomes</b> and the operator community that a late entrant cannot backfill.</p>
+<p class=src>Counterweight: on-chain, that record is currently ~60 NFT mints and <b>one</b> founder-funded settlement. The 65,138 rounds live in a published but operator-controlled dataset. The moat is early, not built.</p>
+</div>
+
+<div class=slide>
+<div class=kicker>Why Arc</div>
+<h2>Why Arc, and not Base where AI2Human already runs</h2>
+<ul>
+<li><b>Product reason:</b> the settlement leg needs a stablecoin that is the gas asset and a fast-finality chain, so a machine payment is one asset and one hop. Arc gives native USDC with an ERC-20 interface over the same balance.</li>
+<li><b>Integration reason:</b> we hit Arc's USDC compliance precompile (<code>0x1800…0001::isBlocklisted</code>) inside <code>transferFrom</code> and documented what it breaks in local simulation vs. real execution — field notes other Arc builders can use.</li>
+<li><b>Not a reason:</b> grant fit. AI2Human is on Base because its users are there. This protocol is on Arc because that is where machine settlement is cheapest.</li>
 </ul>
 </div>
 
 <div class=slide>
 <div class=kicker>The ask</div>
-<h2>Two milestones, because two are already done</h2>
+<h2>$13,000 — the two milestones that are not already done</h2>
 <table>
-<tr><th>Milestone</th><th>Due</th><th>Budget</th><th>Status</th></tr>
-<tr><td><b>M1</b> Deploy EvaluationEscrow to Arc mainnet</td><td>—</td><td>—</td><td class=yes>COMPLETE</td></tr>
-<tr><td><b>M2</b> End-to-end settlement demo</td><td>—</td><td>—</td><td class=yes>COMPLETE</td></tr>
-<tr><td><b>M3</b> Circle Agent Stack integration</td><td>2026-11-22</td><td>$8,000</td><td>funded by this grant</td></tr>
-<tr><td><b>M4</b> Independent security review, findings published</td><td>2026-12-20</td><td>$5,000</td><td>funded by this grant</td></tr>
+<tr><th>#</th><th>Milestone</th><th>Funder</th><th>Due</th><th>Budget</th></tr>
+<tr><td>M1</td><td>Deploy <code>EvaluationEscrow</code> to Arc mainnet</td><td>founder</td><td colspan=2 class=yes>COMPLETE · $0</td></tr>
+<tr><td>M2</td><td>One end-to-end settlement on mainnet</td><td>founder</td><td colspan=2 class=yes>COMPLETE · $0</td></tr>
+<tr><td>M3</td><td>Circle Agent Stack integration</td><td>this grant</td><td>2026-11-22</td><td><b>$8,000</b></td></tr>
+<tr><td>M4</td><td>Independent security review, report published</td><td>this grant</td><td>2026-12-20</td><td><b>$5,000</b></td></tr>
 </table>
-<p style="margin-top:24px"><b>Proposed: $25,000.</b> M1 and M2 were completed on founder funds <i>before</i> any award.
-The grant funds the distance between a working protocol and a production-ready one. Circle sizes the final award.</p>
+<p style="margin-top:20px"><b>Total ask $13,000 = M3 + M4 exactly.</b> M1 and M2 were completed on
+founder funds before any award, so they are not billed and there is no
+retroactive reimbursement. <span class=sub>Success metrics: M3 → 25+ USDC settlements
+routed through Agent Stack by 2027-01-31. M4 → report public, all critical/high
+fixed and retested before any third-party deposit.</span></p>
 </div>
 
 <div class=slide>
 <div class=kicker>Team</div>
 <h2>Prior shipping, same thesis</h2>
 <p class=lead><b>Richard</b> — solo founder.</p>
-<p style="margin-top:24px"><b>AI2Human Network</b> — verification layer for open-world AI agents:
-<i>task → proof → verify → settle</i>. Shipped and live on Base. GitHub org <code>ai2humannetwork</code>.
+<p style="margin-top:22px"><b>AI2Human Network</b> — verification layer for open-world AI agents:
+<i>task → proof → verify → settle</i>. Live on Base. GitHub org <code>ai2humannetwork</code>.
 <b>2nd prize, X Layer (OKX) hackathon.</b></p>
-<p style="margin-top:24px">That project proves the thesis on <b>human</b> execution. This one proves it on
-<b>machine</b> execution. Same architecture, different domain — and this one is already on mainnet.</p>
+<p style="margin-top:22px">That project proves the thesis on <b>human</b> execution. This one proves it on
+<b>machine</b> execution — and this one is already on mainnet.</p>
 <p class=foot>Contract deployed · settlement executed · data public and independently checkable.</p>
 </div>
 
 <div class=slide>
-<div class=kicker>Links</div>
-<h2>Everything is checkable</h2>
+<div class=kicker>Scope, disclosures, links</div>
+<h2>Everything is checkable — including what is not part of this</h2>
 <table>
-<tr><td>Site</td><td class=mono>stonkrobotics.xyz</td></tr>
-<tr><td>Agent workflow</td><td class=mono>stonkrobotics.xyz/skill/</td></tr>
+<tr><td>Site · agent workflow</td><td class=mono>stonkrobotics.xyz · stonkrobotics.xyz/skill/</td></tr>
 <tr><td>Repository</td><td class=mono>github.com/robot-policy-network/robot-policy-network</td></tr>
 <tr><td>Settlement proof (every tx)</td><td class=mono>deployments/arc-mainnet-settlement.json</td></tr>
-<tr><td>Traction verifier</td><td class=mono>docs/grants/traction-evidence/verify.sh</td></tr>
-<tr><td>Adversarial review brief — attack us</td><td class=mono>docs/grants/review-brief.md</td></tr>
-<tr><td>Mechanism rationale</td><td class=mono>docs/mechanism-deep-dive.md</td></tr>
-<tr><td>Arc field notes</td><td class=mono>docs/arc-integration-notes.md</td></tr>
+<tr><td>Dataset + verifier</td><td class=mono>docs/grants/traction-evidence/verify.sh</td></tr>
+<tr><td>Trust limits · milestones · mechanism</td><td class=mono>docs/grants/MILESTONES-CANONICAL.md · docs/mechanism-deep-dive.md</td></tr>
+<tr><td class=no>Not part of this proposal</td><td class=no>ARCROBO token and the UnitreeG1Fleet NFT collection are separate subsystems on the same chain — the free-mint competition that produced the traction ran through the NFT collection, not the settlement protocol</td></tr>
 </table>
 </div>
+
 </body></html>

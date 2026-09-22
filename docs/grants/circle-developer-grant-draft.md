@@ -302,7 +302,7 @@ promise in Risks that no production fund flows precede the review.
 
 ## Budget / use of funds
 
-**Proposed budget: $25,000 over ~13 weeks.** Circle does not publish grant
+**Proposed budget: $13,000** = M3 ($8,000) + M4 ($5,000). Circle does not publish grant
 amounts; this is the milestone budget we propose in the portal, and the final
 award is sized by Circle during milestone design. We are ready to scope the
 plan to a different tier if Circle's assessment differs.

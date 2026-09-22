@@ -8,7 +8,7 @@ _Last updated: 2026-09-20._
 
 | # | Opportunity | Official entry | Status | Deadline | Amount / form | Duplicate rule | Materials needed | Submission status / confirmation |
 |---|---|---|---|---|---|---|---|
-| 1 | **Circle Developer Grants** (main application) | `circle.com/grant` portal (only channel) | ✅ **OPEN** (verified 2026-09-20, active "Apply now") | Rolling / none published | Milestone-based USDC; **amount NOT published by Circle** — we propose budget in portal | Reapply allowed after final milestones complete | Long-form draft, fact sheet, public links | Not started |
+| 1 | **Circle Developer Grants — Cohort 2** | `circle.com/grant` portal (only channel) | ✅ **OPEN** (verified 2026-09-20) | Cohort-based, no deadline shown | **Cohort 2 pool: $253k; $47k paid; 10 accepted of 728 proposals (~1.4% acceptance).** Circle does not publish per-grant amounts | Reapply allowed after final milestones complete | Portal answers (`portal-answers-final.md`), deck, video, Drive folder | **Submitting 2026-09-20** |
 | 2 | Arc Builders Fund | Arc Builders Fund page | Verify; investor-deck submission; Circle Ventures internal initiative — not a fund commitment | None published | Capital + hands-on support (no fixed amount published) | N/A | 10–12 page investor deck | Not started |
 | 3 | Arc House — Agentic Economy Prize | Arc House official page | Verify whether open | Verify | Verify | Verify | 90s demo script, short pitch, architecture diagram, on-chain evidence | Not started |
 | 4 | Arc Acceleration Season | Arc official page | Verify whether open | Verify | Verify | Verify | Product maturity summary, 8–12 week milestones | Not started |

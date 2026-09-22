@@ -89,7 +89,7 @@ path) and **deployed at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` with one re
 founder funds, 0.5 USDC, no third-party money and no audit. Stated plainly in
 the repo.
 
-6/ Everything is checkable: frozen spec, 85-test suite, and a 492-record
+6/ Everything is checkable: frozen spec, 85-test suite, and a 65,138-record
 traction dataset with a script that re-hashes every record and re-derives every
 statistic. Don't trust our numbers — recompute them. [links]
 
@@ -111,7 +111,7 @@ One line: Separates evaluation evidence from payment authorization so an
           agent's verified work can settle in USDC without any single key
           being able to do both.
 Evidence: frozen SPEC_VERSION=2, 85 passing tests, CI deploy-path smoke
-          test, 492-record SHA-256-pinned dataset with re-runnable verifier
+          test, 65,138-record SHA-256-pinned dataset with re-runnable verifier
 ```
 
 ## 4. awesome-list PR blurb

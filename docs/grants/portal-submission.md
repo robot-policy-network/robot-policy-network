@@ -82,15 +82,18 @@ with Arc core to the flow of value and settlement.
 
 ## 6. Proposed milestones
 
-| # | Milestone | Due | Budget |
-|---|---|---|---|
-| M1 | Deploy EvaluationEscrow to Arc mainnet | **DONE 2026-09-20** | — |
-| M2 | End-to-end settlement demo (0.5 USDC released after both signatures validated; founder-funded) | **DONE 2026-09-20** | — |
-| M3 | Circle Agent Stack integration | 2026-11-22 | $8,000 |
-| M4 | Independent security review, findings published | 2026-12-20 | $5,000 |
+| # | Milestone | Funder | Due | Budget |
+|---|---|---|---|---|
+| M1 | Deploy `EvaluationEscrow` to Arc mainnet | founder | COMPLETE 2026-09-20 | $0 |
+| M2 | One end-to-end settlement on mainnet | founder | COMPLETE 2026-09-20 | $0 |
+| M3 | Circle Agent Stack integration | **this grant** | 2026-11-22 | **$8,000** |
+| M4 | Independent security review, report published | **this grant** | 2026-12-20 | **$5,000** |
 
-**Proposed budget: $25,000.** Final award sized by Circle during milestone
-design. M1/M2 already complete on founder funds; the grant funds M3/M4.
+**Total ask: $13,000** = M3 + M4 exactly. M1 and M2 were completed on founder
+funds before any award and are **not billed** — no retroactive reimbursement.
+Post-grant roadmap (not funded): M5 third-party-reproducible evaluation,
+M6 production instance under a fresh owner key. Single source of truth:
+`MILESTONES-CANONICAL.md`.
 
 ## 7. Success metrics (conditional on award)
 

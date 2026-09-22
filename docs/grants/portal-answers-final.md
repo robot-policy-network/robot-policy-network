@@ -3,6 +3,15 @@
 Every field is inside its limit and uses the space for mechanism-level detail.
 Copy each block verbatim into the corresponding portal field.
 
+
+> **Scope note (must match the deck and MILESTONES-CANONICAL.md).**
+> Grant-funded milestones are **M3 = Circle Agent Stack integration ($8,000)** and
+> **M4 = independent security review ($5,000)**. **Total ask: $13,000.**
+> M1 (deploy to Arc mainnet) and M2 (one end-to-end settlement) were completed on
+> founder funds on 2026-09-20 and are **not billed** — there is no retroactive
+> reimbursement. The roadmap block below lists grant milestones first, then
+> post-grant roadmap items that are **not** part of this ask.
+
 ---
 
 ## Project Name  [36/80]
@@ -56,7 +65,7 @@ No independent audit has been conducted. Interim assurance: 85 Foundry tests cov
 
 **Required format:** `what will exist at completion | Circle product involved | target date | success metric`
 
-**Paste this block into the 1250-char field** [1233/1250]:
+**Grant milestones only (M3+M4). Post-grant roadmap M5/M6 is listed after, and is NOT part of the ask.** Paste the grant block into the 1250-char field: [1233/1250]:
 
 ```
 Agents in the live arena hold and move USDC through Circle Agent Stack primitives instead of direct contract calls | Circle Agent Stack | 2026-11-22 | 25+ real USDC settlements routed through Agent Stack by 2027-01-31, integration open-sourced, evaluator/payer key split unchanged
@@ -67,7 +76,7 @@ Public simulator, task manifest carrying keccak256(referenceTrajectory) not the 
 
 ## Milestone names (if the form takes name + details separately)
 
-### M1 — Circle Agent Stack integration
+### M3 (grant-funded) — Circle Agent Stack integration
 
 **Name** [195/1024]
 ```
@@ -79,19 +88,7 @@ Circle Agent Stack integrated into the live agent workflow: agents hold and move
 Today the live arena's agents settle through direct contract calls. This milestone replaces that path with Circle Agent Stack primitives, so the 217-wallet community transacts through Circle infrastructure end to end: challenge, score, agent-side payment capability, settlement. The evaluator key remains separate from the payer key and release() still requires both signatures, so the integration cannot weaken the evidence/authority split. Delivered as a documented, open-source integration in the public repository, wired into the existing agent skill and exercised by live traffic rather than a greenfield build. The protocol's whole claim is that a machine can be paid for verifiable work; doing that through Circle's own agent-payment surface turns this into a reusable Arc pattern rather than a bespoke settlement path, and gives Circle a working reference at a scale that is already running.
 ```
 
-### M2 — Production settlement instance
-
-**Name** [143/1024]
-```
-Production settlement instance: EvaluationEscrow redeployed under a production owner key, with live evaluator rotation exercised on a real job.
-```
-
-**Details** [774/2048]
-```
-The current mainnet deployment is a founder-funded demo whose owner key was handled in a development session and must be treated as compromised. This milestone deploys a clean instance with a production-grade owner key, publishes the new address and deployment manifest, and exercises setEvaluator against a live job to demonstrate the rotation guarantee: rotating the default evaluator can never affect a job that already exists, because each job captures its evaluator at creation. Deliverable: a production instance with a published owner and evaluator policy, plus an on-chain rotation, so a reviewer can verify that owner powers are bounded to future jobs and can never redirect an existing job's funds. The demo instance is retired and its limitations stay documented.
-```
-
-### M3 — Independent security review
+### M4 (grant-funded) — Independent security review
 
 **Name** [146/1024]
 ```
@@ -103,7 +100,11 @@ Independent security review of EvaluationEscrow, findings published, all critica
 The contract has no independent audit today. Interim assurance is 85 Foundry tests covering signature validity, domain separation, deadlines, expiry, replay, both v2 semantic fixes and every settlement path, plus CI that deploys the contract and runs a complete settlement on every push. That is not a substitute for review of a contract that will hold other people's USDC. This milestone funds a scoped review (contest or boutique reviewer) sized to a roughly 300-line contract, publishes the full report, and fixes every critical and high finding before the contract accepts a single external deposit. The funding gate we already publish stays in force until this completes: only founder-funded escrows.
 ```
 
-### M4 — Third-party-reproducible evaluation
+---
+
+## Post-grant roadmap (NOT funded by this ask)
+
+### M5 (post-grant, NOT funded) — Third-party-reproducible evaluation
 
 **Name** [155/1024]
 ```
@@ -115,3 +116,14 @@ Third-party-reproducible evaluation: publish the simulator, task manifest and ru
 Today a third party can verify our hash commitments and on-chain records but cannot independently recompute an alignment score, because the reference trajectory is held server-side and the simulator is unreleased. That trade bought un-gameability at the cost of verifiability, and we document it as an accepted limitation. This milestone closes it without publishing the references: ship the simulator and scorer; publish a task manifest carrying the world state, perturbation seeds and keccak256(referenceTrajectory) rather than the trajectory; publish a runner that reproduces the executability score and the derived planHash and resultHash. CI pins example vectors so drift fails the build. A reviewer can then recompute executability exactly, prove the scorer used the reference it always used, and turn a disputed score into an auditable artifact.
 ```
 
+### M6 (post-grant, NOT funded) — Production settlement instance
+
+**Name** [143/1024]
+```
+Production settlement instance: EvaluationEscrow redeployed under a production owner key, with live evaluator rotation exercised on a real job.
+```
+
+**Details** [774/2048]
+```
+The current mainnet deployment is a founder-funded demo whose owner key was handled in a development session and must be treated as compromised. This milestone deploys a clean instance with a production-grade owner key, publishes the new address and deployment manifest, and exercises setEvaluator against a live job to demonstrate the rotation guarantee: rotating the default evaluator can never affect a job that already exists, because each job captures its evaluator at creation. Deliverable: a production instance with a published owner and evaluator policy, plus an on-chain rotation, so a reviewer can verify that owner powers are bounded to future jobs and can never redirect an existing job's funds. The demo instance is retired and its limitations stay documented.
+```
