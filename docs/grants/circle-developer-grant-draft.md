@@ -334,7 +334,7 @@ Conditional on grant award:
 - Applicant: **Richard** (solo founder)
 - Entity: individual, DBA "StonkRobotics"; Legal Entity Name: N/A
   `<FINAL CONFIRM before signing>`
-- Email: **ritsuyan4763@gmail.com**
+- Email: **richard@stonkrobotics.xyz**
 
 **Proven shipping ability.** The applicant has previously built and shipped
 **AI2Human Network** (`https://ai2human.work/`), a verification layer for

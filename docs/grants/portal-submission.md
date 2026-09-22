@@ -110,7 +110,7 @@ M6 production instance under a fresh owner key. Single source of truth:
   settlement contracts). **2nd prize, X Layer (OKX) hackathon** —
   https://x.com/ai2humannetwork/status/2071909716704293211
 - Entity: individual, DBA "StonkRobotics"; Legal Entity Name: N/A.
-- Email: ritsuyan4763@gmail.com
+- Email: richard@stonkrobotics.xyz
 
 ## 9. Links
 

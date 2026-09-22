@@ -9,7 +9,7 @@ initiative — not a fund with a published commitment.
 
 1. **Title** — StonkRobotics / Robot Policy Network: the evaluation and
    verification layer for agentic economic activity on Arc. Contact:
-   Richard, ritsuyan4763@gmail.com.
+   Richard, richard@stonkrobotics.xyz.
 
 2. **Problem** — Agent and robot work is becoming economically meaningful,
    but outcomes are unverifiable and unpayable: scores are opaque,
