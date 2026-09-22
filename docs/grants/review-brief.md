@@ -15,8 +15,8 @@ this document. Re-derive it. Every figure below has a stated verification path.
 | # | Claim | Evidence location | How to verify | Status |
 |---|---|---|---|---|
 | 1 | A frozen settlement protocol exists, separating evaluation evidence from payment authorization | `docs/settlement-spec.md` (**SPEC_VERSION 2**, frozen) | Read §1 and §4; check the two typehashes; read the v1→v2 changelog | **True, frozen** |
-| 2 | `EvaluationEscrow` implements it with 85 passing tests | `contracts/EvaluationEscrow.sol`, `test/EvaluationEscrow.t.sol` | Install deps, then `forge test` — expect 85 passed | **True — local Foundry implementation and tests with a mock ERC-20; not deployed, not audited, no real USDC settlement has ever executed** |
-| 3 | The settlement contract is **not deployed** | spec preamble, `docs/limitations.md` | Query the Arc explorer for the address — it does not exist | **True (deliberate)** |
+| 2 | `EvaluationEscrow` implements it with 85 passing tests | `contracts/EvaluationEscrow.sol`, `test/EvaluationEscrow.t.sol` | Install deps, then `forge test` — expect 85 passed | **True — Foundry implementation with 85 passing tests. Not audited.** |
+| 3 | The settlement contract **is deployed on Arc mainnet and has executed a real settlement** | `deployments/arc-mainnet-settlement.json` | Read the contract at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` and re-derive the job: `cast call 0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491 'getJob(uint256)(...)' 1 --rpc-url https://rpc.mainnet.arc.io` → state 3 (RELEASED), score 87, all three hashes | **True.** One settlement, 0.5 USDC, **founder-funded**; no third-party funds, no audit, no volume claim |
 | 4 | A deterministic evaluation and score-recording flow is live on Arc mainnet | contract `0x6a3B12532F8e562f99e3292380e7f69D32e10B32`, chain 5042 | Fetch the explorer page; read the runtime code. Note precisely what this means: scores are produced off-chain by our deterministic evaluator and **recorded** on-chain via voucher/mint; no evaluator attestation and no USDC flow through the settlement protocol exist on-chain | **True, with the scope above** |
 | 5 | 217 unique addresses submitted 65,138 scored rounds over 67 missions, 99.94% pass (by race design — see pass-rate honesty) | `docs/grants/traction-evidence/` | Run `bash verify.sh` — re-hashes 5 day-files and re-derives the stats | **Recomputable from the published export; source provenance remains operator-attested** (see §2.1) |
 | 6 | Scoring is 100% deterministic simulator, not an LLM | `mode: "sim"` in every scored record | `jq` the `mode` field across records | **Recomputable from the published export; source provenance remains operator-attested** |
@@ -64,13 +64,15 @@ Ranked by how much damage they do if a reviewer hits them cold.
    played by a loyal base — which is the intended design — but it is also
    consistent with fewer humans behind many wallets, and the dataset cannot
    distinguish them. *Probe:* ask for the human-attribution story; the
-   template exists at `traction-attribution-template.md` and is currently
-   unfilled.
+   attribution is recorded in `traction-attribution.md` (founder-confirmed: X-recruited cohort), with the wallet-vs-human limit stated rather than blurred.
 
-3. **Settlement — the payable half — is not deployed.** Everything about
-   payment is a specification plus tests. The only live capability is
-   evaluation and on-chain recording. Our one-line summary ("trust and
-   settlement layer") is tighter than the truth; the body states the split.
+3. **Settlement is deployed and proven once — but on founder money, with a
+   demo owner key.** The contract at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` really did escrow and release 0.5
+   USDC after both signatures validated, which is far stronger than a test
+   suite. It is still not: audited, funded by anyone else, exercised more than
+   once, or owned by a production-grade key (the demo owner key was exposed in
+   the session that deployed it and must be rotated). Do not read one
+   founder-funded settlement as traction.
 
 4. **One founder — with a verifiable prior shipping record, but no external
    validation.** On the positive side the applicant has shipped **AI2Human
@@ -81,10 +83,10 @@ Ranked by how much damage they do if a reviewer hits them cold.
    On the negative side: `ai2humannetwork` has **0 followers and 0 stars**
    across its repos, this repository has **0 stars / 0 forks / 0 watchers**,
    no independent audit exists, and no third party is known to build on
-   either project. The OKX hackathon second-place claim is
-   **founder-confirmed but not independently verifiable** — the official
-   announcement appears to publish winners as an image. *Probe:* ask for a
-   resolvable URL for the award, and ask why one project settles on Base and
+   either project. The X Layer (OKX) hackathon second-prize claim is
+   **now independently verifiable** — public post on the founder's account
+   naming the win: https://x.com/ai2humannetwork/status/2071909716704293211
+   (resolved 2026-09-20). *Probe:* ask why one project settles on Base and
    the other on Arc.
 
 5. **`main` does not contain the work.** The default branch is protected and
@@ -101,7 +103,8 @@ Ranked by how much damage they do if a reviewer hits them cold.
 7. **No Circle product is integrated yet.** "Circle products as building
    blocks" is a plan (M3), not a fact. The only Circle surface used is
    Arc-native USDC as a settlement unit of account in the spec — and that
-   path is not deployed either.
+   path IS deployed and has executed one founder-funded settlement
+   (`0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491`).
 
 8. **Competitor claims are second-hand.** Axis ($12M), PrismaX ($11M), and
    RoboTrain characterisations rest on press coverage and company posts. The
@@ -123,11 +126,14 @@ Ranked by how much damage they do if a reviewer hits them cold.
 ## 3. Questions a hostile reviewer should ask us
 
 1. If the upstream bucket is private, what stops you from having generated
-   these 65,138 records yourself?
+   these 65,138 records yourself? (The settlement proof is different: it is
+   independently checkable on Arc mainnet.)
 2. Who were the 217 addresses? Can any of them be contacted to confirm they
-   ran the flow? (The earlier 483-record Filebase era had a separate 91.)
-3. Why does the dataset stop on 2026-09-04? Was the flow running on
-   2026-09-20, and if so where are those records?
+   ran the flow? (Founder-confirmed sourcing is X; human counts are not
+   claimed — see `traction-attribution.md`.)
+3. Why does the earlier dataset stop on 2026-09-04, and what is the 2026-09-16
+   onwards window? (Arena backend moved self-hosted at mainnet launch; the
+   published export covers the current backend.)
 4. Your KPI promises 100 verified outcomes per month. You hit 343 in one day
    on 2026-09-03, then nothing. Which number is real?
 5. Which Circle product will M3 integrate, and what breaks if you integrate
@@ -143,11 +149,11 @@ Ranked by how much damage they do if a reviewer hits them cold.
    from distribution, data, and integrations, not from bytecode lock-in.
 7. The evaluation layer has been running since mainnet launch. How many
    distinct humans are behind those 217 addresses — could it be one operator
-   with a wallet farm? **(This is a real open question; see
-   `traction-attribution-template.md`, which exists because we cannot yet
-   answer it with evidence. The usage shape — median 297 rounds per address,
-   top 1,381 — reads more like a loyal mining community than one-shot
-   visitors, but that is not proof.)**
+   with a wallet farm? **(Answered at wallet level, honestly capped at human
+   level: `traction-attribution.md` records the founder-confirmed sourcing
+   (X-recruited cohort) plus the behavioural evidence — 91.2% near-unique
+   answers, 82% five-day retention — and explicitly does not claim human
+   counts it cannot evidence.)**
 8. What is your actual cost per verified evaluation, and who pays it?
 9. `EvaluationEscrow` is 292 lines with 1,060 lines of tests and no audit.
    Why should a payer trust it with funds after a $5,000 review?
@@ -247,7 +253,7 @@ Ranked by impact per unit of effort:
 5. Answer the "217 addresses, how many humans?" question with a documented
    attribution story (e.g. a KOL campaign or community event) filed alongside
    the dataset. **(Template created at
-   `traction-attribution-template.md`; needs founder input.)**
+   `traction-attribution.md`; sourced via X, human count not claimed.)**
 6. Ship a whitepaper. **(Done — `../whitepaper.md`, 10 sections, honest
    live/proposed status table.)**
 
@@ -261,7 +267,7 @@ Ranked by impact per unit of effort:
 | `../whitepaper.md` | Full protocol write-up with honest status table |
 | `../evaluation-reproducibility.md` | L0/L1/L2 verifiability analysis + L2 proposal |
 | `../security/red-team-findings.md` | Self-disclosed findings, incl. the gameable rubric |
-| `traction-attribution-template.md` | Template for the 217-address attribution answer |
+| `traction-attribution.md` | The 217-wallet attribution: X-recruited cohort, what it does and does not support |
 | `launch-content.md` | Community/X/directory/integration drafts |
 | `circle-developer-grant-draft.md` | The application itself (v5) |
 | `canonical-fact-sheet.md` | Claim governance: verified / confirmed / planned / do-not-claim |

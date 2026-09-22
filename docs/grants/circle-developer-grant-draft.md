@@ -84,7 +84,12 @@ attributable performance *inputs* from which curated training assets
 (consensus labels, hard cases, reasoning traces — see roadmap) are derived.
 
 **Layer 3 — Evidence/authorization-split USDC settlement (specified, tested,
-not yet deployed).** The v1 settlement protocol (`docs/settlement-spec.md`,
+deployed and exercised on mainnet).** The settlement contract runs at
+`0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` on Arc mainnet (SPEC_VERSION 2) and has executed a complete
+settlement: 0.5 USDC escrowed, an evaluator attestation recorded, and the
+funds released only after the payer's separate authorization validated — every
+transaction hash is published in `deployments/arc-mainnet-settlement.json`.
+The protocol (`docs/settlement-spec.md`,
 frozen at `SPEC_VERSION = 2`) defines two independent EIP-712 artifacts: an
 `EvaluationAttestation` produced by the evaluator (evidence; can never move
 funds) and a `ReleaseAuthorization` signed by the payer (authority;
@@ -228,7 +233,9 @@ payer  → EIP-712 ReleaseAuthorization    (authority; insufficient alone)
   not re-computed on-chain, so a payer who skips off-chain recomputation
   trusts the evaluator to have bound the right plan. The protocol makes that
   check cheap and publishable; it does not make it automatic.
-- **The settlement contract is not deployed.** Only the evaluation/recording
+- **The settlement contract is deployed and has executed one settlement**, but
+  the demo ran on founder funds only (0.5 USDC) and its owner key must be
+  rotated for production. Only the evaluation/recording
   flow is live. This application funds its deployment, not its invention.
 
 ## Market and competition
@@ -295,7 +302,7 @@ promise in Risks that no production fund flows precede the review.
 
 ## Budget / use of funds
 
-**Proposed budget: $25,000 over ~13 weeks.** Circle does not publish grant
+**Proposed budget: $13,000** = M3 ($8,000) + M4 ($5,000). Circle does not publish grant
 amounts; this is the milestone budget we propose in the portal, and the final
 award is sized by Circle during milestone design. We are ready to scope the
 plan to a different tier if Circle's assessment differs.
@@ -338,8 +345,7 @@ verifiable now: the GitHub organization `ai2humannetwork` (created 2026-06-27)
 publishes six repositories including Base settlement contracts, a structured
 proof kit, and protocol specifications; the live product is reachable and
 includes a whitepaper, reviewer console, and task board. AI2Human was also a
-**second-place finisher in the OKX OnchainOS AI Hackathon** `<LINK PENDING —
-founder to supply a resolvable URL before submission>`.
+**2nd-prize winner in an X Layer (OKX) hackathon** — public record: https://x.com/ai2humannetwork/status/2071909716704293211.
 
 **Why this matters for this application.** StonkRobotics extends the same
 thesis to *machine* execution: AI2Human verifies work that only a human can
@@ -352,8 +358,9 @@ grant funds the Arc-native, machine-side implementation.
 **Honest caveats.** AI2Human settles on Base, not Arc, and is a separate
 project outside this proposal; it is cited as track record only, not as an
 integrated system. The team remains a solo founder with no advisors listed.
-`<LINK PENDING: supply the OKX hackathon announcement URL, or delete the
-award sentence if no public record exists — do not cite an unverifiable award>`
+*(The hackathon award is publicly recorded on the founder's own account:
+https://x.com/ai2humannetwork/status/2071909716704293211 — verified resolvable
+2026-09-20.)*
 
 ## Open-source / ecosystem contribution
 

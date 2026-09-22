@@ -85,9 +85,11 @@ not just the fix. [link]
 
 5/ Where it actually is: evaluation + on-chain recording live on Arc mainnet.
 The settlement contract is frozen (SPEC_VERSION 2, 85 tests, CI-proven deploy
-path) and **not deployed**. No audit. Stated plainly in the repo.
+path) and **deployed at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` with one real settlement executed** — on
+founder funds, 0.5 USDC, no third-party money and no audit. Stated plainly in
+the repo.
 
-6/ Everything is checkable: frozen spec, 85-test suite, and a 492-record
+6/ Everything is checkable: frozen spec, 85-test suite, and a 65,138-record
 traction dataset with a script that re-hashes every record and re-derives every
 statistic. Don't trust our numbers — recompute them. [links]
 
@@ -109,7 +111,7 @@ One line: Separates evaluation evidence from payment authorization so an
           agent's verified work can settle in USDC without any single key
           being able to do both.
 Evidence: frozen SPEC_VERSION=2, 85 passing tests, CI deploy-path smoke
-          test, 492-record SHA-256-pinned dataset with re-runnable verifier
+          test, 65,138-record SHA-256-pinned dataset with re-runnable verifier
 ```
 
 ## 4. awesome-list PR blurb
@@ -128,7 +130,9 @@ Evidence: frozen SPEC_VERSION=2, 85 passing tests, CI deploy-path smoke
 > with USDC) who'd be willing to integrate the challenge API and tell us where
 > it breaks. We're not asking for a testimonial — we're asking for friction
 > reports, and we'll publish what you find. The evaluation layer is live and
-> free to call; the settlement layer is specified and tested but not deployed,
+> free to call; the settlement layer is deployed and has executed one
+> founder-funded settlement, so you can read the receipts but nobody else's
+> funds are involved,
 > so nothing you do can put funds at risk.
 
 That framing converts better than a partnership ask, because it is honest about

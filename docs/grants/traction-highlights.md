@@ -110,4 +110,7 @@ This is the "curation layer" thesis made concrete: not raw trajectories
 - **Wallets are not humans.** 217 addresses could be fewer people. The
   attribution template exists because we cannot yet evidence this.
 - **No USDC has settled.** The 60 mints are collection NFTs. Settlement
-  (`EvaluationEscrow`) is frozen, tested, CI-verified, and **not deployed**.
+  (`EvaluationEscrow`) is deployed at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` and has executed one real
+  settlement (0.5 USDC, founder-funded) — but that is a proof of the path, not
+  volume. What has *not* happened: third-party funds, revenue, or a second
+  settlement.

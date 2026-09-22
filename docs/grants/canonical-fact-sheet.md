@@ -33,8 +33,8 @@ _Last updated: 2026-09-20._
 | Applicant email: **ritsuyan4763@gmail.com** | CONFIRMED 2026-09-20 |
 | **Founder track record — AI2Human Network** (prior/parallel project, same founder): GitHub org `ai2humannetwork` (created 2026-06-27, bio: "The execution and verification layer for the agent economy"), 6 public repos incl. Base settlement contracts, proof-kit, protocol specs, agent skills | **VERIFIED 2026-09-20 via GitHub API** |
 | **Founder track record — AI2Human live product**: `https://ai2human.work/` (verification layer for open-world AI agents; proof → review → conditional USDC settlement; whitepaper + live demo) | **VERIFIED 2026-09-20 (HTTP 200)** |
-| **OKX OnchainOS AI Hackathon — 2nd place (with AI2Human)** | FOUNDER-CONFIRMED — **verifiable link still needed**; the official winners announcement appears to publish the list as an image |
-| Grant ask: **$25,000 over ~13 weeks** (proposed budget; Circle sizes the actual award — Circle publishes no amounts) | CONFIRMED 2026-09-20 |
+| **X Layer (OKX) hackathon — 2nd prize (AI2Human)** | **VERIFIED 2026-09-20** — public post from official account @ai2humannetwork: https://x.com/ai2humannetwork/status/2071909716704293211 (states: "As an @XLayerOfficial hackathon 2nd prize winner…")
+| Grant ask: **$13,000** = M3 ($8,000 Circle Agent Stack integration) + M4 ($5,000 independent security review). M1/M2 completed on founder funds and not billed. `MILESTONES-CANONICAL.md` is the single source | CONFIRMED 2026-09-20 |
 | Milestones: fast schedule, M1–M4 from 2026-10-11 to 2026-12-13 | CONFIRMED 2026-09-20 |
 | Legal entity: none; apply as individual, DBA "StonkRobotics" | Assumed per plan — final confirm before signing |
 | Circle product for M3: Circle Agent Stack (recommended) | Recommended — confirm or swap before submission |
@@ -44,7 +44,9 @@ _Last updated: 2026-09-20._
 ## Planned (roadmap only — never present as live)
 
 - General-purpose USDC job escrow and milestone-based settlement on Arc.
-- `EvaluationEscrow` deployment to Arc mainnet (spec frozen, not deployed).
+- Post-grant: production instance under a fresh owner key (M6) and third-party-reproducible evaluation (M5).
+- Note: the demo deployment at 0x479F... is founder-funded, its owner key must be
+  treated as compromised, and it is retired by M6. See MILESTONES-CANONICAL.md.
 - Provider/robot-policy marketplace.
 - Integration of Circle products (Agent Stack, Wallets, or Contracts — exact
   selection must match the milestone plan before it is claimed).

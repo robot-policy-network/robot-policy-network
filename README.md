@@ -28,7 +28,7 @@ The contract also contains collection-management modules such as whitelist minti
 
 ## Architecture boundary
 
-The live product demonstrates an agent challenge and on-chain verification flow. A general-purpose USDC job escrow and robot-policy marketplace is a future extension, not claimed as deployed by this repository.
+The live product demonstrates an agent challenge and on-chain verification flow. On 2026-09-20 a **complete USDC settlement also executed on Arc mainnet**: `EvaluationEscrow` at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` escrowed 0.5 USDC, accepted an evaluator attestation, and released the funds only after the payer's separate authorization validated. A general-purpose USDC job escrow **marketplace** remains a future extension and is not claimed as live; the executed settlement is a founder-funded proof of the path and is not evidence of volume, users, or revenue.
 
 ```text
 agent requests challenge

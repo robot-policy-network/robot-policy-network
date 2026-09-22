@@ -71,7 +71,8 @@ Three layers, each defensible:
 3. **Evidence/authorization-split USDC settlement** — `EvaluationEscrow`
    (frozen SPEC_VERSION 2, 85 tests): an `EvaluationAttestation` can never
    move funds; a `ReleaseAuthorization` alone is insufficient; `release()`
-   requires both. **Specified + tested, not yet deployed.**
+   requires both. **Deployed at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491`; one settlement executed (0.5 USDC,
+   founder-funded).**
 
 ## 4. The narrative: the curation + settlement layer for Physical AI
 

@@ -77,8 +77,11 @@ shows `totalMinted() = 60` with `mintOpen() = true` and `poiMintOpen() = true`
 (read via RPC, 2026-09-20). The vouchers these records produced are the input
 to those mints; we do not claim a 1:1 record-to-mint join (minting is a
 separate, optional on-chain step). The settlement contract
-(`EvaluationEscrow`) is specified, tested, and CI-verified but **not deployed**
-— no USDC has moved through it.
+(`EvaluationEscrow`) is deployed on Arc mainnet at `0x479FF86C25d813cD3FA076e2Fe6df2E3d2d77491` and has executed
+one complete settlement of 0.5 USDC (founder-funded). See
+[`../../deployments/arc-mainnet-settlement.json`](../../deployments/arc-mainnet-settlement.json).
+This is a proof of the settlement path, not evidence of volume, users, or
+revenue — and no third-party funds have ever touched the contract.
 
 ## Provenance caveats (stated, not hidden)
 
@@ -86,7 +89,7 @@ separate, optional on-chain step). The settlement contract
   pinned by per-file SHA-256 in `manifest.json` (the uncompressed bytes), but
   *provenance* — that these came from independent users rather than the
   operator — is asserted, with the participant-attribution template at
-  `../traction-attribution-template.md` left for the founder to evidence.
+  `../traction-attribution.md` now records the founder-confirmed sourcing: an X-recruited cohort, with the wallet-vs-human limit stated.
 - The earlier 483-record Filebase snapshot (window 2026-08-17 → 09-04) is a
   different, earlier backend. It is superseded by this export and its
   Sepolia-testnet receipts are not Arc mainnet evidence.

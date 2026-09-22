@@ -59,7 +59,7 @@ initiative — not a fund with a published commitment.
 11. **Team** — Solo founder **Richard**, full-stack + smart contracts.
     `<OPTIONAL: 1–2 句真实背景，没有就保持简洁>`
 
-12. **Ask** — **$25,000**（与 Circle Developer Grant 一致的预算框架；若 Builders Fund
+12. **Ask** — **$13,000**（与 Circle Developer Grant 一致；若 Builders Fund
     是投资形式则改为展示用款计划而非 grant 金额），use of funds:
     deployment + demo (48%), Circle integration (32%), security review (20%).
     What Arc core-team support would unblock: USDC settlement best

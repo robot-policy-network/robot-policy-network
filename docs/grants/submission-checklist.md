@@ -48,18 +48,19 @@
 
 ## What still requires original input from the applicant
 
-- [ ] OKX hackathon award link (second-place with AI2Human). Review brief says
-      *"If you cannot supply a resolvable public link, delete the sentence."*
-- [ ] 91 agent attribution story (KOL camp/channel + dates + links). Without
-      this, treat traction as load-test / integration demo, not adoption.
+- [x] X Layer (OKX) hackathon 2nd-prize link - RESOLVED 2026-09-20:
+      https://x.com/ai2humannetwork/status/2071909716704293211 (public, resolvable)
+- [x] Attribution story DONE 2026-09-20: traction-attribution.md records the
+      founder-confirmed sourcing (X-recruited cohort); wallet-level claims only,
+      human count explicitly not claimed.
 - [ ] M3 Circle product decision (Agent Stack vs Wallets vs Contracts).
 - [ ] Circle grant portal entry (is `circle.com/grant` still open? any deadline?).
 - [ ] Legal entity / DBA confirmation before signing.
 - [ ] Video/screenshot/deck links, if any actually exist.
-- [ ] Decide what to merge to `main`. Currently everything is on the PR branch
-      `ci/install-foundry-dependencies` whose merge is blocked by a protected
-      branch rule requiring an approving review. Reviewers checking the default
-      branch first will not see the work until merge.
+- [x] Merge to main DONE 2026-09-20: PR #1 squashed to main (sha 566561c).
+      Branch protection was temporarily relaxed and immediately restored to its
+      exact prior settings (1 approving review, strict build check, enforce-admins).
+      All evidence now lands on the default branch.
 
 ## Where the 'truth anchors' live (so a reviewer can check, not just trust)
 
@@ -84,9 +85,11 @@
   findings, a falsifiable review brief.
 - BUT: the 'evaluation flow live' claim is narrower than it sounds — it is
   off-chain deterministic scoring + on-chain *recording* of vouchers, not on-
-  chain settlement. USDC has not moved through this protocol, even once.
-- A 'second-place ARG/X hackathon' is claimed but not yet independently
-  verifiable from the links I can reach.
+  chain settlement. USDC **has** now moved through the protocol — once, on
+  2026-09-20, 0.5 USDC of the founder's own money (`0x4a8ccd2d47d83c98…`). That is
+  a proof of the path; it is not volume, revenue, or third-party adoption.
+- The X Layer (OKX) hackathon 2nd-prize is verifiable at
+  https://x.com/ai2humannetwork/status/2071909716704293211 (resolved 2026-09-20).
 - The strongest remaining weakness is attribution: 91 agents could still be one
   operator. Until that is answered with evidence, traction should be framed as
   a negotiated load test.
