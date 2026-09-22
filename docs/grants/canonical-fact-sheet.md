@@ -30,7 +30,7 @@ _Last updated: 2026-09-20._
 | Fact | Status |
 |---|---|
 | Applicant / project lead identity: **Richard** | CONFIRMED 2026-09-20 |
-| Applicant email: **ritsuyan4763@gmail.com** | CONFIRMED 2026-09-20 |
+| Applicant email: **richard@stonkrobotics.xyz** | CONFIRMED 2026-09-20 |
 | **Founder track record — AI2Human Network** (prior/parallel project, same founder): GitHub org `ai2humannetwork` (created 2026-06-27, bio: "The execution and verification layer for the agent economy"), 6 public repos incl. Base settlement contracts, proof-kit, protocol specs, agent skills | **VERIFIED 2026-09-20 via GitHub API** |
 | **Founder track record — AI2Human live product**: `https://ai2human.work/` (verification layer for open-world AI agents; proof → review → conditional USDC settlement; whitepaper + live demo) | **VERIFIED 2026-09-20 (HTTP 200)** |
 | **X Layer (OKX) hackathon — 2nd prize (AI2Human)** | **VERIFIED 2026-09-20** — public post from official account @ai2humannetwork: https://x.com/ai2humannetwork/status/2071909716704293211 (states: "As an @XLayerOfficial hackathon 2nd prize winner…")
